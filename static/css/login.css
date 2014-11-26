@@ -1,0 +1,29 @@
+#lc-input {
+    margin-top: 70px;
+    border-radius: 15px;
+    width: 290px;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px 20px 10px 20px;
+    overflow: auto;
+}
+
+.font-90 {font-size: 90%}
+#lc-input input {width: 250px;}
+#lc-input p {margin-bottom: 15px;}
+#lc-input img {padding-left: 5px;}
+
+.popup-info span {display: none;}
+
+#lci-submit-row {
+    margin-bottom: 10px;
+}
+
+#test-container {position: absolute; left: 600px;}
+
+#test-container li {clear:both;white-space:nowrap;}
+
+.tc-checked {float:left;}
+.tc-text {float:left; left: 40px;white-space:nowrap;overflow: hidden;}

@@ -1,0 +1,70 @@
+
+#layout-topbar{background:#f1f1f1;border-radius:5px;margin:3px;border:1px solid darkgrey;overflow:auto;font-size:85%;min-width:600px;padding: 5px;}
+#layout-topbar label{display: inline-block;}
+#lt-language{float:left;padding:0px;cursor: default;}
+#lt-user{float:right;padding:3px;margin-top:6px;}
+
+.layout-popup {background:#fff;border:1px solid #ccc;box-shadow: 0 2px 10px rgba(0,0,0,.2);visibility:hidden;position:absolute;}
+#popup-info-container {padding:10px;max-width:180px;min-width:50px;border-radius:2px;}
+/*#popup-language-container {padding:5px 15px 5px 5px;}*/
+#popup-language-container {padding: 6px 0px 6px 0px;border-radius:2px}
+
+#popup-info-container span {
+    content: "";
+    background: #fff;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    position: absolute;
+    left: -6px;
+    top: 12px;
+    width: 9px;
+    height: 9px;
+    -webkit-transform:  rotate(-45deg);
+    -moz-transform:     rotate(-45deg);
+    -ms-transform:      rotate(-45deg);
+    -o-transform:       rotate(-45deg);
+    transform:          rotate(-45deg);
+}
+#popup-info-container div {font-size: 90%;}
+
+#pic-arrow-top-left {
+    content: "";
+    background: #fff;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    position: absolute;
+    left: 12px;
+    top: -6px;
+    width: 9px;
+    height: 9px;
+    -webkit-transform:  rotate(45deg);
+    -moz-transform:     rotate(45deg);
+    -ms-transform:      rotate(45deg);
+    -o-transform:       rotate(45deg);
+    transform:          rotate(45deg);
+}
+
+#popup-language-container  {font-size: 90%;
+    min-width: 0px;}
+
+li:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+#ltl-name { display:inline-block;}
+
+#ltl-drop-down {
+    border-top: 4px solid black;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.plc-item {white-space: nowrap;padding-left: 25px;padding-right:18px;}
+.plc-item-checked {background-image:url('/static/images/steve/checkmark.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+}

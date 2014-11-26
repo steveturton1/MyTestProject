@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/static/js/mvc/login.js"></script>
+{% endblock %}
+
+{% block content %}
+    <title>LOGIN</title>
+
+    <div id="login-container">
+        <div id="lc-input">
+            <p id="lci-title">
+                Sign in to Steve's Test Project
+            </p>
+            <p>
+            <label class="block-label font-90" for="lci-email">Username</label>
+            <input type="text" name="email" id="lci-email" autofocus="autofocus">
+            <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
+                <img src="/static/images/steve/info.png">
+                <span>This is the username, usually an email address.</span>
+            </span>
+
+            </p>
+
+            <p>
+            <label class="block-label font-90" for="lci-password">Password</label>
+            <input type="text" name="password" id="lci-password">
+            <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
+                <img src="/static/images/steve/info.png">
+                <span>This is the password.</span>
+            </span>
+            </p>
+
+            <div id="lci-submit-row">
+                <a href="#" class="bluebutton">Sign In</a>
+            </div>
+
+            <a href="{{ url_for('request_logon_detail') }}" id="lci-forgotten" class="font-90" >Forgotten your sign-in details?</a>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script type="text/javascript">
+    //executed when the page is loaded
+    jQuery(window).load(function () {
+        login_controller = new LoginController();
+    });
+
+</script>
+
+{% endblock %}
