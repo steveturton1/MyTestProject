@@ -3,17 +3,17 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>layout template used for all html pages.</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/vr.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vr.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}"/>
 
     <!--Add css for specific pages-->
     {% block css %}{% endblock %}
 
-    <script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/mvc/layout.js"></script>
-    <script type="text/javascript" src="/static/js/jsrender.js"></script>
-    <script type="text/javascript" src="/static/js/MyRest.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/layout.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jsrender.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/MyRest.js') }}"></script>
 
     <!--Add js for specific pages-->
     {% block js %}{% endblock %}

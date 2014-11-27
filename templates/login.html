@@ -2,11 +2,11 @@
 
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}"/>
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="/static/js/mvc/login.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/login.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@
             <label class="block-label font-90" for="lci-email">Username</label>
             <input type="text" name="email" id="lci-email" autofocus="autofocus">
             <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
-                <img src="/static/images/steve/info.png">
+                <img src="{{ url_for('static', filename='images/steve/info.png') }}"/>
                 <span>This is the username, usually an email address.</span>
             </span>
 
@@ -31,7 +31,7 @@
             <label class="block-label font-90" for="lci-password">Password</label>
             <input type="text" name="password" id="lci-password">
             <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
-                <img src="/static/images/steve/info.png">
+                <img src="{{ url_for('static', filename='images/steve/info.png') }}">
                 <span>This is the password.</span>
             </span>
             </p>
