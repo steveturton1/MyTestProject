@@ -46,6 +46,10 @@ LayoutController.prototype.index = function(e) {
 
         //jQuery(jQuery('#LanguageTestTemplate').render({languages:arr})).appendTo('#jsRenderTest');
         jQuery('#plc-list').html(jQuery('#LanguageTestTemplate').render({languages:arr}));
+
+        // As the user may have clicked the back button, the session['language'] shown in layout.html
+        // Might be out of date so set the correct language here aswell.
+        jQuery('#ltln-language').html(settings["i18N"]["CURRENT_LANGUAGE"]);
     });
 
 
