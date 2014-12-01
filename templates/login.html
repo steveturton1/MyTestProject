@@ -12,37 +12,43 @@
 {% block content %}
     <title>LOGIN</title>
 
-    <div id="login-container">
-        <div id="lc-input">
-            <p id="lci-title">
-                Sign in to Steve's Test Project
-            </p>
-            <p>
-            <label class="block-label font-90" for="lci-email">Username</label>
-            <input type="text" name="email" id="lci-email" autofocus="autofocus">
-            <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
-                <img src="{{ url_for('static', filename='images/steve/info.png') }}"/>
-                <span>This is the username, usually an email address.</span>
-            </span>
 
-            </p>
+    <div id="lc-input">
+        <form method="POST" action="{{ url_for('login') }}">
 
-            <p>
-            <label class="block-label font-90" for="lci-password">Password</label>
-            <input type="text" name="password" id="lci-password">
-            <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
-                <img src="{{ url_for('static', filename='images/steve/info.png') }}">
-                <span>This is the password.</span>
-            </span>
-            </p>
+            {% if get_flashed_messages() %}
+                <div id="lci-error">
+                    {{ get_flashed_messages()[0] }}
+                </div>
+            {% else %}
+                <div id="lci-title">
+                    Sign in to Steve's Test Project
+                </div>
+            {% endif %}
 
-            <div id="lci-submit-row">
+
+            <div id="lci-username">
+                <input type="text" name="email" id="lci-email" autofocus="autofocus" placeholder="Username">
+                <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
+                    <img src="{{ url_for('static', filename='images/steve/info.png') }}"/>
+                    <span>This is the username, usually an email address.</span>
+                </span>
+            </div>
+
+            <div id="lci-password">
+                <input type="password" name="password" id="lci-password" placeholder="Password">
+                <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
+                    <img src="{{ url_for('static', filename='images/steve/info.png') }}">
+                    <span>This is the password for the above user.</span>
+                </span>
+            </div>
+
+            <div id="lci-submit-row" onclick="document.forms[0].submit();">
                 <a href="#" class="bluebutton">Sign In</a>
             </div>
 
             <a href="{{ url_for('request_logon_detail') }}" id="lci-forgotten" class="font-90" >Forgotten your sign-in details?</a>
-
-        </div>
+        </form>
     </div>
 
 {% endblock %}

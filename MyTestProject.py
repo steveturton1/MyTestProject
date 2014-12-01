@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, jsonify
+from flask import Flask, render_template, request, session, jsonify, redirect, url_for, flash
 from flask.ext.babel import Babel, refresh, gettext
 import settings
 import services.MyData
@@ -25,8 +25,22 @@ def app_initialise():
 
 
 @app.route('/')
-def hello_world():
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if request.form['email'] != 'steve.turton@cumptons.co.uk':
+            flash('The login information you have entered is not valid.')
+        else:
+            session['logged_in'] = True
+            return redirect(url_for('request_logon_detail'))
+
     return render_template("login.html")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
 
 
 @app.route('/requestlogondetail')
