@@ -43,8 +43,8 @@
                 </span>
             </div>
 
-            <div id="lci-submit-row" onclick="document.forms[0].submit();">
-                <a href="#" class="bluebutton">Sign In</a>
+            <div id="lci-submit-row">
+                <a href="#" class="bluebutton" onclick="event.preventDefault(); document.forms[0].submit();">Sign In</a>
             </div>
 
             <a href="{{ url_for('request_logon_detail') }}" id="lci-forgotten" class="font-90" >Forgotten your sign-in details?</a>

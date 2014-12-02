@@ -24,8 +24,7 @@ def app_initialise():
         session["language"] = request.accept_languages.best_match(settings.APPLICATION["i18N"]["LANGUAGES"].keys())
 
 
-@app.route('/')
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         if request.form['email'] != 'steve.turton@cumptons.co.uk':
