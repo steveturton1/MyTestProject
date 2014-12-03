@@ -42,9 +42,9 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/requestlogondetail')
-def request_logon_detail():
-    return render_template("request_logon_detail.html")
+@app.route('/forgotpassword')
+def forgotpassword():
+    return render_template("forgotpassword.html")
 
 
 @app.route('/service/settings', methods=['GET'])
