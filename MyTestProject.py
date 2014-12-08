@@ -6,7 +6,7 @@ import services.MyData
 app = Flask(__name__)
 app.debug = True
 
-#needed for sessions - note can use import os; os.random(24) to generate a new key if needed.
+# needed for sessions - note can use import os; os.random(24) to generate a new key if needed.
 app.secret_key = '\xc1\x85\xb8\xb2\x9f-1\xd61rGtB\x7f\xaa\xfb\xa1\xacT|I\xd9\xd2"'
 
 babel = Babel(app)
@@ -14,10 +14,10 @@ babel = Babel(app)
 
 @app.before_request
 def app_initialise():
-    #Set the language - would need some validation if done correctly.
-    #needed this because if you shut the browser down and bring back up, goto home page again, then
+    # Set the language - would need some validation if done correctly.
+    # needed this because if you shut the browser down and bring back up, goto home page again, then
     # session["language"] is blank and so in layout.html, the first thing it does is use session["language"] which
-    #it won't have.  Tried doing this in before_first_request but that doesn;t get fired when launching the browser again.
+    # it won't have.  Tried doing this in before_first_request but that doesn;t get fired when launching the browser again.
     if request.cookies.get('language') is not None:
         session["language"] = request.cookies.get('language')
     else:
@@ -31,7 +31,7 @@ def login():
             flash('The login information you have entered is not valid.')
         else:
             session['logged_in'] = True
-            return redirect(url_for('request_logon_detail'))
+            return redirect(url_for('render_ui', template='main.html'))
 
     return render_template("login.html")
 
@@ -45,6 +45,18 @@ def logout():
 @app.route('/forgotpassword')
 def forgotpassword():
     return render_template("forgotpassword.html")
+
+
+@app.route('/ui/<template>')
+def render_ui(template):
+    # todo - checked logged user plus pass user preferences to template
+    return render_template(template, language=session["language"])
+
+
+
+
+
+
 
 
 @app.route('/service/settings', methods=['GET'])
