@@ -32,8 +32,9 @@ def login():
         else:
             session['logged_in'] = True
             return redirect(url_for('render_ui', template='main.html'))
+            #return redirect(url_for('main'))
 
-    return render_template("login.html")
+    return render_template("login.html", settings=services.MyData.get_settings())
 
 
 @app.route('/logout')
@@ -44,13 +45,18 @@ def logout():
 
 @app.route('/forgotpassword')
 def forgotpassword():
-    return render_template("forgotpassword.html")
+    return render_template("forgotpassword.html", settings=services.MyData.get_settings())
+
+
+@app.route('/main')
+def main():
+    return render_template("main.html", settings=services.MyData.get_settings())
 
 
 @app.route('/ui/<template>')
 def render_ui(template):
     # todo - checked logged user plus pass user preferences to template
-    return render_template(template, language=session["language"])
+    return render_template(template, settings=services.MyData.get_settings())
 
 
 
@@ -67,8 +73,10 @@ def service_settings():
 
 @app.route('/service/set_language/<lang_id>', methods=['POST'])
 def service_set_language(lang_id):
+   # request.cookies.('language', lang_id)
     session["language"] = lang_id
-    return jsonify(data="ok")
+    session.modified = True
+    return jsonify(data=lang_id)
 
 
 @babel.localeselector

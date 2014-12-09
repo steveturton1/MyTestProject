@@ -218,8 +218,9 @@ MyRest.getSettings = function(successCallback, errorCallback) {
     return this.getJSON('/service/settings', successCallback, errorCallback);
 };
 
-MyRest.setLanguage = function(lang_id, successCallback){
-    return this.sendEmptyJSON('/service/set_language/'+lang_id, 'POST', successCallback)
+MyRest.setLanguage = function(lang_id, successCallback, errorCallback){
+    //return this.sendEmptyJSON('/service/set_language/'+lang_id, 'POST', successCallback)
+	return this.sendJSON('/service/set_language/'+lang_id, lang_id, 'POST', successCallback, errorCallback)
 };
 
 

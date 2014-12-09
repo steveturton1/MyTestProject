@@ -9,5 +9,4 @@ def get_settings():
         #Translate each language value
         settings.APPLICATION["i18N"]["LANGUAGES"][lang] = gettext(lang)
 
-    settings.APPLICATION["i18N"]["CURRENT_LANGUAGE"] = gettext(session['language'])
     return settings.APPLICATION

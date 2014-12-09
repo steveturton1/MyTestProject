@@ -12,19 +12,7 @@ function LayoutController() {
 
 LayoutController.prototype.index = function(e) {
 
-
-    // OPTION 1 - use jsRender to pass in data.
-    //var user={fullName:"hi",username:"steve",password:"pass",email:"email" };
-    //jQuery("#jsRenderTest").append(
-    //    jQuery('#LanguageTestTemplate').render({user: user})
-    //);
-
-    // OPTION 2 - change the values right here.
-
-    //jQuery("#ltl-name").text("hi steve");
-    //var settings;
-    //settings = MyRest.getSettings();
-
+/*
     MyRest.getSettings(function(settings)
     {
         // On a callback, we lose reference to 'this' so use 'controller' instead which is defined in the html file.
@@ -41,32 +29,31 @@ LayoutController.prototype.index = function(e) {
             arr.push({id: x, value: settings["i18N"]["LANGUAGES"][x]})
         }
 
-        //jQuery("#ltln-language").text("{{session['language']}}");
-        //x=session['language'];
-
-        //jQuery(jQuery('#LanguageTestTemplate').render({languages:arr})).appendTo('#jsRenderTest');
         jQuery('#plc-list').html(jQuery('#LanguageTestTemplate').render({languages:arr}));
 
         // As the user may have clicked the back button, the session['language'] shown in layout.html
         // Might be out of date so set the correct language here aswell.
         jQuery('#ltln-language').html(settings["i18N"]["CURRENT_LANGUAGE"]);
     });
-
-
-
+*/
 }
 
 LayoutController.prototype.changeLanguage=function(language) {
     //update cookie and reload page
-    var exdate=new Date();
-    exdate.setDate(exdate.getDate() + 1);
 
-    var s = "language=" + language + "; expires=" + exdate.toUTCString();
-    document.cookie = s;
+    MyRest.setLanguage(language,
+        function(data) {
+            var exdate=new Date();
+            exdate.setDate(exdate.getDate() + 1);
 
-    MyRest.setLanguage(language, function() {
-        window.location.reload();
-    });
+            document.cookie = "language=" + data+"; expires="+exdate.toUTCString()+"; path=/";
+
+            window.location.reload();
+        },
+        function(errors) {
+
+        }
+    );
 };
 
 LayoutController.prototype.popupLanguageRender=function(element, e) {

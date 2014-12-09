@@ -37,24 +37,19 @@
 
 <div id="popup-language-container" class="layout-popup">
     <span id="pic-arrow-top-left"></span>
-    <div id="plc-list">Please wait...</div>
+    <div id="plc-list">
+        <ul>
+            <!-- Sort on Language, Note:- after a dictsort, language becomes a tuple -->
+            {% for language in settings.i18N.LANGUAGES|dictsort(true, 'value') %}
+                {% if language[0] == session['language']  %}
+                    <li id="plc-item:{{ language[0] }}" class="plc-item plc-item-checked" onclick="layout_controller.changeLanguage('{{ language[0] }}')">{{ language[1] }}</li>
+                {% else %}
+                    <li id="plc-item:{{ language[0] }}" class="plc-item" onclick="layout_controller.changeLanguage('{{ language[0] }}')">{{ language[1] }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
 </div>
-
-{% raw %}
-<script id="LanguageTestTemplate" type="text/x-jsrender">
-    <ul>
-        {{for languages}}
-            {{if id == "{% endraw %}{{ session['language'] }}{% raw %}"}}
-                {{!-- Check the currently selected language --}}
-                <li id="plc-item:{{:id}}" class="plc-item plc-item-checked" onclick="layout_controller.changeLanguage('{{:id}}')">{{:value}}</li>
-            {{else}}
-                <li id="plc-item:{{:id}}" class="plc-item" onclick="layout_controller.changeLanguage('{{:id}}')">{{:value}}</li>
-            {{/if}}
-        {{/for}}
-    </ul>
-</script>
-{% endraw %}
-
 
 {% block content %}{% endblock %}
 
@@ -62,19 +57,16 @@
     //executed when the page is loaded
     //jQuery(window).load(function () {
         layout_controller = new LayoutController();
-        layout_controller.index();
+        //layout_controller.index();
 
         document.onclick = function () {
             layout_controller.popupsRemoveAll();
         }
-
     //});
-
-    /*
     window.onresize = function() {
         layout_controller.popupsRemoveAll();
     }
-    */
+
 </script>
 
 {% block scripts %}{% endblock %}

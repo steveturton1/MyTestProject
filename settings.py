@@ -25,7 +25,6 @@ def log(level, *message):
 APPLICATION = dict(
     IS_TEST_MODE=False,
     i18N={
-        "CURRENT_LANGUAGE": 'en',
         "LANGUAGES": {
             'en': 'English',
             'es': 'Espanol',
