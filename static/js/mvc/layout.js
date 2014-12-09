@@ -41,19 +41,22 @@ LayoutController.prototype.index = function(e) {
 LayoutController.prototype.changeLanguage=function(language) {
     //update cookie and reload page
 
-    MyRest.setLanguage(language,
-        function(data) {
+    //MyRest.setLanguage(language,
+    //    function(data) {
             var exdate=new Date();
             exdate.setDate(exdate.getDate() + 1);
 
-            document.cookie = "language=" + data+"; expires="+exdate.toUTCString()+"; path=/";
+
+            //document.cookie = "language=" + language +"; expires="+exdate.toUTCString();
+            //above didn't work on a view with param (@app.route('/ui/<template>')) so put path on end???
+            document.cookie = "language=" + language +"; expires="+exdate.toUTCString()+"; path=/";
 
             window.location.reload();
-        },
-        function(errors) {
-
-        }
-    );
+    //    },
+    //    function(errors) {
+//
+    //    }
+    //);
 };
 
 LayoutController.prototype.popupLanguageRender=function(element, e) {
