@@ -1,13 +1,14 @@
 
 #layout-topbar{background:#f1f1f1;border-radius:3px;margin:3px;border:1px solid darkgrey;overflow:auto;font-size:85%;min-width:600px;padding: 5px;}
 #layout-topbar label{display: inline-block;}
-#lt-language{float:left;padding:0px;cursor: default;}
-#lt-user{float:right;padding:3px;margin-top:6px;}
+#lt-language{float:left;cursor: default;}
+#lt-user{float:right;cursor: default;}
 
 .layout-popup {background:#fff;border:1px solid #ccc;box-shadow: 0 2px 10px rgba(0,0,0,.2);visibility:hidden;position:absolute;}
 #popup-info-container {padding:10px;max-width:180px;min-width:50px;border-radius:2px;}
-/*#popup-language-container {padding:5px 15px 5px 5px;}*/
 #popup-language-container {padding: 6px 0px 6px 0px;border-radius:2px}
+#popup-user-container {padding: 6px 0px 6px 0px;border-radius:2px}
+
 
 #popup-info-container span {
     content: "";
@@ -54,7 +55,7 @@ li:hover {
 
 #ltl-name { display:inline-block;}
 
-#ltl-drop-down {
+.drop-down {
     border-top: 4px solid black;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;

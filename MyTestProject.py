@@ -14,6 +14,7 @@ babel = Babel(app)
 
 @app.before_request
 def app_initialise():
+    # IS THIS NEEDED ANY MORE ???? COULD PASS IT INTO TEMPLATE WITH SETTINGS
     # Set the language - would need some validation if done correctly.
     # needed this because if you shut the browser down and bring back up, goto home page again, then
     # session["language"] is blank and so in layout.html, the first thing it does is use session["language"] which
@@ -32,9 +33,10 @@ def login():
         else:
             session['logged_in'] = True
             return redirect(url_for('render_ui', template='main.html'))
-            #return redirect(url_for('main'))
 
-    return render_template("login.html", settings=services.MyData.get_settings())
+    app_settings = services.MyData.get_settings()
+    user = services.MyData.get_user()
+    return render_template("login.html", settings=app_settings, user=user)
 
 
 @app.route('/logout')
@@ -45,24 +47,16 @@ def logout():
 
 @app.route('/forgotpassword')
 def forgotpassword():
-    return render_template("forgotpassword.html", settings=services.MyData.get_settings())
-
-
-@app.route('/main')
-def main():
-    return render_template("main.html", settings=services.MyData.get_settings())
+    app_settings = services.MyData.get_settings()
+    user = services.MyData.get_user()
+    return render_template("forgotpassword.html", settings=app_settings, user=user)
 
 
 @app.route('/ui/<template>')
 def render_ui(template):
-    # todo - checked logged user plus pass user preferences to template
-    return render_template(template, settings=services.MyData.get_settings())
-
-
-
-
-
-
+    app_settings = services.MyData.get_settings()
+    user = services.MyData.get_user()
+    return render_template(template, settings=app_settings, user=user)
 
 
 @app.route('/service/settings', methods=['GET'])
@@ -73,9 +67,7 @@ def service_settings():
 
 @app.route('/service/set_language/<lang_id>', methods=['POST'])
 def service_set_language(lang_id):
-   # request.cookies.('language', lang_id)
     session["language"] = lang_id
-    session.modified = True
     return jsonify(data=lang_id)
 
 

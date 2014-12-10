@@ -11,7 +11,6 @@ function LayoutController() {
 }
 
 LayoutController.prototype.index = function(e) {
-
 /*
     MyRest.getSettings(function(settings)
     {
@@ -39,24 +38,12 @@ LayoutController.prototype.index = function(e) {
 }
 
 LayoutController.prototype.changeLanguage=function(language) {
-    //update cookie and reload page
+    // update cookie and reload page
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + 1);
+    document.cookie = "language=" + language +"; expires="+exdate.toUTCString()+"; path=/";
 
-    //MyRest.setLanguage(language,
-    //    function(data) {
-            var exdate=new Date();
-            exdate.setDate(exdate.getDate() + 1);
-
-
-            //document.cookie = "language=" + language +"; expires="+exdate.toUTCString();
-            //above didn't work on a view with param (@app.route('/ui/<template>')) so put path on end???
-            document.cookie = "language=" + language +"; expires="+exdate.toUTCString()+"; path=/";
-
-            window.location.reload();
-    //    },
-    //    function(errors) {
-//
-    //    }
-    //);
+    window.location.reload();
 };
 
 LayoutController.prototype.popupLanguageRender=function(element, e) {
@@ -97,8 +84,16 @@ LayoutController.prototype.popupInfoRender=function(element, e) {
     e.stopPropagation();
 };
 
+LayoutController.prototype.popupUserRender=function(element, e) {
+    // Remove any current popups
+    this.view.popupsRemoveAll();
+};
+
 LayoutController.prototype.popupsRemoveAll=function() {
     this.view.popupsRemoveAll();
+
+    // Prevent the click closing the popup in layout.html document.onclick
+    e.stopPropagation();
 };
 
 

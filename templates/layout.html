@@ -24,10 +24,20 @@
 <div id="layout-topbar">
     <div id="lt-language" onclick="layout_controller.popupLanguageRender(this, event)">
         <div id="ltl-name">
-        <span id="ltln-language">{{_(session['language'])}}</span>
-        <span id="ltl-drop-down"></span>
+            <span id="ltln-language">{{_(session['language'])}}</span>
+            <span id="ltl-drop-down" class="drop-down"></span>
         </div>
     </div>
+
+    {% if user %}
+        <div id="lt-user">
+            <div id="ltu-name" onclick="layout_controller.popupUserRender(this, event)">
+                <span id="ltun-user">{{ user.id }}</span>
+                <span id="ltu-drop-down" class="drop-down"></span>
+            </div>
+        </div>
+    {% endif %}
+
 </div>
 
 <div id="popup-info-container" class="layout-popup">
@@ -39,7 +49,7 @@
     <span id="pic-arrow-top-left"></span>
     <div id="plc-list">
         <ul>
-            <!-- Sort on Language, Note:- after a dictsort, language becomes a tuple -->
+            <!-- Sort on Language value, Note:- after a dictsort, language becomes a tuple -->
             {% for language in settings.i18N.LANGUAGES|dictsort(true, 'value') %}
                 {% if language[0] == session['language']  %}
                     <li id="plc-item:{{ language[0] }}" class="plc-item plc-item-checked" onclick="layout_controller.changeLanguage('{{ language[0] }}')">{{ language[1] }}</li>
@@ -51,18 +61,21 @@
     </div>
 </div>
 
+<div id="popup-user-container" class="layout-popup">
+    <span id="pic-arrow-top-right"></span>
+    <div>user data goes here.</div>
+</div>
+
 {% block content %}{% endblock %}
 
 <script type="text/javascript">
-    //executed when the page is loaded
-    //jQuery(window).load(function () {
-        layout_controller = new LayoutController();
-        //layout_controller.index();
 
-        document.onclick = function () {
-            layout_controller.popupsRemoveAll();
-        }
-    //});
+    layout_controller = new LayoutController();
+
+    document.onclick = function () {
+        layout_controller.popupsRemoveAll();
+    }
+
     window.onresize = function() {
         layout_controller.popupsRemoveAll();
     }

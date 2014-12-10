@@ -210,9 +210,11 @@ MyRest.sendString	=	function(_url, _string, _method) {
 
 };
 
-//MyRest.getUsers = function() {
-//	return this.getJSON('/users/');
-//};
+
+/*
+MyRest.getUsers = function() {
+	return this.getJSON('/users/');
+};
 
 MyRest.getSettings = function(successCallback, errorCallback) {
     return this.getJSON('/service/settings', successCallback, errorCallback);
@@ -236,3 +238,4 @@ MyRest.delete_user = function(user_id){
 MyRest.saveUser = function(user, successCallback, errorCallback) {
     return this.sendJSON('/service/user', user, 'POST', successCallback, errorCallback);
 };
+*/

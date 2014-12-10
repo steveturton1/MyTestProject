@@ -10,3 +10,15 @@ def get_settings():
         settings.APPLICATION["i18N"]["LANGUAGES"][lang] = gettext(lang)
 
     return settings.APPLICATION
+
+
+def get_user():
+    user = {}
+
+    if 'logged_in' in session and session['logged_in']:
+        user['id'] = 'testuser@test.co.uk'
+        return user
+    else:
+        #return None
+        user['id'] = 'testuser@test.co.uk'
+        return user
