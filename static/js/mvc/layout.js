@@ -53,11 +53,9 @@ LayoutController.prototype.popupLanguageRender=function(element, e) {
     // Get the popup container
     var popup = document.getElementById('popup-language-container');
 
-    var x =  document.getElementById('lt-language');
-
-    // Position and show the popup.
-    popup.style.left = x.offsetLeft  + 10 + "px";
-    popup.style.top = x.offsetTop + 25 + "px";
+    // Position and show the popup - MAYBE SHOULD GO IN VIEW
+    popup.style.left = element.offsetLeft  + 10 + "px";
+    popup.style.top = element.offsetTop + 25 + "px";
     popup.style.visibility = "visible";
 
     e.stopPropagation();
@@ -87,6 +85,18 @@ LayoutController.prototype.popupInfoRender=function(element, e) {
 LayoutController.prototype.popupUserRender=function(element, e) {
     // Remove any current popups
     this.view.popupsRemoveAll();
+
+    // Get the popup container
+    var popup = document.getElementById('popup-user-container');
+
+    // GET DATA FROM MODEL
+
+    // Position and show the popup - MAYBE GO IN VIEW.
+    popup.style.right = element.style.right + 20 + "px";
+    popup.style.top = element.offsetTop + 25 + "px";
+    popup.style.visibility = "visible";
+
+    e.stopPropagation();
 };
 
 LayoutController.prototype.popupsRemoveAll=function() {
@@ -128,4 +138,5 @@ LayoutView.prototype.popupsRemoveAll=function() {
     // Hide any popups that may be showing.
     document.getElementById("popup-info-container").style.visibility = "hidden";
     document.getElementById("popup-language-container").style.visibility = "hidden";
+    document.getElementById("popup-user-container").style.visibility = "hidden";
 };

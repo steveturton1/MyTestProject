@@ -25,15 +25,15 @@
     <div id="lt-language" onclick="layout_controller.popupLanguageRender(this, event)">
         <div id="ltl-name">
             <span id="ltln-language">{{_(session['language'])}}</span>
-            <span id="ltl-drop-down" class="drop-down"></span>
+            <span id="ltl-drop-down" class="drop-down-arrow"></span>
         </div>
     </div>
 
     {% if user %}
-        <div id="lt-user">
-            <div id="ltu-name" onclick="layout_controller.popupUserRender(this, event)">
+        <div id="lt-user" onclick="layout_controller.popupUserRender(this, event)">
+            <div id="ltu-name">
                 <span id="ltun-user">{{ user.id }}</span>
-                <span id="ltu-drop-down" class="drop-down"></span>
+                <span id="ltu-drop-down" class="drop-down-arrow"></span>
             </div>
         </div>
     {% endif %}
@@ -41,12 +41,12 @@
 </div>
 
 <div id="popup-info-container" class="layout-popup">
-    <span id="pic-arrow-left-top"></span>
+    <span class="popup-arrow-left-top"></span>
     <div>a popup message goes here.</div>
 </div>
 
 <div id="popup-language-container" class="layout-popup">
-    <span id="pic-arrow-top-left"></span>
+    <span class="popup-arrow-top-left"></span>
     <div id="plc-list">
         <ul>
             <!-- Sort on Language value, Note:- after a dictsort, language becomes a tuple -->
@@ -62,8 +62,8 @@
 </div>
 
 <div id="popup-user-container" class="layout-popup">
-    <span id="pic-arrow-top-right"></span>
-    <div>user data goes here.</div>
+    <span class="popup-arrow-top-right"></span>
+    <div>user data goes here so there.</div>
 </div>
 
 {% block content %}{% endblock %}
