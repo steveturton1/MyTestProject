@@ -1,3 +1,5 @@
+.font-90 {font-size: 90%}
+
 #lc-input {
     margin-top: 70px;
     border-radius: 15px;
@@ -10,22 +12,12 @@
     overflow: auto;
 }
 
-.font-90 {font-size: 90%}
 #lc-input input {width: 250px;}
-
 #lc-input img {padding-left: 5px;}
-
-.popup-info {cursor: pointer;}
-.popup-info span {display: none;}
-
 #lci-submit-row { margin-bottom: 5px;}
 #lci-title {margin-bottom: 20px;}
 #lci-error {margin-bottom: 20px;background: red;padding: 10px; text-align: center; border-radius: 3px; font-weight:bold;}
 #lci-password {margin-bottom: 10px;}
 
-#test-container {position: absolute; left: 600px;}
-
-#test-container li {clear:both;white-space:nowrap;}
-
-.tc-checked {float:left;}
-.tc-text {float:left; left: 40px;white-space:nowrap;overflow: hidden;}
+.popup-info {cursor: pointer;}
+.popup-info span {display: none;}

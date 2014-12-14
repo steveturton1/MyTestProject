@@ -101,9 +101,6 @@ LayoutController.prototype.popupUserRender=function(element, e) {
 
 LayoutController.prototype.popupsRemoveAll=function() {
     this.view.popupsRemoveAll();
-
-    // Prevent the click closing the popup in layout.html document.onclick
-    e.stopPropagation();
 };
 
 

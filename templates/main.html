@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"/>
 {% endblock %}
 
 {% block js %}
@@ -8,17 +9,20 @@
 
 {% block content %}
 
-    the main bit!!!
-    {{ language }}
+    <div id="main-container">
+        <div id="mc-options">
+            &nbsp
+        </div>
+        <div id="mc-image">
+            &nbsp
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block scripts %}
 
     <script type="text/javascript">
-    //executed when the page is loaded
-    //jQuery(window).load(function () {
-    //    login_controller = new LoginController();
-    //});
 
     </script>
 
