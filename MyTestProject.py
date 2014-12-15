@@ -29,6 +29,7 @@ def app_initialise():
 def login():
     if request.method == 'POST':
         if request.form['email'] != 'steve.turton@cumptons.co.uk':
+            session.pop('logged_in', None)
             flash('The login information you have entered is not valid.')
         else:
             session['logged_in'] = True
@@ -54,6 +55,7 @@ def forgotpassword():
 
 @app.route('/ui/<template>')
 def render_ui(template):
+    # STILL TO DO - IF NOT LOGGED ON THEN REDIRECT TO LOGON SCREEN.
     app_settings = services.MyData.get_settings()
     user = services.MyData.get_user()
     return render_template(template, settings=app_settings, user=user)

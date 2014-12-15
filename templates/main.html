@@ -5,17 +5,15 @@
 {% endblock %}
 
 {% block js %}
+     <script type="text/javascript" src="{{ url_for('static', filename='js/main-canvas.js') }}"></script>
 {% endblock %}
 
 {% block content %}
 
     <div id="main-container">
-        <div id="mc-options">
-            &nbsp
-        </div>
-        <div id="mc-image">
-            &nbsp
-        </div>
+        <canvas id="mc-canvas" width="600" height="500">
+		    Canvas not supported
+	    </canvas>
     </div>
 
 {% endblock %}
@@ -23,7 +21,9 @@
 {% block scripts %}
 
     <script type="text/javascript">
-
+        //initialise_canvas();
+        maincanvas = new maincanvas();
+        maincanvas.initialise_canvas();
     </script>
 
 {% endblock %}

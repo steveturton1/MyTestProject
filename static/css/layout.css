@@ -5,10 +5,16 @@
 
 .layout-popup {background:#fff;border:1px solid #ccc;box-shadow: 0 2px 10px rgba(0,0,0,.2);visibility:hidden;position:absolute;border-radius:2px;font-size:90%;}
 #popup-info-container {padding:10px;max-width:180px;min-width:50px;}
-#popup-language-container {padding: 6px 0px 6px 0px;}
-#popup-user-container {padding:10px;}
 
+#popup-language-container {padding: 6px 0px 6px 0px;}
 #popup-language-container li:hover {background-color:#f1f1f1;cursor:pointer;}
+
+#popup-user-container {padding:0px;min-width:225px;}
+#puc-detail {padding: 6px 6px 10px 6px;}
+#pucd-name { font-weight: bold;}
+
+#puc-control-container {background:#f5f5f5; border-top: 1px solid #ccc;}
+#puc-control {padding:6px;}
 
 .popup-arrow-left-top {
     content: "";

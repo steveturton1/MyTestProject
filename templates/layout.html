@@ -63,7 +63,17 @@
 
 <div id="popup-user-container" class="layout-popup">
     <span class="popup-arrow-top-right"></span>
-    <div>user data goes here so there.</div>
+    {% if user %}
+        <div id="puc-detail">
+            <div id="pucd-name">{{ user.name }}</div>
+            <div id="pucd-id">{{ user.id }}</div>
+        </div>
+        <div id="puc-control-container">
+            <div id="puc-control">
+                <a href="{{ url_for('logout') }}" class="bluebutton">Sign out</a>
+            </div>
+        </div>
+    {% endif %}
 </div>
 
 {% block content %}{% endblock %}

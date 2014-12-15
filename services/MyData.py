@@ -17,8 +17,7 @@ def get_user():
 
     if 'logged_in' in session and session['logged_in']:
         user['id'] = 'testuser@test.co.uk'
+        user['name'] = 'Steve Turton'
         return user
     else:
-        #return None
-        user['id'] = 'testuser@test.co.uk'
-        return user
+        return None
