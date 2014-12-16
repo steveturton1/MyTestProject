@@ -2,7 +2,7 @@
  * Created by Steve on 03/10/2014.
  */
 
-LayoutController.prototype = new Object;
+LayoutController.prototype = {};
 LayoutController.prototype.constructor = LayoutController;
 
 function LayoutController() {
@@ -35,7 +35,7 @@ LayoutController.prototype.index = function(e) {
         jQuery('#ltln-language').html(settings["i18N"]["CURRENT_LANGUAGE"]);
     });
 */
-}
+};
 
 LayoutController.prototype.changeLanguage=function(language) {
     // update cookie and reload page
@@ -105,7 +105,7 @@ LayoutController.prototype.popupsRemoveAll=function() {
 
 
 
-LayoutModel.prototype = new Object;
+LayoutModel.prototype = {};
 LayoutModel.prototype.constructor = LayoutModel;
 function LayoutModel() {}
 
@@ -113,11 +113,11 @@ LayoutModel.prototype.popupInfoMsg=function(element) {
     // Each popup-info span has an image and a span, the span holds the message
     // we want to display in the popup.  Get this message.
     return element.getElementsByTagName("span")[0].innerHTML;
-}
+};
 
 
 
-LayoutView.prototype = new Object;
+LayoutView.prototype = {};
 LayoutView.prototype.constructor = LayoutView;
 function LayoutView() {}
 

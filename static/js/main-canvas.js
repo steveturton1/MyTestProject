@@ -2,14 +2,10 @@
  * Created by Steve on 15/12/2014.
  */
 
-    var xxx = document.getElementById('main-container');
+MainCanvas.prototype = {};
+MainCanvas.prototype.constructor = MainCanvas;
 
-
-
-maincanvas.prototype = new Object;
-maincanvas.prototype.constructor = maincanvas;
-
-function maincanvas() {
+function MainCanvas() {
     this.canvas = document.getElementById("mc-canvas"),
 	this.context = this.canvas.getContext("2d"),
 	this.image = new Image(),
@@ -27,13 +23,13 @@ function maincanvas() {
     this.canvas.onmousedown = onmousedown;
 }
 
-maincanvas.prototype.initialise_canvas=function() {
+MainCanvas.prototype.initialise_canvas=function() {
     this.renderGrid('lightgray', 10, 10);
     this.saveCanvasBackground();
     this.renderAll();
-}
+};
 
-maincanvas.prototype.renderGrid=function(color, stepx, stepy) {
+MainCanvas.prototype.renderGrid=function(color, stepx, stepy) {
 	this.context.save();
 
 	this.context.strokeStyle = color;
@@ -47,24 +43,24 @@ maincanvas.prototype.renderGrid=function(color, stepx, stepy) {
 			this.context.stroke();
 		}
 
-		for (var i = stepy + 0.5; i < this.context.canvas.height; i += stepy) {
+		for (i = stepy + 0.5; i < this.context.canvas.height; i += stepy) {
 			this.context.beginPath();
 			this.context.moveTo(0, i);
 			this.context.lineTo(this.context.canvas.width, i);
 			this.context.stroke();
 		}
 		this.context.restore();
-}
+};
 
-maincanvas.prototype.saveCanvasBackground=function() {
+MainCanvas.prototype.saveCanvasBackground=function() {
 		this.canvasBackgroundImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
-	}
+};
 
-maincanvas.prototype.restoreCanvasBackground=function() {
+MainCanvas.prototype.restoreCanvasBackground=function() {
 		this.context.putImageData(this.canvasBackgroundImageData, 0, 0);
-}
+};
 
-maincanvas.prototype.renderAll=function() {
+MainCanvas.prototype.renderAll=function() {
 		this.restoreCanvasBackground();
 		//this.renderObject();
 
@@ -72,7 +68,7 @@ maincanvas.prototype.renderAll=function() {
 		//	//context.fillRect(10, 10, 10, 10);
 		//	selectObject();
 		//}
-}
+};
 
 onmousedown=function(e){
     var x = 1;
@@ -83,7 +79,7 @@ onmousedown=function(e){
 		//dragging = false;
 		//resizing = false;
 		//canvas.style.cursor = "default";
-}
+};
 
     /*
 	// maybe wrap this in a vars object for tidyness

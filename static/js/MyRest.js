@@ -47,7 +47,7 @@ MyRest.getJSON	=	function(_url, successCallback, errorCallback) {
 		url: _url,
 		success:    function(data) {
             if(data.data)
-                data = data["data"]
+                data = data["data"];
 			if(successCallback) {
 				successCallback(data);
 			} else {
@@ -77,9 +77,9 @@ MyRest.sendJSON	=	function(_url, _object, _method, successCallback, errorCallbac
             if(this.expected[_url])
             {
                 console.log("POST:"+_url);
-                console.log("sent:")
+                console.log("sent:");
                 console.log(_object);
-                console.log("expected:")
+                console.log("expected:");
                 console.log(this.expected[_url]);
                 compareRecursively(_object, this.expected[_url]);
             }
@@ -93,7 +93,7 @@ MyRest.sendJSON	=	function(_url, _object, _method, successCallback, errorCallbac
 
             if(callback)
             {
-                callback(result.result)
+                callback(result.result);
                 return;
             }
             else{
@@ -119,7 +119,7 @@ MyRest.sendJSON	=	function(_url, _object, _method, successCallback, errorCallbac
 		contentType:    'application/json',
 		success:    function(data) {
             if(data.data)
-                data = data["data"]
+                data = data["data"];
             if(successCallback) {
 				successCallback(data);
 			} else {
@@ -150,7 +150,7 @@ MyRest.sendEmptyJSON	=	function(_url, _method, successCallback, errorCallback) {
 
             if(callback)
             {
-                callback(result.result)
+                callback(result.result);
                 return;
             }
             else{
@@ -176,7 +176,7 @@ MyRest.sendEmptyJSON	=	function(_url, _method, successCallback, errorCallback) {
 		contentType:    'application/json',
 		success:    function(data) {
             if(data.data)
-                data = data["data"]
+                data = data["data"];
             if(successCallback) {
 				successCallback(data);
 			} else {

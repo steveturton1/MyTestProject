@@ -18,7 +18,8 @@ def app_initialise():
     # Set the language - would need some validation if done correctly.
     # needed this because if you shut the browser down and bring back up, goto home page again, then
     # session["language"] is blank and so in layout.html, the first thing it does is use session["language"] which
-    # it won't have.  Tried doing this in before_first_request but that doesn;t get fired when launching the browser again.
+    # it won't have.  Tried doing this in before_first_request but that doesn;t get fired when launching
+    # the browser again.
     if request.cookies.get('language') is not None:
         session["language"] = request.cookies.get('language')
     else:
@@ -75,8 +76,8 @@ def service_set_language(lang_id):
 
 @babel.localeselector
 def get_locale():
-    #get this out of a table or even a cookie :)
-    #return "fr" #request.accept_languages.best_match(settings.LANGUAGES.keys())
+    # get this out of a table or even a cookie :)
+    # return "fr" #request.accept_languages.best_match(settings.LANGUAGES.keys())
     if request.cookies.get('language') is not None:
         lang = request.cookies.get('language')
     else:
@@ -84,9 +85,9 @@ def get_locale():
 
     session['language'] = lang
 
-    #maybe just need to return session["language"] now it is initialised in def app_initialise():
-    #return lang
-    #return session['language']
+    # maybe just need to return session["language"] now it is initialised in def app_initialise():
+    # return lang
+    # return session['language']
     return lang
 
 if __name__ == '__main__':
