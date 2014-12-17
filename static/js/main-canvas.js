@@ -24,7 +24,8 @@ function MainCanvas() {
 }
 
 MainCanvas.prototype.initialise_canvas=function() {
-    this.renderGrid('lightgray', 10, 10);
+	this.context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
+    this.renderGrid('whitesmoke', 10, 10);
     this.saveCanvasBackground();
     this.renderAll();
 };
@@ -33,17 +34,17 @@ MainCanvas.prototype.renderGrid=function(color, stepx, stepy) {
 	this.context.save();
 
 	this.context.strokeStyle = color;
-	this.context.lineWidth = 0.5;
+	this.context.lineWidth = 1;
 	this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 
-		for (var i = stepx + 0.5; i < this.context.canvas.width; i += stepx) {
+		for (var i = stepx; i < this.context.canvas.width; i += stepx) {
 			this.context.beginPath();
 			this.context.moveTo(i, 0);
 			this.context.lineTo(i, this.context.canvas.height);
 			this.context.stroke();
 		}
 
-		for (i = stepy + 0.5; i < this.context.canvas.height; i += stepy) {
+		for (i = stepy; i < this.context.canvas.height; i += stepy) {
 			this.context.beginPath();
 			this.context.moveTo(0, i);
 			this.context.lineTo(this.context.canvas.width, i);

@@ -1,0 +1,3 @@
+#main-container {min-width: 1030px;}
+#mc-tools {margin: 0 3px 3px 3px;float:left;border: solid lightgrey 1px;background-color: white; width: 200px; height: 600px;}
+#mc-canvas {margin: 0 0 3px 0;border: solid lightgrey 1px;background-color: white;}

@@ -2,6 +2,8 @@
  * Created by Steve on 03/10/2014.
  */
 
+// TODO - THE VIEW MUST WORKOUT WHERE TO PLACE ELEMENTS NOT THE CONTROLLER!
+
 LayoutController.prototype = {};
 LayoutController.prototype.constructor = LayoutController;
 
@@ -55,7 +57,7 @@ LayoutController.prototype.popupLanguageRender=function(element, e) {
 
     // Position and show the popup - MAYBE SHOULD GO IN VIEW
     popup.style.left = element.offsetLeft  + 10 + "px";
-    popup.style.top = element.offsetTop + 25 + "px";
+    popup.style.top = element.offsetTop + 21 + "px";
     popup.style.visibility = "visible";
 
     e.stopPropagation();
@@ -92,8 +94,10 @@ LayoutController.prototype.popupUserRender=function(element, e) {
     // GET DATA FROM MODEL
 
     // Position and show the popup - MAYBE GO IN VIEW.
-    popup.style.right = element.style.right + 20 + "px";
-    popup.style.top = element.offsetTop + 25 + "px";
+    //popup.style.right = element.style.right + 20 + "px";
+
+    popup.style.left = element.offsetLeft + element.clientWidth - popup.clientWidth - 15 + "px";
+    popup.style.top = element.offsetTop + 21 + "px";
     popup.style.visibility = "visible";
 
     e.stopPropagation();
