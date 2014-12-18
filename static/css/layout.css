@@ -1,4 +1,4 @@
-#layout-topbar{background:#f1f1f1;border-radius:3px;margin:3px;border:1px solid lightgrey;overflow:auto;font-size:85%;min-width:995px;padding: 5px;}
+#layout-topbar{background:#f1f1f1;border-bottom:1px solid lightgrey;overflow:auto;font-size:85%;min-width:700px;padding: 5px;}
 #layout-topbar label{display: inline-block;}
 #lt-language{float:left;cursor: default;}
 #lt-user{float:right;cursor: default;}
