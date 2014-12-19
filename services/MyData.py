@@ -21,3 +21,15 @@ def get_user():
         return user
     else:
         return None
+
+
+def get_toolbar():
+    toolbar = {}
+
+    # shirts = {}
+    # shirt = []
+    # shirt['id'] = 'id1'
+    # shirt['name'] = 'name1'
+    # shirt.append(shirt)
+
+    return toolbar
