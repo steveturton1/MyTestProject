@@ -11,7 +11,6 @@
 
 #popup-user-container {padding:0;min-width:225px;}
 #puc-detail {padding: 6px 6px 10px 6px;}
-#pucd-name { font-weight: bold;}
 
 #puc-control-container {background:#f5f5f5; border-top: 1px solid #ccc;}
 #puc-control {padding:6px;}
@@ -76,3 +75,5 @@
 
 .plc-item {white-space: nowrap;padding-left: 25px;padding-right:18px;}
 .plc-item-checked {background: url('/static/images/steve/checkmark.png') no-repeat left center;}
+
+

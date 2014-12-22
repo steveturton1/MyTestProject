@@ -12,11 +12,34 @@
 
     <div id="main-container">
 
-        <div id="mc-tools">&nbsp;</div>
+        <div id="mc-tools">
+            <div id="mct-shirts">
+                <div id="mcts-title">
+                    <span id="mcts-colour-title"><strong>{{_('Colour: ')}}</strong></span>
 
+                    {% for shirt in tools.shirts.list %}
+                        {% if shirt.id == tools.shirts.selected %}
+                            <span id="mcts-colour">{{ shirt.display_name }}</span>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+                <ul id="mcts-list">
+                    {% for shirt in tools.shirts.list %}
+                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}">
+                            {% if shirt.id == tools.shirts.selected %}
+                                <img src="{{ shirt.img }}" class="selected-img">
+                            {% else %}
+                                <img src="{{ shirt.img }}">
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
         <canvas id="mc-canvas" width="490" height="300">
-		    Canvas not supported
+		    {{_('Canvas not supported')}}
 	    </canvas>
     </div>
 

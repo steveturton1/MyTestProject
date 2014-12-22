@@ -1,10 +1,11 @@
-#main-container {
-    margin: 3px;
-    /*background-color: lightsteelblue;*/
-    min-width: 700px;
-}
+#main-container {margin: 3px; min-width: 700px; font-size: 90%;  }
 
-#mc-tools {margin: 0 3px 0 0;float:left;border: solid lightgrey 1px;background-color: white; width: 200px; height: 300px;}
+#mc-tools {margin: 0 3px 0 0;float:left;border: solid lightgrey 1px;background-color: white; width: 271px; height: 300px;}
+
+#mct-shirts {margin: 4px;}
+#mct-shirts li {display: inline;}
+#mct-shirts li img {border: 1px solid #e0e0e0;}
+#mct-shirts .selected-img {border: 1px solid red;}
 
 #mc-canvas {
     width:auto;

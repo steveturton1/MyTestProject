@@ -65,12 +65,12 @@
     <span class="popup-arrow-top-right"></span>
     {% if user %}
         <div id="puc-detail">
-            <div id="pucd-name">{{ user.name }}</div>
+            <div id="pucd-name"><strong>{{ user.name }}</strong></div>
             <div id="pucd-id">{{ user.id }}</div>
         </div>
         <div id="puc-control-container">
             <div id="puc-control">
-                <a href="{{ url_for('logout') }}" class="bluebutton">Sign out</a>
+                <a href="{{ url_for('logout') }}" class="bluebutton">{{_('Sign out')}}</a>
             </div>
         </div>
     {% endif %}

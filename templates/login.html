@@ -19,7 +19,7 @@
                 </div>
             {% else %}
                 <div id="lci-title">
-                    Sign in to Steve's Test Project
+                    {{_("Sign in to Steve's Test Project")}}
                 </div>
             {% endif %}
 
@@ -27,7 +27,7 @@
                 <input type="text" name="email" id="lci-email" autofocus="autofocus" placeholder="Username">
                 <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
                     <img src="{{ url_for('static', filename='images/steve/info.png') }}"/>
-                    <span>This is the username, usually an email address.</span>
+                    <span>{{_('This is the username, usually an email address.')}}</span>
                 </span>
             </div>
 
@@ -35,15 +35,15 @@
                 <input type="password" name="password" id="lci-password" placeholder="Password">
                 <span class="popup-info" onclick="layout_controller.popupInfoRender(this, event)">
                     <img src="{{ url_for('static', filename='images/steve/info.png') }}">
-                    <span>This is the password for the above user.</span>
+                    <span>{{_('This is the password for the above user.')}}</span>
                 </span>
             </div>
 
             <div id="lci-submit-row">
-                <a href="#" class="bluebutton" onclick="event.preventDefault(); document.forms[0].submit();">Sign In</a>
+                <a href="#" class="bluebutton" onclick="event.preventDefault(); document.forms[0].submit();">{{_('Sign In')}}</a>
             </div>
 
-            <a href="{{ url_for('forgotpassword') }}" id="lci-forgotten" class="font-90" >Forgotten your sign-in details?</a>
+            <a href="{{ url_for('forgotpassword') }}" id="lci-forgotten" class="font-90" >{{_('Forgotten your sign-in details?')}}</a>
         </form>
     </div>
 

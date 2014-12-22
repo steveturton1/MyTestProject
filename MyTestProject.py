@@ -60,7 +60,8 @@ def main():
     # STILL TO DO - IF NOT LOGGED ON THEN REDIRECT TO LOGON SCREEN.
     app_settings = services.MyData.get_settings()
     user = services.MyData.get_user()
-    return render_template("main.html", settings=app_settings, user=user)
+    tools = services.MyData.get_toolbar()
+    return render_template("main.html", settings=app_settings, user=user, tools=tools)
 
 
 @app.route('/ui/<template>')
