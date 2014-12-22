@@ -18,10 +18,20 @@ function MainCanvas() {
 	this.dragging = false,
 	this.resizing = false,
 	this.dragLoc,
-	this.canvasBackgroundImageData;
+	this.canvasBackgroundImageData,
+	this.x = 0;
 
     this.canvas.onmousedown = onmousedown;
 }
+
+
+MainCanvas.prototype.testmouseover=function(element) {
+	this.x+=1;
+	if (this.x===10) {
+		this.x = 0;
+	}
+};
+
 
 MainCanvas.prototype.initialise_canvas=function() {
 	this.context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/

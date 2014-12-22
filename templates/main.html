@@ -26,7 +26,7 @@
                 </div>
                 <ul id="mcts-list">
                     {% for shirt in tools.shirts.list %}
-                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}">
+                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}" onmouseover="maincanvas.testmouseover(this);">
                             {% if shirt.id == tools.shirts.selected %}
                                 <img src="{{ shirt.img }}" class="selected-img">
                             {% else %}
