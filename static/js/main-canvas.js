@@ -26,10 +26,14 @@ function MainCanvas() {
 
 
 MainCanvas.prototype.testmouseover=function(element) {
-	this.x+=1;
-	if (this.x===10) {
-		this.x = 0;
-	}
+
+	var img = $(element).find("img").attr("data-img-medium");
+
+	var x = $(element).parent().parent().find("li").find("img").removeClass("selected_img");
+	$(element).find("img").addClass("selected-img");
+
+
+
 };
 
 

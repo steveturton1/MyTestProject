@@ -16,21 +16,19 @@
             <div id="mct-shirts">
                 <div id="mcts-title">
                     <span id="mcts-colour-title"><strong>{{_('Colour: ')}}</strong></span>
-
                     {% for shirt in tools.shirts.list %}
                         {% if shirt.id == tools.shirts.selected %}
                             <span id="mcts-colour">{{ shirt.display_name }}</span>
                         {% endif %}
                     {% endfor %}
-
                 </div>
                 <ul id="mcts-list">
                     {% for shirt in tools.shirts.list %}
-                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}" onmouseover="maincanvas.testmouseover(this);">
+                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}" onclick="maincanvas.testmouseover(this);">
                             {% if shirt.id == tools.shirts.selected %}
-                                <img src="{{ shirt.img }}" class="selected-img">
+                                <img src="{{ shirt.img_small }}" data-img-medium="{{ shirt.img_medium }}" class="selected-img">
                             {% else %}
-                                <img src="{{ shirt.img }}">
+                                <img src="{{ shirt.img_small }}" data-img-medium="{{ shirt.img_medium }}">
                             {% endif %}
                         </li>
                     {% endfor %}
