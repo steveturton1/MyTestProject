@@ -12,6 +12,13 @@
     overflow: auto;
 }
 
+#lci-hidden-submit {
+    width: 0 !important;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+}
+
 #lc-input input {width: 250px;}
 #lc-input img {padding-left: 5px;}
 #lci-submit-row { margin-bottom: 5px;}
@@ -19,5 +26,7 @@
 #lci-error {margin-bottom: 20px;background: red;padding: 10px; text-align: center; border-radius: 3px; font-weight:bold;}
 #lci-password {margin-bottom: 10px;}
 
+
 .popup-info {cursor: pointer;}
 .popup-info span {display: none;}
+

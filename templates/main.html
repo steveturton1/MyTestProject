@@ -26,9 +26,14 @@
                     {% for shirt in tools.shirts.list %}
                         <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}" onclick="maincanvas.testmouseover(this);">
                             {% if shirt.id == tools.shirts.selected %}
-                                <img src="{{ shirt.img_small }}" data-img-medium="{{ shirt.img_medium }}" class="selected-img">
+                                <img src="{{ shirt.img_small }}"
+                                     data-img-medium="{{ shirt.img_medium }}"
+                                     data-displayname="{{ shirt.display_name }}"
+                                     class="selected-img">
                             {% else %}
-                                <img src="{{ shirt.img_small }}" data-img-medium="{{ shirt.img_medium }}">
+                                <img src="{{ shirt.img_small }}"
+                                     data-displayname="{{ shirt.display_name }}"
+                                     data-img-medium="{{ shirt.img_medium }}">
                             {% endif %}
                         </li>
                     {% endfor %}
@@ -36,9 +41,11 @@
             </div>
         </div>
 
-        <canvas id="mc-canvas" width="490" height="300">
+        <canvas id="mc-canvas" width="490" height="525">
 		    {{_('Canvas not supported')}}
 	    </canvas>
+
+
     </div>
 
 {% endblock %}
@@ -48,7 +55,9 @@
     <script type="text/javascript">
         //initialise_canvas();
         maincanvas = new MainCanvas();
-        maincanvas.initialise_canvas();
+
+        //'TODO' send correct default image
+        maincanvas.initialise_canvas("/static/images/shirts/anvil-white-medium.png");
     </script>
 
 {% endblock %}

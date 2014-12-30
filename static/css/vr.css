@@ -721,3 +721,10 @@ div.token-input-dropdown-facebook p{font-size:11px;font-weight:400;font-family:A
 #dashboard-dialog-popup #content-section #product-list .pl-canvas.collapsed header{width:786px;}
 #dashboard-dialog-popup #content-section #guideline-canvas-thumbs ul li{margin-right:16px;}
 #dashboard-dialog-popup #content-section #product-list .pl-canvas.collapsed header{background:url(/static/images/ngd_collapsed.png); width:786px;}
+
+
+
+
+.bluebutton:focus {
+    outline: 0;
+}

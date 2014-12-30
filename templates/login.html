@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block content %}
-
     <div id="lc-input">
         <form method="POST" action="{{ url_for('login') }}">
 
@@ -40,7 +39,8 @@
             </div>
 
             <div id="lci-submit-row">
-                <a href="#" class="bluebutton" onclick="event.preventDefault(); document.forms[0].submit();">{{_('Sign In')}}</a>
+                <a href="#" id="lci-submit" class="bluebutton" onclick="event.preventDefault(); document.forms[0].submit();">{{_('Sign In')}}</a>
+                <input id="lci-hidden-submit" type="submit"/>
             </div>
 
             <a href="{{ url_for('forgotpassword') }}" id="lci-forgotten" class="font-90" >{{_('Forgotten your sign-in details?')}}</a>

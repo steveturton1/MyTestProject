@@ -1,6 +1,6 @@
 #main-container {margin: 3px; min-width: 700px; font-size: 90%;  }
 
-#mc-tools {margin: 0 3px 0 0;float:left;border: solid lightgrey 1px;background-color: white; width: 271px; height: 300px;}
+#mc-tools {margin: 0 3px 0 0;float:left;border: solid lightgrey 1px;background-color: white; width: 271px; height: 525px;}
 
 #mct-shirts {margin: 4px;}
 #mct-shirts li {display: inline;}
