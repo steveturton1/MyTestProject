@@ -10,7 +10,7 @@ function MainCanvas() {
 
     this.canvas = document.getElementById("mc-canvas"),
 	this.context = this.canvas.getContext("2d"),
-	this.canvasBackgroundImageData,
+	this.canvasBackgroundImageData,			// contains the grid and garmentImage
 	this.garmentImage = new Image();
 
     this.canvas.onmousedown = onmousedown;
@@ -37,24 +37,31 @@ MainCanvas.prototype.testmouseover=function(element) {
 
 
 MainCanvas.prototype.initialise_canvas=function(img) {
-	//this.context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
-    this.renderGrid('whitesmoke', 10, 10);
-
+	this.garmentImage = new Image();
 	var _this = this;
 
-	this.garmentImage.onload = function(e) {
+	this.garmentImage.onload = function() {
+		_this.renderGrid('whitesmoke', 10, 10);
 		_this.context.drawImage(_this.garmentImage, 0, 0);
+
+		_this.saveCanvasBackground();
+    	_this.renderAll();
+	};
+	this.garmentImage.onerror = function() {
+		_this.renderGrid('whitesmoke', 10, 10);
+		_this.context.fillText("MISSING IMAGE!", 10, 10);
 
 		_this.saveCanvasBackground();
     	_this.renderAll();
 	};
 
 	this.garmentImage.src = img;
-
 };
 
 MainCanvas.prototype.renderGrid=function(color, stepx, stepy) {
 	this.context.save();
+
+	this.context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
 
 	this.context.strokeStyle = color;
 	this.context.lineWidth = 1;
@@ -77,11 +84,12 @@ MainCanvas.prototype.renderGrid=function(color, stepx, stepy) {
 };
 
 MainCanvas.prototype.saveCanvasBackground=function() {
-		this.canvasBackgroundImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+	// Saves the grid and the garmentImage so it can be quickly retrieved.
+	this.canvasBackgroundImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
 };
 
 MainCanvas.prototype.restoreCanvasBackground=function() {
-		this.context.putImageData(this.canvasBackgroundImageData, 0, 0);
+	this.context.putImageData(this.canvasBackgroundImageData, 0, 0);
 };
 
 MainCanvas.prototype.renderAll=function() {
