@@ -2,41 +2,29 @@
  * Created by Steve on 15/12/2014.
  */
 
-MainCanvas.prototype = {};
-MainCanvas.prototype.constructor = MainCanvas;
+MainController.prototype = {};
+MainController.prototype.constructor = MainController;
 
-function MainCanvas() {
-	// maybe wrap this in a vars object for tidyness
-
+function MainController() {
+	this.model = new MainModel(),
+    this.view=new MainView(),
     this.canvas = document.getElementById("mc-canvas"),
 	this.context = this.canvas.getContext("2d"),
 	this.canvasBackgroundImageData,			// contains the grid and garmentImage
 	this.garmentImage = new Image();
 
-    this.canvas.onmousedown = onmousedown;
+    //this.canvas.onmousedown = onmousedown;
 }
 
-
-MainCanvas.prototype.testmouseover=function(element) {
-
-	// do this better - I keep finding the selected image.  Just do it once.
-
-	var img = $(element).find("img").attr("data-img-medium");
-
-	// Get the display name and display it.
-	$("#mcts-colour").text($(element).find("img").attr("data-displayname"));
-
-	// Deselect any selected images (should only be 1)
-	$(element).parent().parent().find("li").find("img").removeClass("selected-img");
-
-	// Select the clicked image
-	$(element).find("img").addClass("selected-img");
-
-	this.initialise_canvas(img);
+/*
+onmousedown=function(e){
+    //var x = 1;
 };
+*/
 
+MainController.prototype.initialise_canvas=function(img) {
+	// Initialise the the canvas with the grid and the selected garment (img)
 
-MainCanvas.prototype.initialise_canvas=function(img) {
 	this.garmentImage = new Image();
 	var _this = this;
 
@@ -58,7 +46,26 @@ MainCanvas.prototype.initialise_canvas=function(img) {
 	this.garmentImage.src = img;
 };
 
-MainCanvas.prototype.renderGrid=function(color, stepx, stepy) {
+
+
+MainController.prototype.garmentThumbnailClick=function(element) {
+	// The user has clicked a thumbnail - we want to show the bigger image.
+
+	var img = $(element).find("img");						// Get the image clicked
+	$("#mcts-colour").text(img.attr("data-displayname"));	// Get the display name and display it.
+
+	// Deselect any selected images (should only be 1)
+	$(element).parent().parent().find("li").find("img").removeClass("selected-img");
+
+	img.addClass("selected-img");							// Select the clicked image
+	this.initialise_canvas(img.attr("data-img-medium"));	// Reinitialise the canvas with the new image
+};
+
+
+
+
+
+MainController.prototype.renderGrid=function(color, stepx, stepy) {
 	this.context.save();
 
 	this.context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
@@ -83,19 +90,25 @@ MainCanvas.prototype.renderGrid=function(color, stepx, stepy) {
 		this.context.restore();
 };
 
-MainCanvas.prototype.saveCanvasBackground=function() {
+MainController.prototype.saveCanvasBackground=function() {
 	// Saves the grid and the garmentImage so it can be quickly retrieved.
 	this.canvasBackgroundImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
 };
 
-MainCanvas.prototype.restoreCanvasBackground=function() {
+MainController.prototype.restoreCanvasBackground=function() {
 	this.context.putImageData(this.canvasBackgroundImageData, 0, 0);
 };
 
-MainCanvas.prototype.renderAll=function() {
+MainController.prototype.renderAll=function() {
 	this.restoreCanvasBackground();
 };
 
-onmousedown=function(e){
-    //var x = 1;
-};
+
+
+MainModel.prototype = {};
+MainModel.prototype.constructor = MainModel;
+function MainModel() {}
+
+MainView.prototype = {};
+MainView.prototype.constructor = MainView;
+function MainView() {}
