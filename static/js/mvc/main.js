@@ -7,12 +7,7 @@ MainController.prototype.constructor = MainController;
 
 function MainController() {
 	this.model = new MainModel(),
-    this.view=new MainView(),
-    this.canvas = document.getElementById("mc-canvas"),
-	this.context = this.canvas.getContext("2d"),
-	this.canvasBackgroundImageData,			// contains the grid and garmentImage
-	this.garmentImage = new Image();
-
+    this.view = new MainView();
     //this.canvas.onmousedown = onmousedown;
 }
 
@@ -22,31 +17,22 @@ onmousedown=function(e){
 };
 */
 
-MainController.prototype.initialise_canvas=function(img) {
-	// Initialise the the canvas with the grid and the selected garment (img)
+MainController.prototype.initialiseCanvas=function(img) {
+	// Initialise the canvas with the grid and the selected garment (img)
 
-	this.garmentImage = new Image();
+	this.view.garmentImage = new Image();
 	var _this = this;
 
-	this.garmentImage.onload = function() {
-		_this.renderGrid('whitesmoke', 10, 10);
-		_this.context.drawImage(_this.garmentImage, 0, 0);
-
-		_this.saveCanvasBackground();
-    	_this.renderAll();
+	this.view.garmentImage.onload = function() {
+		_this.view.renderCanvasBackground();
+    	_this.view.renderCanvasAll();
 	};
-	this.garmentImage.onerror = function() {
-		_this.renderGrid('whitesmoke', 10, 10);
-		_this.context.fillText("MISSING IMAGE!", 10, 10);
-
-		_this.saveCanvasBackground();
-    	_this.renderAll();
+	this.view.garmentImage.onerror = function() {
+		_this.view.renderCanvasBackground("MISSING IMAGE!");
+    	_this.view.renderCanvasAll();
 	};
-
-	this.garmentImage.src = img;
+	this.view.garmentImage.src = img;
 };
-
-
 
 MainController.prototype.garmentThumbnailClick=function(element) {
 	// The user has clicked a thumbnail - we want to show the bigger image.
@@ -58,14 +44,35 @@ MainController.prototype.garmentThumbnailClick=function(element) {
 	$(element).parent().parent().find("li").find("img").removeClass("selected-img");
 
 	img.addClass("selected-img");							// Select the clicked image
-	this.initialise_canvas(img.attr("data-img-medium"));	// Reinitialise the canvas with the new image
+	this.initialiseCanvas(img.attr("data-img-medium"));	// Reinitialise the canvas with the new image
 };
 
 
 
+MainView.prototype = {};
+MainView.prototype.constructor = MainView;
+function MainView() {
+	this.canvas = document.getElementById("mc-canvas"),
+	this.context = this.canvas.getContext("2d"),
+	this.canvasBackgroundImageData,			// contains the grid and garmentImage
+	this.garmentImage = new Image();
+}
 
+MainView.prototype.renderCanvasBackground=function(garmentImageError) {
+	this.renderCanvasGrid('whitesmoke', 10, 10);
 
-MainController.prototype.renderGrid=function(color, stepx, stepy) {
+	if (garmentImageError === undefined) {
+		// no problem with the garment image so draw it.
+		this.context.drawImage(this.garmentImage, 0, 0);
+	} else {
+		// problem, just output the error (usually missing image).
+		this.context.fillText(garmentImageError, 10, 10);
+	}
+
+	this.view.saveCanvasBackground();
+};
+
+MainView.prototype.renderCanvasGrid=function(color, stepx, stepy) {
 	this.context.save();
 
 	this.context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
@@ -90,16 +97,16 @@ MainController.prototype.renderGrid=function(color, stepx, stepy) {
 		this.context.restore();
 };
 
-MainController.prototype.saveCanvasBackground=function() {
+MainView.prototype.saveCanvasBackground=function() {
 	// Saves the grid and the garmentImage so it can be quickly retrieved.
 	this.canvasBackgroundImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
 };
 
-MainController.prototype.restoreCanvasBackground=function() {
+MainView.prototype.restoreCanvasBackground=function() {
 	this.context.putImageData(this.canvasBackgroundImageData, 0, 0);
 };
 
-MainController.prototype.renderAll=function() {
+MainView.prototype.renderCanvasAll=function() {
 	this.restoreCanvasBackground();
 };
 
@@ -108,7 +115,3 @@ MainController.prototype.renderAll=function() {
 MainModel.prototype = {};
 MainModel.prototype.constructor = MainModel;
 function MainModel() {}
-
-MainView.prototype = {};
-MainView.prototype.constructor = MainView;
-function MainView() {}
