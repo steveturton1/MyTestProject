@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block js %}
-     <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/motif.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/main.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -24,7 +25,7 @@
                 </div>
                 <ul id="mcts-list">
                     {% for shirt in tools.shirts.list %}
-                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}" onclick="main_controller.garmentThumbnailClick(this);">
+                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}" onclick="controller.garmentThumbnailClick(this);">
                             {% if shirt.id == tools.shirts.selected %}
                                 <img src="{{ shirt.img_small }}"
                                      data-img-medium="{{ shirt.img_medium }}"
@@ -63,8 +64,9 @@
         {% endfor %}
 
         // initialise the canvas with the selected garment
-        main_controller = new MainController();
-        main_controller.initialiseCanvas(selected);
+        controller = new MainController();
+        controller.index(selected);
+
     </script>
 
 {% endblock %}

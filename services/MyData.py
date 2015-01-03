@@ -184,7 +184,7 @@ def get_toolbar():
     shirts.append(shirt)
 
     toolbar['shirts'] = {}
-    toolbar['shirts']['selected'] = "white"     # default to the white one being selected.
+    toolbar['shirts']['selected'] = "apple"     # default to the white one being selected.
     toolbar['shirts']['list'] = shirts
 
     return toolbar

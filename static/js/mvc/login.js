@@ -14,8 +14,12 @@ function LoginController() {
     this.view=new LoginView();
 }
 
+LoginController.prototype.index=function() {
+};
+
 LoginController.prototype.requestlogin=function(email) {
 };
+
 
 
 LoginModel.prototype = {};
