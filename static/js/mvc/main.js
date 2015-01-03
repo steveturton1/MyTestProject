@@ -12,7 +12,10 @@ function MainController() {
     this.view = new MainView();
 	this.view.canvas.onmousedown = function(e) {
 		//e.preventDefault();
-    	var loc = controller.windowToCanvas(e.clientX, e.clientY);
+
+		// See if we hit a motif - select it if we did.
+		controller.model.motifSelect(e.clientX, e.clientY);
+		controller.view.canvasRenderAll();
 	};
 }
 
@@ -33,10 +36,18 @@ MainController.prototype.index=function(img) {
 };
 
 MainController.prototype.windowToCanvas = function (x, y) {
+	// Convert mouse coordinates to client coordinates
 	var bbox = this.view.canvas.getBoundingClientRect();
 	return { x : x - bbox.left * (this.view.canvas.width / bbox.width),
 			 y : y - bbox.top  * (this.view.canvas.height / bbox.height) };
 
+};
+
+MainController.prototype.hitTest = function(loc, x, y, width, height) {
+	// Determine if a point (loc) is in a rectangle.
+	this.view.context.beginPath();
+	this.view.context.rect(x, y, width, height);
+	return this.view.context.isPointInPath(loc.x, loc.y);
 };
 
 MainController.prototype.garmentThumbnailClick=function(element) {
@@ -111,7 +122,6 @@ MainView.prototype.canvasRenderAll=function() {
 	for (var i = 0, len = controller.model.motifs.length; i < len; i++) {
 		controller.model.motifs[i].draw(this.context);
 	}
-
 };
 
 MainView.prototype.canvasSaveBackground=function() {
@@ -139,4 +149,20 @@ MainModel.prototype.AddDummyData = function() {
 	x = new Motif(20, 150, 100, 100);
 	x.selected = true;
 	this.motifs.push(x);
+};
+
+MainModel.prototype.motifSelect = function(x, y) {
+	// go through each of our motifs and see if the mouse x, y
+	// means one of them were clicked.  If one was then mark it
+	// as selected otherwise mark as not selected.
+
+	var loc = controller.windowToCanvas(x, y);
+
+	// Draw each motif
+	for (var i = 0, len = this.motifs.length; i < len; i++) {
+		this.motifs[i].selected = controller.hitTest(loc, this.motifs[i].position.x,
+									this.motifs[i].position.y,
+									this.motifs[i].position.width,
+									this.motifs[i].position.height);
+	}
 };
