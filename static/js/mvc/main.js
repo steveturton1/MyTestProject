@@ -17,6 +17,18 @@ function MainController() {
 		controller.model.motifSelect(e.clientX, e.clientY);
 		controller.view.canvasRenderAll();
 	};
+
+	this.view.canvas.onmouseup = function(e) {
+		controller.model.motifStopDragging();
+	};
+
+	this.view.canvas.onmousemove = function(e) {
+		if (controller.model.motifMove(e.clientX, e.clientY)) {
+			controller.view.canvasRenderAll();
+		}
+	};
+
+
 }
 
 MainController.prototype.index=function(img) {
@@ -43,10 +55,10 @@ MainController.prototype.windowToCanvas = function (x, y) {
 
 };
 
-MainController.prototype.hitTest = function(loc, x, y, width, height) {
+MainController.prototype.hitTest = function(loc, rect) {
 	// Determine if a point (loc) is in a rectangle.
 	this.view.context.beginPath();
-	this.view.context.rect(x, y, width, height);
+	this.view.context.rect(rect.x, rect.y, rect.width, rect.height);
 	return this.view.context.isPointInPath(loc.x, loc.y);
 };
 
@@ -133,6 +145,10 @@ MainView.prototype.canvasRestoreBackground=function() {
 	this.context.putImageData(this.canvasBackgroundImageData, 0, 0);
 };
 
+MainView.prototype.canvasSetDragCursor=function() {
+	this.canvas.style.cursor = "default";
+};
+
 
 
 MainModel.prototype = {};
@@ -143,12 +159,52 @@ function MainModel() {
 }
 
 MainModel.prototype.AddDummyData = function() {
-	var x = new Motif();
-	this.motifs.push(x);
+/*
+	var img = new Image();
 
-	x = new Motif(20, 150, 100, 100);
-	x.selected = true;
-	this.motifs.push(x);
+	img.onload = function() {
+		var x = new Motif(20, 20, 150, 100, img);
+		x.selected = true;
+		controller.model.motifs.push(x);
+
+		x = new Motif(20, 150, 150, 100, img);
+		controller.model.motifs.push(x);
+	};
+	img.src = '/static/images/steve/delete_on.png';
+*/
+	function loadImages(sources, callback) {
+		var images = {};
+        var loadedImages = 0;
+        var numImages = 0;
+        // get num of sources
+        for(var src in sources) {
+			numImages++;
+        }
+        for(var src in sources) {
+			images[src] = new Image();
+          	images[src].onload = function() {
+            	if(++loadedImages >= numImages) {
+              		callback(images);
+            	}
+          	};
+          images[src].src = sources[src];
+        }
+	}
+
+	var sources = {
+		delete: '/static/images/steve/delete_on.png'
+	};
+
+	loadImages(sources, function(images) {
+        var x = new Motif(20, 20, 150, 100, images.delete);
+		x.selected = true;
+		controller.model.motifs.push(x);
+
+		x = new Motif(20, 150, 150, 100, images.delete);
+		controller.model.motifs.push(x);
+	});
+
+	var x = 1;
 };
 
 MainModel.prototype.motifSelect = function(x, y) {
@@ -158,11 +214,52 @@ MainModel.prototype.motifSelect = function(x, y) {
 
 	var loc = controller.windowToCanvas(x, y);
 
-	// Draw each motif
 	for (var i = 0, len = this.motifs.length; i < len; i++) {
-		this.motifs[i].selected = controller.hitTest(loc, this.motifs[i].position.x,
-									this.motifs[i].position.y,
-									this.motifs[i].position.width,
-									this.motifs[i].position.height);
+		if (controller.hitTest(loc, this.motifs[i].position)) {
+			this.motifs[i].selected = true;
+			this.motifs[i].dragging = true;
+			this.motifs[i].dragLoc = loc;
+
+			// Once a motif is found under the mouse click, we will ignore the rest
+			// to stop the possibility of selecting multiple motifs that overlap.
+			i++;
+			for (var j = i, len = this.motifs.length; j < len; j++) {
+				this.motifs[i].selected = false;
+				this.motifs[i].dragging = false;
+			}
+			return;
+
+		} else {
+			this.motifs[i].selected = false;
+			this.motifs[i].dragging = false;
+		}
 	}
+};
+
+MainModel.prototype.motifStopDragging = function() {
+	for (var i = 0, len = this.motifs.length; i < len; i++) {
+		this.motifs[i].dragging = false;
+	}
+};
+
+MainModel.prototype.motifMove = function(x, y) {
+	// returns true if a motif was moved, otherwise false.
+
+	for (var i = 0, len = this.motifs.length; i < len; i++) {
+
+		if (this.motifs[i].dragging) {
+			// we are trying to drag this motif
+			var loc = controller.windowToCanvas(x, y);
+
+			this.motifs[i].position.x += loc.x - this.motifs[i].dragLoc.x;
+			this.motifs[i].position.y += loc.y - this.motifs[i].dragLoc.y;
+
+			this.motifs[i].dragLoc = loc;
+
+			controller.view.canvasSetDragCursor();
+			return true;
+		}
+	}
+	return false;
+
 };
