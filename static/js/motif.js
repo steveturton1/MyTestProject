@@ -10,14 +10,14 @@
 Motif.prototype = {};
 Motif.prototype.constructor = Motif;
 
-function Motif(x, y, width, height, deleteImg) {
+function Motif(x, y, width, height, images) {
     this.position = {x : x || 20, y : y || 20, width : width || 150, height : height || 100 };
     this.dragging = false;      // True if being dragged, otherwise false.
     this.resizing = false;      // True if being resized, otherwise false.
     this.selected = false;
     this.dragLoc = {x : 0, y : 0};
-    this.deleteImg = deleteImg;
-    this.image = new Image();
+    this.images = images;
+    //this.image = new Image();
 }
 
 Motif.prototype.draw = function(context) {
@@ -45,16 +45,17 @@ Motif.prototype.draw = function(context) {
         context.stroke();
         context.setLineDash([]);    // turn off dashed line
 
+        // Draw Delete button
         context.beginPath();
         context.fillStyle = "white";
-        context.fillRect(this.position.x, this.position.y, 15, 15);
-        context.rect(this.position.x, this.position.y, 15, 15);
+        context.fillRect(this.position.x + this.position.width - 8, this.position.y - 8, 15, 15);
+        context.rect(this.position.x + this.position.width - 8, this.position.y - 8, 15, 15);
         context.stroke();
 
         // don't draw images with the context.translate(0.5, 0.5) fix as images
         // will be blurred so restore canvas here.
         context.restore();
-        context.drawImage(this.deleteImg, this.position.x, this.position.y);
+        context.drawImage(this.images.delete_on, this.position.x + this.position.width - 8, this.position.y - 8);
 
     }
     context.restore();

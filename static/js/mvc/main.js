@@ -187,20 +187,21 @@ MainModel.prototype.AddDummyData = function() {
               		callback(images);
             	}
           	};
-          images[src].src = sources[src];
+          	images[src].src = sources[src];
         }
 	}
 
 	var sources = {
-		delete: '/static/images/steve/delete_on.png'
+		delete_on: '/static/images/steve/delete_on.png',
+		delete_off: '/static/images/steve/delete_off.png'
 	};
 
 	loadImages(sources, function(images) {
-        var x = new Motif(20, 20, 150, 100, images.delete);
+        var x = new Motif(20, 20, 150, 100, images);
 		x.selected = true;
 		controller.model.motifs.push(x);
 
-		x = new Motif(20, 150, 150, 100, images.delete);
+		x = new Motif(20, 150, 150, 100, images);
 		controller.model.motifs.push(x);
 	});
 
