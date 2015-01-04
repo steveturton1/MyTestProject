@@ -247,10 +247,10 @@ MainModel.prototype.motifMove = function(x, y) {
 	// returns true if a motif was moved, otherwise false.
 
 	for (var i = 0, len = this.motifs.length; i < len; i++) {
+		var loc = controller.windowToCanvas(x, y);
 
 		if (this.motifs[i].dragging) {
 			// we are trying to drag this motif
-			var loc = controller.windowToCanvas(x, y);
 
 			this.motifs[i].position.x += loc.x - this.motifs[i].dragLoc.x;
 			this.motifs[i].position.y += loc.y - this.motifs[i].dragLoc.y;
