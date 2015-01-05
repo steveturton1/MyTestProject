@@ -5,7 +5,6 @@
 MainController.prototype = {};
 MainController.prototype.constructor = MainController;
 function MainController() {
-
 	this.model = new MainModel();
 	this.model.AddDummyData();
 
@@ -14,7 +13,9 @@ function MainController() {
 		//e.preventDefault();
 
 		// See if we hit a motif - select it if we did.
-		controller.model.motifSelect(e.clientX, e.clientY);
+		controller.model.motifResetAll();
+		controller.model.motifTestMouseDown(controller.windowToCanvas(e.clientX, e.clientY),
+											controller.view.context);
 		controller.view.canvasRenderAll();
 	};
 
@@ -23,7 +24,8 @@ function MainController() {
 	};
 
 	this.view.canvas.onmousemove = function(e) {
-		if (controller.model.motifMove(e.clientX, e.clientY)) {
+		if (controller.model.motifTestMouseMove(controller.windowToCanvas(e.clientX, e.clientY),
+											controller.view.context)) {
 			controller.view.canvasRenderAll();
 		}
 	};
@@ -49,17 +51,15 @@ MainController.prototype.index=function(img) {
 
 MainController.prototype.windowToCanvas = function (x, y) {
 	// Convert mouse coordinates to client coordinates
+
+	/*
 	var bbox = this.view.canvas.getBoundingClientRect();
-	return { x : x - bbox.left * (this.view.canvas.width / bbox.width),
-			 y : y - bbox.top  * (this.view.canvas.height / bbox.height) };
+	return { x : Math.round(x - bbox.left * (this.view.canvas.width / bbox.width)),
+			 y : Math.round(y - bbox.top  * (this.view.canvas.height / bbox.height)) };
+	*/
 
-};
-
-MainController.prototype.hitTest = function(loc, rect) {
-	// Determine if a point (loc) is in a rectangle.
-	this.view.context.beginPath();
-	this.view.context.rect(rect.x, rect.y, rect.width, rect.height);
-	return this.view.context.isPointInPath(loc.x, loc.y);
+	var bbox = this.view.canvas.getBoundingClientRect();
+	return { x : x - bbox.left, y : y - bbox.top};
 };
 
 MainController.prototype.garmentThumbnailClick=function(element) {
@@ -77,6 +77,14 @@ MainController.prototype.garmentThumbnailClick=function(element) {
 	this.index(img.attr("data-img-medium"));	// Reinitialise the canvas with the new image
 };
 
+/*
+MainController.prototype.hitTest = function(loc, rect) {
+	// Determine if a point (loc) is in a rectangle.
+	this.view.context.beginPath();
+	this.view.context.rect(rect.x, rect.y, rect.width, rect.height);
+	return this.view.context.isPointInPath(loc.x, loc.y);
+};
+*/
 
 
 MainView.prototype = {};
@@ -154,24 +162,13 @@ MainView.prototype.canvasSetDragCursor=function() {
 MainModel.prototype = {};
 MainModel.prototype.constructor = MainModel;
 function MainModel() {
+	this._selectedMotif = null;			// gives us quick access to the selected motif in this.motifs[]
 	this.motifs = [];
 	this.garmentImage = new Image();
 }
 
 MainModel.prototype.AddDummyData = function() {
-/*
-	var img = new Image();
 
-	img.onload = function() {
-		var x = new Motif(20, 20, 150, 100, img);
-		x.selected = true;
-		controller.model.motifs.push(x);
-
-		x = new Motif(20, 150, 150, 100, img);
-		controller.model.motifs.push(x);
-	};
-	img.src = '/static/images/steve/delete_on.png';
-*/
 	function loadImages(sources, callback) {
 		var images = {};
         var loadedImages = 0;
@@ -200,6 +197,8 @@ MainModel.prototype.AddDummyData = function() {
         var x = new Motif(20, 20, 150, 100, images);
 		x.selected = true;
 		controller.model.motifs.push(x);
+		controller.model._selectedMotif = x;
+
 
 		x = new Motif(20, 150, 150, 100, images);
 		controller.model.motifs.push(x);
@@ -208,59 +207,60 @@ MainModel.prototype.AddDummyData = function() {
 	var x = 1;
 };
 
-MainModel.prototype.motifSelect = function(x, y) {
-	// go through each of our motifs and see if the mouse x, y
-	// means one of them were clicked.  If one was then mark it
-	// as selected otherwise mark as not selected.
+MainModel.prototype.motifResetAll = function() {
+	for (var i = 0, len = this.motifs.length; i < len; i++) {
+		this._selectedMotif = null;
+		this.motifs[i].reset();
+	}
+}
 
-	var loc = controller.windowToCanvas(x, y);
+MainModel.prototype.motifTestMouseDown = function(loc, context) {
+	// go through each of our motifs and see if the mouse loc means one
+	// of them were clicked.  If one was then mark it as selected.
 
 	for (var i = 0, len = this.motifs.length; i < len; i++) {
-		if (controller.hitTest(loc, this.motifs[i].position)) {
+		if (this.motifs[i].hitTest(loc, context)) {
 			this.motifs[i].selected = true;
 			this.motifs[i].dragging = true;
 			this.motifs[i].dragLoc = loc;
-
-			// Once a motif is found under the mouse click, we will ignore the rest
-			// to stop the possibility of selecting multiple motifs that overlap.
-			i++;
-			for (var j = i, len = this.motifs.length; j < len; j++) {
-				this.motifs[i].selected = false;
-				this.motifs[i].dragging = false;
-			}
-			return;
-
-		} else {
-			this.motifs[i].selected = false;
-			this.motifs[i].dragging = false;
+			this._selectedMotif = this.motifs[i];
 		}
 	}
 };
 
 MainModel.prototype.motifStopDragging = function() {
-	for (var i = 0, len = this.motifs.length; i < len; i++) {
-		this.motifs[i].dragging = false;
+	if (this._selectedMotif && this._selectedMotif.dragging) {
+		this._selectedMotif.dragging = false;
 	}
 };
 
-MainModel.prototype.motifMove = function(x, y) {
-	// returns true if a motif was moved, otherwise false.
+MainModel.prototype.motifTestMouseMove = function(loc, context) {
+	// Returns true if a motif was changed(needs redrawing), otherwise false.
+	// Only need to test the selected motif.
 
-	for (var i = 0, len = this.motifs.length; i < len; i++) {
-		var loc = controller.windowToCanvas(x, y);
-
-		if (this.motifs[i].dragging) {
+	if (this._selectedMotif) {
+		if (this._selectedMotif.dragging) {
 			// we are trying to drag this motif
-
-			this.motifs[i].position.x += loc.x - this.motifs[i].dragLoc.x;
-			this.motifs[i].position.y += loc.y - this.motifs[i].dragLoc.y;
-
-			this.motifs[i].dragLoc = loc;
+			this._selectedMotif.rect.x += loc.x - this._selectedMotif.dragLoc.x;
+			this._selectedMotif.rect.y += loc.y - this._selectedMotif.dragLoc.y;
+			this._selectedMotif.dragLoc = loc;
 
 			controller.view.canvasSetDragCursor();
 			return true;
 		}
+
+		var prevVal = this._selectedMotif.deleteButton.mouseHover;
+		var changed = false;
+
+		// See if we are hovering over the delete button
+		this._selectedMotif.deleteButton.mouseHover = this._selectedMotif.hitTestDelete(loc, context);
+		if (prevVal !== this._selectedMotif.deleteButton.mouseHover){
+			changed = true;
+		};
+
+		return changed;
 	}
+
 	return false;
 
 };
