@@ -33,8 +33,7 @@ Motif.prototype.reset = function() {
     this.selected = false;
 	this.dragging = false;
 	this.resizing = false;
-	this.deleteButton.mouseHover = false;
-    this.deleteButton.mouseDown = false;
+
 };
 
 Motif.prototype.hitTest = function(loc, context) {

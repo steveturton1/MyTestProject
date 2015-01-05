@@ -10,7 +10,16 @@ function MainController() {
 
     this.view = new MainView();
 	this.view.canvas.onmousedown = function(e) {
-		//e.preventDefault();
+		e.preventDefault();
+
+		if (controller.model._selectedMotif) {
+			// a motif is selected.
+			if (controller.model._selectedMotif.hitTestDelete(
+									controller.windowToCanvas(e.clientX, e.clientY),
+									controller.view.context)) {
+				return;	// do nothing if over the delete button.
+			}
+		}
 
 		// See if we hit a motif - select it if we did.
 		controller.model.motifResetAll();
@@ -20,6 +29,21 @@ function MainController() {
 	};
 
 	this.view.canvas.onmouseup = function(e) {
+
+		if (controller.model._selectedMotif) {
+
+			if (controller.model._selectedMotif.hitTestDelete(
+									controller.windowToCanvas(e.clientX, e.clientY),
+									controller.view.context) &&
+									controller.model._selectedMotif.deleteButton.mouseHover) {
+
+				// Clicked the delete button.
+				controller.model.motifDeleteSelected();
+				controller.view.canvasRenderAll();
+				return;
+			}
+		}
+
 		controller.model.motifStopDragging();
 	};
 
@@ -29,7 +53,6 @@ function MainController() {
 			controller.view.canvasRenderAll();
 		}
 	};
-
 
 }
 
@@ -49,7 +72,7 @@ MainController.prototype.index=function(img) {
 	this.model.garmentImage.src = img;
 };
 
-MainController.prototype.windowToCanvas = function (x, y) {
+MainController.prototype.windowToCanvas=function (x, y) {
 	// Convert mouse coordinates to client coordinates
 
 	/*
@@ -77,6 +100,13 @@ MainController.prototype.garmentThumbnailClick=function(element) {
 	this.index(img.attr("data-img-medium"));	// Reinitialise the canvas with the new image
 };
 
+MainController.prototype.motifAddDummy=function(e) {
+	e.preventDefault();
+	this.model.motifAddDummy(function(){
+		controller.view.canvasRenderAll();
+	});
+
+}
 /*
 MainController.prototype.hitTest = function(loc, rect) {
 	// Determine if a point (loc) is in a rectangle.
@@ -199,12 +229,47 @@ MainModel.prototype.AddDummyData = function() {
 		controller.model.motifs.push(x);
 		controller.model._selectedMotif = x;
 
-
-		x = new Motif(20, 150, 150, 100, images);
-		controller.model.motifs.push(x);
+		//x = new Motif(20, 150, 150, 100, images);
+		//controller.model.motifs.push(x);
 	});
+};
 
-	var x = 1;
+MainModel.prototype.motifAddDummy = function(parentCallback) {
+
+	function loadImages(sources, callback) {
+		var images = {};
+        var loadedImages = 0;
+        var numImages = 0;
+        // get num of sources
+        for(var src in sources) {
+			numImages++;
+        }
+        for(var src in sources) {
+			images[src] = new Image();
+          	images[src].onload = function() {
+            	if(++loadedImages >= numImages) {
+              		callback(images);
+            	}
+          	};
+          	images[src].src = sources[src];
+        }
+	}
+
+	var sources = {
+		delete_on: '/static/images/steve/delete_on.png',
+		delete_off: '/static/images/steve/delete_off.png'
+	};
+
+	loadImages(sources, function(images) {
+		controller.model.motifResetAll();
+
+        var x = new Motif(20, 20, 150, 100, images);
+		x.selected = true;
+		controller.model.motifs.push(x);
+		controller.model._selectedMotif = x;
+
+		parentCallback();
+	});
 };
 
 MainModel.prototype.motifResetAll = function() {
@@ -224,6 +289,7 @@ MainModel.prototype.motifTestMouseDown = function(loc, context) {
 			this.motifs[i].dragging = true;
 			this.motifs[i].dragLoc = loc;
 			this._selectedMotif = this.motifs[i];
+			return;
 		}
 	}
 };
@@ -263,4 +329,10 @@ MainModel.prototype.motifTestMouseMove = function(loc, context) {
 
 	return false;
 
+};
+
+MainModel.prototype.motifDeleteSelected = function() {
+	var y = this.motifs.indexOf(this._selectedMotif);
+	this._selectedMotif = null;
+	this.motifs.splice(y,1);
 };
