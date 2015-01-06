@@ -2,6 +2,9 @@
  * Created by Steve on 15/12/2014.
  */
 
+
+// TODO - load all images needed for motif on start up rather than in motifAdd.
+// When click a thumbnail, hourglass and freeze thumbnails until loaded into canvas.
 MainController.prototype = {};
 MainController.prototype.constructor = MainController;
 function MainController() {
@@ -184,9 +187,16 @@ MainView.prototype.canvasRestoreBackground=function() {
 };
 
 MainView.prototype.canvasSetDragCursor=function() {
+	this.canvas.style.cursor = "move";
+};
+
+MainView.prototype.canvasSetDefaultCursor=function() {
 	this.canvas.style.cursor = "default";
 };
 
+MainView.prototype.canvasSetResizeCursor=function() {
+	this.canvas.style.cursor = "nwse-resize";
+};
 
 
 MainModel.prototype = {};
@@ -220,7 +230,8 @@ MainModel.prototype.AddDummyData = function() {
 
 	var sources = {
 		delete_on: '/static/images/steve/delete_on.png',
-		delete_off: '/static/images/steve/delete_off.png'
+		delete_off: '/static/images/steve/delete_off.png',
+		blank: '/static/images/steve/blank.png'
 	};
 
 	loadImages(sources, function(images) {
@@ -257,7 +268,8 @@ MainModel.prototype.motifAddDummy = function(parentCallback) {
 
 	var sources = {
 		delete_on: '/static/images/steve/delete_on.png',
-		delete_off: '/static/images/steve/delete_off.png'
+		delete_off: '/static/images/steve/delete_off.png',
+		blank: '/static/images/steve/blank.png'
 	};
 
 	loadImages(sources, function(images) {
@@ -297,6 +309,7 @@ MainModel.prototype.motifTestMouseDown = function(loc, context) {
 MainModel.prototype.motifStopDragging = function() {
 	if (this._selectedMotif && this._selectedMotif.dragging) {
 		this._selectedMotif.dragging = false;
+		controller.view.canvasSetDefaultCursor();
 	}
 };
 
@@ -322,6 +335,21 @@ MainModel.prototype.motifTestMouseMove = function(loc, context) {
 		this._selectedMotif.deleteButton.mouseHover = this._selectedMotif.hitTestDelete(loc, context);
 		if (prevVal !== this._selectedMotif.deleteButton.mouseHover){
 			changed = true;
+		};
+
+		// See if we are hovering over the resize button
+		prevVal = this._selectedMotif.resizeButton.mouseHover;
+		this._selectedMotif.resizeButton.mouseHover = this._selectedMotif.hitTestResize(loc, context);
+		//if (prevVal !== this._selectedMotif.resizeButton.mouseHover){
+		//	controller.view.canvasSetResizeCursor();
+		//	//changed = true;
+		//} else {
+		//	//controller.view.canvasSetDefaultCursor();
+		//};
+		if (this._selectedMotif.resizeButton.mouseHover) {
+			controller.view.canvasSetResizeCursor();
+		} else {
+			controller.view.canvasSetDefaultCursor();
 		};
 
 		return changed;

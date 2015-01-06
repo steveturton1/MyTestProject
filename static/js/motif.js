@@ -20,6 +20,12 @@ function Motif(x, y, width, height, images) {
                             mouseDown: false
                         };
 
+    this.resizeButton = {   rect: {},           // Position and dimension of button - set in draw method.
+                            mouseHover: false,  // True if mouse hovering over, otherwise false.
+                            mouseDown: false
+                        };
+
+
     this.dragging = false;      // True if being dragged, otherwise false.
 
     this.resizing = false;      // True if being resized, otherwise false.
@@ -51,20 +57,43 @@ Motif.prototype.hitTest = function(loc, context) {
 };
 
 Motif.prototype.hitTestDelete = function(loc, context) {
-	// Determine if a point (loc) is in a rectangle.
+	// Determine if a point (loc) is in the delete button rectangle.
 
     context.save();
     context.translate(0.5, 0.5);    // remember we've used translate to avoid blurred lines, so we must also apply here.
 
 	context.beginPath();
-	context.rect(this.deleteButton.rect.x, this.deleteButton.rect.y, this.deleteButton.rect.width, this.deleteButton.rect.height);
+	context.rect(   this.deleteButton.rect.x, this.deleteButton.rect.y,
+                    this.deleteButton.rect.width, this.deleteButton.rect.height);
 	var retVal = context.isPointInPath(loc.x, loc.y);
 
     context.restore();
     return retVal;
 };
 
+Motif.prototype.hitTestResize = function(loc, context) {
+	// Determine if a point (loc) is in the delete button rectangle.
+
+    context.save();
+    context.translate(0.5, 0.5);    // remember we've used translate to avoid blurred lines, so we must also apply here.
+
+	context.beginPath();
+	context.rect(   this.resizeButton.rect.x, this.resizeButton.rect.y,
+                    this.resizeButton.rect.width, this.resizeButton.rect.height);
+	var retVal = context.isPointInPath(loc.x, loc.y);
+
+    context.restore();
+    return retVal;
+};
+
+
+
 Motif.prototype.draw = function(context) {
+
+    // TODO when drawing images, i turn of translate so not to skew the image,
+    // so rather that keep saving and restoring the context, draw all the images at the end.
+
+
     context.save();
 
 
@@ -92,12 +121,12 @@ Motif.prototype.draw = function(context) {
         // Draw Delete button
         this.deleteButton.rect = {x: this.rect.x + this.rect.width - 8,
                                 y: this.rect.y - 8,
-                                width: 15, height: 15};
-        context.beginPath();
-        context.fillStyle = "white";
-        context.fillRect(this.deleteButton.rect.x, this.deleteButton.rect.y, this.deleteButton.rect.width, this.deleteButton.rect.height);
-        context.rect(this.deleteButton.rect.x, this.deleteButton.rect.y, this.deleteButton.rect.width, this.deleteButton.rect.height);
-        context.stroke();
+                                width: 16, height: 16};
+        //context.beginPath();
+        //context.fillStyle = "white";
+        //context.fillRect(this.deleteButton.rect.x, this.deleteButton.rect.y, this.deleteButton.rect.width, this.deleteButton.rect.height);
+        //context.rect(this.deleteButton.rect.x, this.deleteButton.rect.y, this.deleteButton.rect.width, this.deleteButton.rect.height);
+        //context.stroke();
 
         // don't draw images with the context.translate(0.5, 0.5) fix as images
         // will be blurred so restore canvas here.
@@ -108,6 +137,24 @@ Motif.prototype.draw = function(context) {
             context.drawImage(this.images.delete_off, this.deleteButton.rect.x, this.deleteButton.rect.y);
         }
 
+        // draw the resize button.
+        //context.save();
+        //context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
+        //context.strokeStyle = "black";
+        //context.lineWidth = 1;
+        //context.beginPath();
+        //context.fillStyle = "white";
+        this.resizeButton.rect = {x: this.rect.x + this.rect.width - 8,
+                                y: this.rect.y + this.rect.height - 8,
+                                width: 16, height: 16};
+        //context.fillRect(this.resizeButton.rect.x, this.resizeButton.rect.y, this.resizeButton.rect.width, this.resizeButton.rect.height);
+        //context.rect(this.resizeButton.rect.x, this.resizeButton.rect.y, this.resizeButton.rect.width, this.resizeButton.rect.height);
+        //context.stroke();
+        //if (this.resizeButton.mouseHover) {
+            context.drawImage(this.images.blank, this.resizeButton.rect.x, this.resizeButton.rect.y);
+        //} else {
+        //    context.drawImage(this.images.delete_off, this.resizeButton.rect.x, this.resizeButton.rect.y);
+        //}
 
     }
     context.restore();
