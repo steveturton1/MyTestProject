@@ -5,57 +5,59 @@
 
 // TODO - load all images needed for motif on start up rather than in motifAdd.
 // When click a thumbnail, hourglass and freeze thumbnails until loaded into canvas.
+// Have the controller set the cursor based on _selectedMotif state.
+
 MainController.prototype = {};
 MainController.prototype.constructor = MainController;
 function MainController() {
 	this.model = new MainModel();
 	this.model.AddDummyData();
-
     this.view = new MainView();
+
 	this.view.canvas.onmousedown = function(e) {
 		e.preventDefault();
 
-		if (controller.model._selectedMotif) {
+		if (this.model._selectedMotif) {
 			// a motif is selected.
-			if (controller.model._selectedMotif.hitTestDelete(
-									controller.windowToCanvas(e.clientX, e.clientY),
-									controller.view.context)) {
+			if (this.model._selectedMotif.hitTestDelete(
+									this.windowToCanvas(e.clientX, e.clientY),
+									this.view.context)) {
 				return;	// do nothing if over the delete button.
 			}
 		}
 
 		// See if we hit a motif - select it if we did.
-		controller.model.motifResetAll();
-		controller.model.motifTestMouseDown(controller.windowToCanvas(e.clientX, e.clientY),
-											controller.view.context);
-		controller.view.canvasRenderAll();
-	};
+		this.model.motifResetAll();
+		this.model.motifTestMouseDown(this.windowToCanvas(e.clientX, e.clientY),
+											this.view.context);
+		this.view.canvasRenderAll(this.model.motifs);
+	}.bind(this);
 
 	this.view.canvas.onmouseup = function(e) {
 
-		if (controller.model._selectedMotif) {
+		if (this.model._selectedMotif) {
 
-			if (controller.model._selectedMotif.hitTestDelete(
-									controller.windowToCanvas(e.clientX, e.clientY),
-									controller.view.context) &&
-									controller.model._selectedMotif.deleteButton.mouseHover) {
+			if (this.model._selectedMotif.hitTestDelete(
+									this.windowToCanvas(e.clientX, e.clientY),
+									this.view.context) &&
+									this.model._selectedMotif.deleteButton.mouseHover) {
 
 				// Clicked the delete button.
-				controller.model.motifDeleteSelected();
-				controller.view.canvasRenderAll();
+				this.model.motifDeleteSelected();
+				this.view.canvasRenderAll(this.model.motifs);
 				return;
 			}
 		}
 
-		controller.model.motifStopDragging();
-	};
+		this.model.motifStopDragging();
+	}.bind(this);
 
 	this.view.canvas.onmousemove = function(e) {
-		if (controller.model.motifTestMouseMove(controller.windowToCanvas(e.clientX, e.clientY),
-											controller.view.context)) {
-			controller.view.canvasRenderAll();
+		if (this.model.motifTestMouseMove(this.windowToCanvas(e.clientX, e.clientY),
+											this.view.context)) {
+			this.view.canvasRenderAll(this.model.motifs);
 		}
-	};
+	}.bind(this);
 
 }
 
@@ -65,13 +67,13 @@ MainController.prototype.index=function(img) {
 	this.model.garmentImage = new Image();
 
 	this.model.garmentImage.onload = function() {
-		controller.view.canvasRenderBackground();
-    	controller.view.canvasRenderAll();
-	};
+		this.view.canvasRenderBackground();
+    	this.view.canvasRenderAll(this.model.motifs);
+	}.bind(this);
 	this.model.garmentImage.onerror = function() {
-		controller.view.canvasRenderBackground("MISSING IMAGE!");
-    	controller.view.canvasRenderAll();
-	};
+		this.view.canvasRenderBackground("MISSING IMAGE!");
+    	this.view.canvasRenderAll(this.model.motifs);
+	}.bind(this);
 	this.model.garmentImage.src = img;
 };
 
@@ -106,8 +108,8 @@ MainController.prototype.garmentThumbnailClick=function(element) {
 MainController.prototype.motifAddDummy=function(e) {
 	e.preventDefault();
 	this.model.motifAddDummy(function(){
-		controller.view.canvasRenderAll();
-	});
+		this.view.canvasRenderAll(this.model.motifs);
+	}.bind(this));
 
 }
 /*
@@ -167,13 +169,13 @@ MainView.prototype.canvasRenderGrid=function(color, stepX, stepY) {
 		this.context.restore();
 };
 
-MainView.prototype.canvasRenderAll=function() {
+MainView.prototype.canvasRenderAll=function(motifs) {
 	// Draw the background grid and garment
 	this.canvasRestoreBackground();
 
 	// Draw each motif
-	for (var i = 0, len = controller.model.motifs.length; i < len; i++) {
-		controller.model.motifs[i].draw(this.context);
+	for (var i = 0, len = motifs.length; i < len; i++) {
+		motifs[i].draw(this.context);
 	}
 };
 
@@ -237,12 +239,12 @@ MainModel.prototype.AddDummyData = function() {
 	loadImages(sources, function(images) {
         var x = new Motif(20, 20, 150, 100, images);
 		x.selected = true;
-		controller.model.motifs.push(x);
-		controller.model._selectedMotif = x;
+		this.motifs.push(x);
+		this._selectedMotif = x;
 
 		//x = new Motif(20, 150, 150, 100, images);
 		//controller.model.motifs.push(x);
-	});
+	}.bind(this));
 };
 
 MainModel.prototype.motifAddDummy = function(parentCallback) {
@@ -273,15 +275,15 @@ MainModel.prototype.motifAddDummy = function(parentCallback) {
 	};
 
 	loadImages(sources, function(images) {
-		controller.model.motifResetAll();
+		this.motifResetAll();
 
         var x = new Motif(20, 20, 150, 100, images);
 		x.selected = true;
-		controller.model.motifs.push(x);
-		controller.model._selectedMotif = x;
+		this.motifs.push(x);
+		this._selectedMotif = x;
 
 		parentCallback();
-	});
+	}.bind(this));
 };
 
 MainModel.prototype.motifResetAll = function() {
