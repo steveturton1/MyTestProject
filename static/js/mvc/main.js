@@ -13,67 +13,100 @@ function MainController() {
 	this.model = new MainModel();
 	this.model.AddDummyData();
     this.view = new MainView();
+    var _this = this;
 
-	this.view.canvas.onmousedown = function(e) {
-		e.preventDefault();
+    // Enable mouse and touch screen interaction.
+    // Everywhere says use pageX, pageY for touch screen but that won't take into
+    // account if the page is scrolled.
+    this.view.canvas.onmousedown = function(e) {
+        e.preventDefault();
+        mouseDownOrTouchStart(_this.windowToCanvas(e.clientX, e.clientY));
+    };
+    this.view.canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        mouseDownOrTouchStart(_this.windowToCanvas(e.touches[0].clientX, e.touches[0].clientY));
+    });
 
-		if (this.model._selectedMotif) {
+    this.view.canvas.onmouseup = function(e) {
+        e.preventDefault();
+        mouseUpOrTouchEnd(_this.windowToCanvas(e.clientX, e.clientY));
+    };
+    this.view.canvas.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        mouseUpOrTouchEnd(_this.windowToCanvas(e.changedTouches[0].clientX, e.changedTouches[0].clientY));
+    });
+
+    this.view.canvas.onmousemove = function(e) {
+        e.preventDefault();
+        mouseMoveOrTouchMove(_this.windowToCanvas(e.clientX, e.clientY));
+    };
+    this.view.canvas.addEventListener('touchmove', function(e) {
+        // TODO maybe only prevent default if dragging/resizing a motif so the user can still
+        // scroll by dragging the canvas with touch screen.
+        e.preventDefault();
+        mouseMoveOrTouchMove(_this.windowToCanvas(e.touches[0].clientX, e.touches[0].clientY));
+    });
+
+	function mouseDownOrTouchStart(location) {
+		if (_this.model._selectedMotif) {
 			// a motif is selected.
-			if (this.model._selectedMotif.hitTestDelete(
-									this.windowToCanvas(e.clientX, e.clientY),
-									this.view.context)) {
+			if (_this.model._selectedMotif.hitTestDelete(location, _this.view.context)) {
 				return;	// do nothing if over the delete button.
 			}
+
+            if (_this.model._selectedMotif.hitTestResize(location, _this.view.context)) {
+                _this.model._selectedMotif.resizing = true;
+                _this.model.motifTestMouseDown(location, _this.view.context);
+                return;
+            }
 		}
 
 		// See if we hit a motif - select it if we did.
-		this.model.motifResetAll();
-		this.model.motifTestMouseDown(this.windowToCanvas(e.clientX, e.clientY),
-											this.view.context);
-		this.view.canvasRenderAll(this.model.motifs);
-	}.bind(this);
+		_this.model.motifResetAll();
+		_this.model.motifTestMouseDown(location, _this.view.context);
+		_this.view.canvasRenderAll(_this.model.motifs);
+	};
 
-	this.view.canvas.onmouseup = function(e) {
+	function mouseUpOrTouchEnd(location) {
+		if (_this.model._selectedMotif) {
 
-		if (this.model._selectedMotif) {
-
-			if (this.model._selectedMotif.hitTestDelete(
-									this.windowToCanvas(e.clientX, e.clientY),
-									this.view.context) &&
-									this.model._selectedMotif.deleteButton.mouseHover) {
+			// TODO - TEST THAT IT HAD A MOUSE DOWN RATHER THAN HOVER - MAYBE
+            if (_this.model._selectedMotif.hitTestDelete(
+									location,
+									_this.view.context) &&
+									_this.model._selectedMotif.deleteButton.mouseHover) {
 
 				// Clicked the delete button.
-				this.model.motifDeleteSelected();
-				this.view.canvasRenderAll(this.model.motifs);
+				_this.model.motifDeleteSelected();
+				_this.view.canvasRenderAll(_this.model.motifs);
 				return;
 			}
 		}
 
-		this.model.motifStopDragging();
-	}.bind(this);
+		_this.model.motifStopDragging();
+        _this.model.motifStopResizing();
+	};
 
-	this.view.canvas.onmousemove = function(e) {
-		if (this.model.motifTestMouseMove(this.windowToCanvas(e.clientX, e.clientY),
-											this.view.context)) {
-			this.view.canvasRenderAll(this.model.motifs);
+	function mouseMoveOrTouchMove(location) {
+		if (_this.model.motifTestMouseMove(location, _this.view.context)) {
+			_this.view.canvasRenderAll(_this.model.motifs);
 		}
-	}.bind(this);
-
+	};
 }
 
 MainController.prototype.index=function(img) {
 	// Initialise the canvas with the grid and the selected garment (img)
-
+    var _this = this;
 	this.model.garmentImage = new Image();
 
 	this.model.garmentImage.onload = function() {
-		this.view.canvasRenderBackground();
-    	this.view.canvasRenderAll(this.model.motifs);
-	}.bind(this);
+		_this.view.canvasRenderBackground();
+    	_this.view.canvasRenderAll(_this.model.motifs);
+	};
 	this.model.garmentImage.onerror = function() {
-		this.view.canvasRenderBackground("MISSING IMAGE!");
-    	this.view.canvasRenderAll(this.model.motifs);
-	}.bind(this);
+		_this.view.canvasRenderBackground("MISSING IMAGE!");
+    	_this.view.canvasRenderAll(this.model.motifs);
+	};
 	this.model.garmentImage.src = img;
 };
 
@@ -107,9 +140,11 @@ MainController.prototype.garmentThumbnailClick=function(element) {
 
 MainController.prototype.motifAddDummy=function(e) {
 	e.preventDefault();
+    var _this = this;
+
 	this.model.motifAddDummy(function(){
-		this.view.canvasRenderAll(this.model.motifs);
-	}.bind(this));
+		_this.view.canvasRenderAll(_this.model.motifs);
+	});
 
 }
 /*
@@ -210,7 +245,7 @@ function MainModel() {
 }
 
 MainModel.prototype.AddDummyData = function() {
-
+    var _this = this;
 	function loadImages(sources, callback) {
 		var images = {};
         var loadedImages = 0;
@@ -239,16 +274,16 @@ MainModel.prototype.AddDummyData = function() {
 	loadImages(sources, function(images) {
         var x = new Motif(20, 20, 150, 100, images);
 		x.selected = true;
-		this.motifs.push(x);
-		this._selectedMotif = x;
+		_this.motifs.push(x);
+		_this._selectedMotif = x;
 
 		//x = new Motif(20, 150, 150, 100, images);
 		//controller.model.motifs.push(x);
-	}.bind(this));
+	});
 };
 
 MainModel.prototype.motifAddDummy = function(parentCallback) {
-
+    var _this = this;
 	function loadImages(sources, callback) {
 		var images = {};
         var loadedImages = 0;
@@ -275,15 +310,15 @@ MainModel.prototype.motifAddDummy = function(parentCallback) {
 	};
 
 	loadImages(sources, function(images) {
-		this.motifResetAll();
+		_this.motifResetAll();
 
         var x = new Motif(20, 20, 150, 100, images);
 		x.selected = true;
-		this.motifs.push(x);
-		this._selectedMotif = x;
+		_this.motifs.push(x);
+		_this._selectedMotif = x;
 
 		parentCallback();
-	}.bind(this));
+	});
 };
 
 MainModel.prototype.motifResetAll = function() {
@@ -298,6 +333,15 @@ MainModel.prototype.motifTestMouseDown = function(loc, context) {
 	// of them were clicked.  If one was then mark it as selected.
 
 	for (var i = 0, len = this.motifs.length; i < len; i++) {
+
+        if (this._selectedMotif && (this._selectedMotif === this.motifs[i])) {
+            if (this.motifs[i].hitTestResize(loc, context)) {
+                this.motifs[i].resizing = true;
+                this.motifs[i].dragLoc = loc;
+                return;
+            }
+        }
+
 		if (this.motifs[i].hitTest(loc, context)) {
 			this.motifs[i].selected = true;
 			this.motifs[i].dragging = true;
@@ -305,12 +349,23 @@ MainModel.prototype.motifTestMouseDown = function(loc, context) {
 			this._selectedMotif = this.motifs[i];
 			return;
 		}
+
+
 	}
 };
 
+
+// TODO DO I REALLY NEED THESE motifStopDragging/Resizing functions?
 MainModel.prototype.motifStopDragging = function() {
 	if (this._selectedMotif && this._selectedMotif.dragging) {
 		this._selectedMotif.dragging = false;
+		controller.view.canvasSetDefaultCursor();
+	}
+};
+
+MainModel.prototype.motifStopResizing = function() {
+	if (this._selectedMotif && this._selectedMotif.resizing) {
+		this._selectedMotif.resizing = false;
 		controller.view.canvasSetDefaultCursor();
 	}
 };
@@ -329,6 +384,17 @@ MainModel.prototype.motifTestMouseMove = function(loc, context) {
 			controller.view.canvasSetDragCursor();
 			return true;
 		}
+
+        if (this._selectedMotif.resizing) {
+
+            this._selectedMotif.rect.width += loc.x - this._selectedMotif.dragLoc.x;
+			this._selectedMotif.rect.height += loc.y - this._selectedMotif.dragLoc.y;
+			this._selectedMotif.dragLoc.x = loc.x;
+			this._selectedMotif.dragLoc.y = loc.y;
+
+            controller.view.canvasSetResizeCursor();
+			return true;
+        }
 
 		var prevVal = this._selectedMotif.deleteButton.mouseHover;
 		var changed = false;
