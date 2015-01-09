@@ -11,50 +11,49 @@ MainController.prototype = {};
 MainController.prototype.constructor = MainController;
 function MainController() {
 	this.model = new MainModel();
-	this.model.AddDummyData();
-    this.view = new MainView();
+	this.view = new MainView();
     var _this = this;
 
+    this.model.AddDummyData();
+
     // Enable mouse and touch screen interaction.
-    // Everywhere says use pageX, pageY for touch screen but that won't take into
-    // account if the page is scrolled.
-    this.view.canvas.onmousedown = function(e) {
+    // Everywhere says use pageX, pageY for touch screen but that won't take into account if the page is scrolled?
+    this.view.canvas.addEventListener('mousedown', function(e) {
         e.preventDefault();
         mouseDownOrTouchStart(_this.windowToCanvas(e.clientX, e.clientY));
-    };
+    });
     this.view.canvas.addEventListener('touchstart', function(e) {
         e.preventDefault();
-        mouseDownOrTouchStart(_this.windowToCanvas(e.touches[0].clientX, e.touches[0].clientY));
+        mouseDownOrTouchStart(_this.windowToCanvas(e.touches[0].pageX, e.touches[0].pageY));
     });
 
-    this.view.canvas.onmouseup = function(e) {
+    this.view.canvas.addEventListener('mouseup', function(e) {
         e.preventDefault();
         mouseUpOrTouchEnd(_this.windowToCanvas(e.clientX, e.clientY));
-    };
+    });
     this.view.canvas.addEventListener('touchend', function(e) {
         e.preventDefault();
-        mouseUpOrTouchEnd(_this.windowToCanvas(e.changedTouches[0].clientX, e.changedTouches[0].clientY));
+        mouseUpOrTouchEnd(_this.windowToCanvas(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
     });
 
-    this.view.canvas.onmousemove = function(e) {
+    this.view.canvas.addEventListener('mousemove', function(e) {
         e.preventDefault();
         mouseMoveOrTouchMove(_this.windowToCanvas(e.clientX, e.clientY));
-    };
+    });
     this.view.canvas.addEventListener('touchmove', function(e) {
-        // TODO maybe only prevent default if dragging/resizing a motif so the user can still
-        // scroll by dragging the canvas with touch screen.
+        // TODO maybe only prevent default if dragging/resizing a motif so the user can still scroll by dragging the canvas with touch screen.
         e.preventDefault();
-        mouseMoveOrTouchMove(_this.windowToCanvas(e.touches[0].clientX, e.touches[0].clientY));
+        mouseMoveOrTouchMove(_this.windowToCanvas(e.touches[0].pageX, e.touches[0].pageY));
     });
 
 	function mouseDownOrTouchStart(location) {
 		if (_this.model._selectedMotif) {
-			// a motif is selected.
 			if (_this.model._selectedMotif.hitTestDelete(location, _this.view.context)) {
 				return;	// do nothing if over the delete button.
 			}
 
             if (_this.model._selectedMotif.hitTestResize(location, _this.view.context)) {
+                // Starting a resize
                 _this.model._selectedMotif.resizing = true;
                 _this.model.motifTestMouseDown(location, _this.view.context);
                 return;
@@ -64,32 +63,31 @@ function MainController() {
 		// See if we hit a motif - select it if we did.
 		_this.model.motifResetAll();
 		_this.model.motifTestMouseDown(location, _this.view.context);
-		_this.view.canvasRenderAll(_this.model.motifs);
+		_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	};
 
 	function mouseUpOrTouchEnd(location) {
 		if (_this.model._selectedMotif) {
 
 			// TODO - TEST THAT IT HAD A MOUSE DOWN RATHER THAN HOVER - MAYBE
-            if (_this.model._selectedMotif.hitTestDelete(
-									location,
-									_this.view.context) &&
+            if (_this.model._selectedMotif.hitTestDelete(location, _this.view.context) &&
 									_this.model._selectedMotif.deleteButton.mouseHover) {
 
 				// Clicked the delete button.
 				_this.model.motifDeleteSelected();
-				_this.view.canvasRenderAll(_this.model.motifs);
+				_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 				return;
 			}
 		}
 
-		_this.model.motifStopDragging();
-        _this.model.motifStopResizing();
+        _this.model._selectedMotif.dragging = false;
+		_this.model._selectedMotif.resizing = false;
+        _this.view.canvasSetDefaultCursor();
 	};
 
 	function mouseMoveOrTouchMove(location) {
 		if (_this.model.motifTestMouseMove(location, _this.view.context)) {
-			_this.view.canvasRenderAll(_this.model.motifs);
+			_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);     // Something changed so redraw everything.
 		}
 	};
 }
@@ -100,19 +98,17 @@ MainController.prototype.index=function(img) {
 	this.model.garmentImage = new Image();
 
 	this.model.garmentImage.onload = function() {
-		_this.view.canvasRenderBackground();
-    	_this.view.canvasRenderAll(_this.model.motifs);
+		_this.view.canvasRenderBackground(_this.model);
+    	_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	};
 	this.model.garmentImage.onerror = function() {
-		_this.view.canvasRenderBackground("MISSING IMAGE!");
-    	_this.view.canvasRenderAll(this.model.motifs);
+		_this.view.canvasRenderBackground(_this.model);
+    	_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	};
 	this.model.garmentImage.src = img;
 };
 
 MainController.prototype.windowToCanvas=function (x, y) {
-	// Convert mouse coordinates to client coordinates
-
 	/*
 	var bbox = this.view.canvas.getBoundingClientRect();
 	return { x : Math.round(x - bbox.left * (this.view.canvas.width / bbox.width)),
@@ -124,10 +120,7 @@ MainController.prototype.windowToCanvas=function (x, y) {
 };
 
 MainController.prototype.garmentThumbnailClick=function(element) {
-
-	// TODO - MOVE TO View
 	// The user has clicked a thumbnail - we want to show the bigger image.
-
 	var img = $(element).find("img");						// Get the image clicked
 	$("#mcts-colour").text(img.attr("data-displayname"));	// Get the display name and display it.
 
@@ -135,7 +128,7 @@ MainController.prototype.garmentThumbnailClick=function(element) {
 	$(element).parent().parent().find("li").find("img").removeClass("selected-img");
 
 	img.addClass("selected-img");							// Select the clicked image
-	this.index(img.attr("data-img-medium"));	// Reinitialise the canvas with the new image
+	this.index(img.attr("data-img-medium"));	            // Reinitialise the canvas with the garment
 };
 
 MainController.prototype.motifAddDummy=function(e) {
@@ -143,18 +136,11 @@ MainController.prototype.motifAddDummy=function(e) {
     var _this = this;
 
 	this.model.motifAddDummy(function(){
-		_this.view.canvasRenderAll(_this.model.motifs);
+		_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	});
 
 }
-/*
-MainController.prototype.hitTest = function(loc, rect) {
-	// Determine if a point (loc) is in a rectangle.
-	this.view.context.beginPath();
-	this.view.context.rect(rect.x, rect.y, rect.width, rect.height);
-	return this.view.context.isPointInPath(loc.x, loc.y);
-};
-*/
+
 
 
 MainView.prototype = {};
@@ -162,21 +148,21 @@ MainView.prototype.constructor = MainView;
 function MainView() {
 	this.canvas = document.getElementById("mc-canvas");
 	this.context = this.canvas.getContext("2d");
-	this.canvasBackgroundImageData;			// contains the grid and garmentImage
 };
 
-MainView.prototype.canvasRenderBackground=function(garmentImageError) {
+MainView.prototype.canvasRenderBackground=function(model) {
 	this.canvasRenderGrid('whitesmoke', 10, 10);
 
-	if (garmentImageError === undefined) {
+	if (model.garmentImage !== null) {
 		// no problem with the garment image so draw it.
-		this.context.drawImage(controller.model.garmentImage, 0, 0);
+		this.context.drawImage(model.garmentImage, 0, 0);
 	} else {
 		// problem, just output the error (usually missing image).
-		this.context.fillText(garmentImageError, 10, 10);
+		this.context.fillText('MISSING IMAGE!', 10, 10);
 	}
 
-	this.canvasSaveBackground();
+    // Save the background grid and garment image so we don't have to keep redrawing it.
+	model.canvasBackgroundImageData = this.canvasGetBackground();
 };
 
 MainView.prototype.canvasRenderGrid=function(color, stepX, stepY) {
@@ -204,23 +190,21 @@ MainView.prototype.canvasRenderGrid=function(color, stepX, stepY) {
 		this.context.restore();
 };
 
-MainView.prototype.canvasRenderAll=function(motifs) {
-	// Draw the background grid and garment
-	this.canvasRestoreBackground();
+MainView.prototype.canvasRenderAll=function(motifs, backgroundImageData) {
+	this.canvasRestoreBackground(backgroundImageData);
 
-	// Draw each motif
 	for (var i = 0, len = motifs.length; i < len; i++) {
-		motifs[i].draw(this.context);
+		motifs[i].draw(this.context);   // Draw each motif
 	}
 };
 
-MainView.prototype.canvasSaveBackground=function() {
+MainView.prototype.canvasGetBackground=function() {
 	// Saves the grid and the garmentImage so it can be quickly retrieved.
-	this.canvasBackgroundImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+	return this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
 };
 
-MainView.prototype.canvasRestoreBackground=function() {
-	this.context.putImageData(this.canvasBackgroundImageData, 0, 0);
+MainView.prototype.canvasRestoreBackground=function(backgroundImageData) {
+	this.context.putImageData(backgroundImageData, 0, 0);
 };
 
 MainView.prototype.canvasSetDragCursor=function() {
@@ -236,12 +220,14 @@ MainView.prototype.canvasSetResizeCursor=function() {
 };
 
 
+
 MainModel.prototype = {};
 MainModel.prototype.constructor = MainModel;
 function MainModel() {
-	this._selectedMotif = null;			// gives us quick access to the selected motif in this.motifs[]
-	this.motifs = [];
-	this.garmentImage = new Image();
+	this._selectedMotif = null;			        // gives us quick access to the selected motif in this.motifs[]
+	this.motifs = [];                           // Different images on the garment
+	this.garmentImage = new Image();            // The big garment t-shirt
+    this.canvasBackgroundImageData = null;		// contains the grid and garmentImage
 }
 
 MainModel.prototype.AddDummyData = function() {
@@ -276,9 +262,6 @@ MainModel.prototype.AddDummyData = function() {
 		x.selected = true;
 		_this.motifs.push(x);
 		_this._selectedMotif = x;
-
-		//x = new Motif(20, 150, 150, 100, images);
-		//controller.model.motifs.push(x);
 	});
 };
 
@@ -350,25 +333,9 @@ MainModel.prototype.motifTestMouseDown = function(loc, context) {
 			return;
 		}
 
-
 	}
 };
 
-
-// TODO DO I REALLY NEED THESE motifStopDragging/Resizing functions?
-MainModel.prototype.motifStopDragging = function() {
-	if (this._selectedMotif && this._selectedMotif.dragging) {
-		this._selectedMotif.dragging = false;
-		controller.view.canvasSetDefaultCursor();
-	}
-};
-
-MainModel.prototype.motifStopResizing = function() {
-	if (this._selectedMotif && this._selectedMotif.resizing) {
-		this._selectedMotif.resizing = false;
-		controller.view.canvasSetDefaultCursor();
-	}
-};
 
 MainModel.prototype.motifTestMouseMove = function(loc, context) {
 	// Returns true if a motif was changed(needs redrawing), otherwise false.
