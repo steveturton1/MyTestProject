@@ -93,15 +93,17 @@ Motif.prototype.draw = function(context) {
     // TODO when drawing images, i turn of translate so not to skew the image,
     // so rather that keep saving and restoring the context, draw all the images at the end.
 
+    var width = Math.floor(this.rect.width),    // prevent fractions as it will cause blurring
+        height = Math.floor(this.rect.height);  // prevent fractions as it will cause blurring
 
     context.save();
 
-
     // Draw the image
     context.fillStyle = "lightgrey";
-    context.fillRect(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
+    context.fillRect(this.rect.x, this.rect.y, width, height);
 
     if (this.selected) {
+
 
         context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
         context.strokeStyle = "black";
@@ -114,12 +116,12 @@ Motif.prototype.draw = function(context) {
             context.setLineDash = function () {}
         }
         context.setLineDash([5, 3]);
-        context.rect(this.rect.x - 4, this.rect.y - 4, this.rect.width + 7, this.rect.height + 7);
+        context.rect(this.rect.x - 4, this.rect.y - 4, width + 7, height + 7);
         context.stroke();
         context.setLineDash([]);    // turn off dashed line
 
         // Draw Delete button
-        this.deleteButton.rect = {x: this.rect.x + this.rect.width - 8,
+        this.deleteButton.rect = {x: this.rect.x + width - 8,
                                 y: this.rect.y - 8,
                                 width: 16, height: 16};
         //context.beginPath();
@@ -144,8 +146,8 @@ Motif.prototype.draw = function(context) {
         //context.lineWidth = 1;
         //context.beginPath();
         //context.fillStyle = "white";
-        this.resizeButton.rect = {x: this.rect.x + this.rect.width - 8,
-                                y: this.rect.y + this.rect.height - 8,
+        this.resizeButton.rect = {x: this.rect.x + width - 8,
+                                y: this.rect.y + height - 8,
                                 width: 16, height: 16};
         //context.fillRect(this.resizeButton.rect.x, this.resizeButton.rect.y, this.resizeButton.rect.width, this.resizeButton.rect.height);
         //context.rect(this.resizeButton.rect.x, this.resizeButton.rect.y, this.resizeButton.rect.width, this.resizeButton.rect.height);

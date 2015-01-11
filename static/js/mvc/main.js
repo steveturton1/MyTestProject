@@ -353,11 +353,23 @@ MainModel.prototype.motifTestMouseMove = function(loc, context) {
 		}
 
         if (this._selectedMotif.resizing) {
+            // Normal resizing
+            //this._selectedMotif.rect.width += loc.x - this._selectedMotif.dragLoc.x;
+			//this._selectedMotif.rect.height += loc.y - this._selectedMotif.dragLoc.y;
+			//this._selectedMotif.dragLoc.x = loc.x;
+			//this._selectedMotif.dragLoc.y = loc.y;
 
-            this._selectedMotif.rect.width += loc.x - this._selectedMotif.dragLoc.x;
-			this._selectedMotif.rect.height += loc.y - this._selectedMotif.dragLoc.y;
-			this._selectedMotif.dragLoc.x = loc.x;
-			this._selectedMotif.dragLoc.y = loc.y;
+            // Resize keeping aspect ratio.
+            var s = this.calculateAspectRatioFit(this._selectedMotif.rect.width,
+                            this._selectedMotif.rect.height,
+                            this._selectedMotif.rect.width += loc.x - this._selectedMotif.dragLoc.x,
+                            this._selectedMotif.rect.height += loc.y - this._selectedMotif.dragLoc.y)
+
+            this._selectedMotif.rect.width = s.width;
+            this._selectedMotif.rect.height = s.height;
+
+            this._selectedMotif.dragLoc.x = this._selectedMotif.rect.x + this._selectedMotif.rect.width;
+            this._selectedMotif.dragLoc.y = this._selectedMotif.rect.y + this._selectedMotif.rect.height;
 
             controller.view.canvasSetResizeCursor();
 			return true;
@@ -392,6 +404,13 @@ MainModel.prototype.motifTestMouseMove = function(loc, context) {
 
 	return false;
 
+};
+
+MainModel.prototype.calculateAspectRatioFit = function(srcWidth, srcHeight, maxWidth, maxHeight) {
+		var ratio = [maxWidth / srcWidth, maxHeight / srcHeight ];
+		ratio = Math.min(ratio[0], ratio[1]);
+
+		return { width:srcWidth*ratio, height:srcHeight*ratio };
 };
 
 MainModel.prototype.motifDeleteSelected = function() {
