@@ -138,7 +138,17 @@ MainController.prototype.motifAddDummy=function(e) {
 	this.model.motifAddDummy(function(){
 		_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	});
+}
 
+MainController.prototype.drawSVG=function(e) {
+	e.preventDefault();
+    var img = new Image();
+    var _this = this;
+
+    img.onload = function() {
+        _this.view.context.drawImage(img,0,0, 300, 200);
+    }
+	img.src = '/static/images/steve/Parental Advisory 16-3-2014.svg'
 }
 
 
