@@ -10,8 +10,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1151.356"
-   height="859.19128"
+   width="952"
+   height="657"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -35,11 +35,12 @@
        inkscape:collect="always"
        xlink:href="#linearGradient5194"
        id="linearGradient5200"
-       x1="572.34782"
+       x1="572.34784"
        y1="146.43976"
-       x2="1603.1739"
+       x2="1603.174"
        y2="146.43976"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(116.98897,84.530001)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -48,11 +49,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.74313636"
-     inkscape:cx="411.36949"
-     inkscape:cy="426.85058"
+     inkscape:zoom="0.52547676"
+     inkscape:cx="621.72927"
+     inkscape:cy="441.37837"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="705"
@@ -81,74 +82,74 @@
      id="layer3"
      inkscape:label="Background Boxes"
      style="display:inline"
-     transform="translate(-341.34392,24.030133)">
+     transform="translate(-341.34392,-178.16116)">
     <rect
-       style="fill:none;fill-opacity:1;stroke:#aaaaaa;stroke-width:10.00001907000000000;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       style="fill:none;stroke:#000000;stroke-width:10.00001907;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect3011"
-       width="941.3595"
+       width="941.35956"
        height="646.62006"
-       x="446.34558"
-       y="84.760231"
-       transform="matrix(0.99999627,-0.00273139,0,1,0,0)" />
+       x="348.11435"
+       y="183.75163"
+       transform="matrix(0.99999982,-5.9936232e-4,-0.00213204,0.99999773,0,0)" />
     <rect
-       style="fill:#aaaaaa;fill-opacity:1;stroke:none"
+       style="fill:#000000;fill-opacity:1;stroke:none"
        id="rect3800"
-       width="912.21289"
+       width="912.21295"
        height="153.41289"
-       x="460.90817"
-       y="97.991203" />
+       x="359.49899"
+       y="198.29546" />
     <rect
-       style="fill:#aaaaaa;fill-opacity:1;stroke:none;display:inline"
+       style="fill:#000000;fill-opacity:1;stroke:none;display:inline"
        id="rect3800-4"
-       width="912.21252"
+       width="912.21259"
        height="161.60632"
-       x="460.90817"
-       y="553.94806" />
+       x="359.49899"
+       y="654.25226" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Text"
      style="display:inline"
-     transform="translate(-341.34392,24.030133)">
+     transform="translate(-341.34392,-178.16116)">
     <text
        xml:space="preserve"
-       style="font-size:63.73529053px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro"
-       x="625.79315"
-       y="391.58591"
+       style="font-size:63.73529434px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro"
+       x="494.75888"
+       y="469.90921"
        id="text3002"
        sodipodi:linespacing="125%"
        transform="scale(0.7739127,1.2921354)"><tspan
          sodipodi:role="line"
          id="tspan3004"
-         x="625.79315"
-         y="391.58591"
+         x="494.75888"
+         y="469.90921"
          style="font-size:235.82054138px;font-weight:bold;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;-inkscape-font-specification:Myriad Pro Bold">ADVISORY</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:137.53125000000000000px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:120.00000476999999000%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient5200);fill-opacity:1;stroke:none;font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro Bold"
-       x="563.27087"
-       y="193.14821"
+       style="font-size:137.53125px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:120.00000477%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro Bold"
+       x="442.93784"
+       y="278.43668"
        id="text3774"
        sodipodi:linespacing="120%"
-       transform="scale(0.8427361,1.1866111)"><tspan
+       transform="scale(0.84273609,1.1866111)"><tspan
          sodipodi:role="line"
          id="tspan3776"
-         x="563.27087"
-         y="193.14821"
-         style="font-size:137.53125000000000000px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:120.00000476999999000%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient5200);font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro Bold;fill-opacity:1">P  A  R  E  N  T  A  L</tspan></text>
+         x="442.93784"
+         y="278.43668"
+         style="font-size:137.53125px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro Bold">P  A  R  E  N  T  A  L</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:114.5689621px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:120.00000477%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.836797;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro Bold"
-       x="720.75659"
-       y="459.78455"
+       x="567.9624"
+       y="526.95355"
        id="text3774-1"
        sodipodi:linespacing="120%"
-       transform="scale(0.6636976,1.5067103)"><tspan
+       transform="scale(0.66369759,1.5067103)"><tspan
          sodipodi:role="line"
          id="tspan3776-7"
-         x="720.75659"
-         y="459.78455"
+         x="567.9624"
+         y="526.95355"
          style="font-size:114.5689621px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke:#ffffff;stroke-width:1.836797;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Myriad Pro;-inkscape-font-specification:Myriad Pro Bold">E X P L I C I T   C O N T E N T</tspan></text>
   </g>
 </svg>

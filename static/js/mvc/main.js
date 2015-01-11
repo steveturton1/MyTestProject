@@ -146,7 +146,7 @@ MainController.prototype.drawSVG=function(e) {
     var _this = this;
 
     img.onload = function() {
-        _this.view.context.drawImage(img,0,0, 300, 200);
+        _this.view.context.drawImage(img,190,120, 150, 100);
     }
 	img.src = '/static/images/steve/Parental Advisory 16-3-2014.svg'
 }
