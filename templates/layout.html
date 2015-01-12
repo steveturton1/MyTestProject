@@ -31,7 +31,12 @@
         </div>
     </div>
 
+
     {% if user %}
+        <div id="lt-admin">
+            <a href="{{ url_for('admin') }}">{{_('Admin')}}</a>
+        </div>
+
         <div id="lt-user" onclick="layout_controller.popupUserRender(this, event)">
             <div id="ltu-name">
                 <span id="ltun-user">{{ user.id }}</span>

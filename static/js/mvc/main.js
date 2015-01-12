@@ -55,14 +55,14 @@ function MainController() {
             if (_this.model._selectedMotif.hitTestResize(location, _this.view.context)) {
                 // Starting a resize
                 _this.model._selectedMotif.resizing = true;
-                _this.model.motifTestMouseDown(location, _this.view.context);
+                _this.motifTestMouseDown(location, _this.view.context);
                 return;
             }
 		}
 
 		// See if we hit a motif - select it if we did.
 		_this.model.motifResetAll();
-		_this.model.motifTestMouseDown(location, _this.view.context);
+		_this.motifTestMouseDown(location, _this.view.context);
 		_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	};
 
@@ -86,7 +86,7 @@ function MainController() {
 	};
 
 	function mouseMoveOrTouchMove(location) {
-		if (_this.model.motifTestMouseMove(location, _this.view.context)) {
+		if (_this.motifTestMouseMove(location, _this.view.context)) {
 			_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);     // Something changed so redraw everything.
 		}
 	};
@@ -151,6 +151,97 @@ MainController.prototype.drawSVG=function(e) {
 	img.src = '/static/images/steve/Parental Advisory 16-3-2014.svg'
 }
 
+MainController.prototype.motifTestMouseMove = function(loc, context) {
+	// Returns true if a motif was changed(needs redrawing), otherwise false.
+	// Only need to test the selected motif.
+
+	if (this.model._selectedMotif) {
+		if (this.model._selectedMotif.dragging) {
+			// we are trying to drag this motif
+			this.model._selectedMotif.rect.x += loc.x - this.model._selectedMotif.dragLoc.x;
+			this.model._selectedMotif.rect.y += loc.y - this.model._selectedMotif.dragLoc.y;
+			this.model._selectedMotif.dragLoc = loc;
+
+			this.view.canvasSetDragCursor();
+			return true;
+		}
+
+        if (this.model._selectedMotif.resizing) {
+            // Normal resizing
+            //this._selectedMotif.rect.width += loc.x - this._selectedMotif.dragLoc.x;
+			//this._selectedMotif.rect.height += loc.y - this._selectedMotif.dragLoc.y;
+			//this._selectedMotif.dragLoc.x = loc.x;
+			//this._selectedMotif.dragLoc.y = loc.y;
+
+            // Resize keeping aspect ratio.
+            var s = this.model.calculateAspectRatioFit(this.model._selectedMotif.rect.width,
+                            this.model._selectedMotif.rect.height,
+                            this.model._selectedMotif.rect.width += loc.x - this.model._selectedMotif.dragLoc.x,
+                            this.model._selectedMotif.rect.height += loc.y - this.model._selectedMotif.dragLoc.y)
+
+            this.model._selectedMotif.rect.width = s.width;
+            this.model._selectedMotif.rect.height = s.height;
+
+            this.model._selectedMotif.dragLoc.x = this.model._selectedMotif.rect.x + this.model._selectedMotif.rect.width;
+            this.model._selectedMotif.dragLoc.y = this.model._selectedMotif.rect.y + this.model._selectedMotif.rect.height;
+
+            this.view.canvasSetResizeCursor();
+			return true;
+        }
+
+		var prevVal = this.model._selectedMotif.deleteButton.mouseHover;
+		var changed = false;
+
+		// See if we are hovering over the delete button
+		this.model._selectedMotif.deleteButton.mouseHover = this.model._selectedMotif.hitTestDelete(loc, context);
+		if (prevVal !== this.model._selectedMotif.deleteButton.mouseHover){
+			changed = true;
+		};
+
+		// See if we are hovering over the resize button
+		prevVal = this.model._selectedMotif.resizeButton.mouseHover;
+		this.model._selectedMotif.resizeButton.mouseHover = this.model._selectedMotif.hitTestResize(loc, context);
+		//if (prevVal !== this._selectedMotif.resizeButton.mouseHover){
+		//	controller.view.canvasSetResizeCursor();
+		//	//changed = true;
+		//} else {
+		//	//controller.view.canvasSetDefaultCursor();
+		//};
+		if (this.model._selectedMotif.resizeButton.mouseHover) {
+			this.view.canvasSetResizeCursor();
+		} else {
+			this.view.canvasSetDefaultCursor();
+		};
+
+		return changed;
+	}
+
+	return false;
+};
+
+MainController.prototype.motifTestMouseDown = function(loc, context) {
+	// go through each of our motifs and see if the mouse loc means one
+	// of them were clicked.  If one was then mark it as selected.
+
+	for (var i = 0, len = this.model.motifs.length; i < len; i++) {
+
+        if (this.model._selectedMotif && (this.model._selectedMotif === this.model.motifs[i])) {
+            if (this.model.motifs[i].hitTestResize(loc, context)) {
+                this.model.motifs[i].resizing = true;
+                this.model.motifs[i].dragLoc = loc;
+                return;
+            }
+        }
+
+		if (this.model.motifs[i].hitTest(loc, context)) {
+			this.model.motifs[i].selected = true;
+			this.model.motifs[i].dragging = true;
+			this.model.motifs[i].dragLoc = loc;
+			this.model._selectedMotif = this.model.motifs[i];
+			return;
+		}
+	}
+};
 
 
 MainView.prototype = {};
@@ -320,101 +411,6 @@ MainModel.prototype.motifResetAll = function() {
 		this.motifs[i].reset();
 	}
 }
-
-MainModel.prototype.motifTestMouseDown = function(loc, context) {
-	// go through each of our motifs and see if the mouse loc means one
-	// of them were clicked.  If one was then mark it as selected.
-
-	for (var i = 0, len = this.motifs.length; i < len; i++) {
-
-        if (this._selectedMotif && (this._selectedMotif === this.motifs[i])) {
-            if (this.motifs[i].hitTestResize(loc, context)) {
-                this.motifs[i].resizing = true;
-                this.motifs[i].dragLoc = loc;
-                return;
-            }
-        }
-
-		if (this.motifs[i].hitTest(loc, context)) {
-			this.motifs[i].selected = true;
-			this.motifs[i].dragging = true;
-			this.motifs[i].dragLoc = loc;
-			this._selectedMotif = this.motifs[i];
-			return;
-		}
-
-	}
-};
-
-
-MainModel.prototype.motifTestMouseMove = function(loc, context) {
-	// Returns true if a motif was changed(needs redrawing), otherwise false.
-	// Only need to test the selected motif.
-
-	if (this._selectedMotif) {
-		if (this._selectedMotif.dragging) {
-			// we are trying to drag this motif
-			this._selectedMotif.rect.x += loc.x - this._selectedMotif.dragLoc.x;
-			this._selectedMotif.rect.y += loc.y - this._selectedMotif.dragLoc.y;
-			this._selectedMotif.dragLoc = loc;
-
-			controller.view.canvasSetDragCursor();
-			return true;
-		}
-
-        if (this._selectedMotif.resizing) {
-            // Normal resizing
-            //this._selectedMotif.rect.width += loc.x - this._selectedMotif.dragLoc.x;
-			//this._selectedMotif.rect.height += loc.y - this._selectedMotif.dragLoc.y;
-			//this._selectedMotif.dragLoc.x = loc.x;
-			//this._selectedMotif.dragLoc.y = loc.y;
-
-            // Resize keeping aspect ratio.
-            var s = this.calculateAspectRatioFit(this._selectedMotif.rect.width,
-                            this._selectedMotif.rect.height,
-                            this._selectedMotif.rect.width += loc.x - this._selectedMotif.dragLoc.x,
-                            this._selectedMotif.rect.height += loc.y - this._selectedMotif.dragLoc.y)
-
-            this._selectedMotif.rect.width = s.width;
-            this._selectedMotif.rect.height = s.height;
-
-            this._selectedMotif.dragLoc.x = this._selectedMotif.rect.x + this._selectedMotif.rect.width;
-            this._selectedMotif.dragLoc.y = this._selectedMotif.rect.y + this._selectedMotif.rect.height;
-
-            controller.view.canvasSetResizeCursor();
-			return true;
-        }
-
-		var prevVal = this._selectedMotif.deleteButton.mouseHover;
-		var changed = false;
-
-		// See if we are hovering over the delete button
-		this._selectedMotif.deleteButton.mouseHover = this._selectedMotif.hitTestDelete(loc, context);
-		if (prevVal !== this._selectedMotif.deleteButton.mouseHover){
-			changed = true;
-		};
-
-		// See if we are hovering over the resize button
-		prevVal = this._selectedMotif.resizeButton.mouseHover;
-		this._selectedMotif.resizeButton.mouseHover = this._selectedMotif.hitTestResize(loc, context);
-		//if (prevVal !== this._selectedMotif.resizeButton.mouseHover){
-		//	controller.view.canvasSetResizeCursor();
-		//	//changed = true;
-		//} else {
-		//	//controller.view.canvasSetDefaultCursor();
-		//};
-		if (this._selectedMotif.resizeButton.mouseHover) {
-			controller.view.canvasSetResizeCursor();
-		} else {
-			controller.view.canvasSetDefaultCursor();
-		};
-
-		return changed;
-	}
-
-	return false;
-
-};
 
 MainModel.prototype.calculateAspectRatioFit = function(srcWidth, srcHeight, maxWidth, maxHeight) {
 		var ratio = [maxWidth / srcWidth, maxHeight / srcHeight ];

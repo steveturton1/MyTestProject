@@ -42,6 +42,11 @@ def login():
     return render_template("login.html", settings=app_settings, user=user)
 
 
+@app.route('/admin')
+def admin():
+    return render_template("admin.html")
+
+
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
