@@ -29,11 +29,10 @@ def get_toolbar():
     # TODO pull this from the database
     shirts = []
 
-    shirt = {}
-    shirt['id'] = 'white'
-    shirt['display_name'] = 'White'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-white-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-white-medium.png')
+    shirt = {'id': 'white',
+             'display_name': 'White',
+             'img_small': url_for('static', filename='images/shirts/anvil-white-small.jpg'),
+             'img_medium': url_for('static', filename='images/shirts/anvil-white-medium.png')}
     shirts.append(shirt)
 
     shirt = {}
@@ -184,7 +183,7 @@ def get_toolbar():
     shirts.append(shirt)
 
     toolbar['shirts'] = {}
-    toolbar['shirts']['selected'] = "apple"     # default to the white one being selected.
+    toolbar['shirts']['selected'] = "apple"  # default to the white one being selected.
     toolbar['shirts']['list'] = shirts
 
     return toolbar

@@ -104,6 +104,7 @@ MainController.prototype.index=function(img) {
     	_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	};
 	this.model.garmentImage.onerror = function() {
+        _this.model.garmentImage = null;
 		_this.view.canvasRenderBackground(_this.model);
     	_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
 	};
