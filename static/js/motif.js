@@ -99,8 +99,9 @@ Motif.prototype.draw = function(context) {
     context.save();
 
     // Draw the image
-    context.fillStyle = "lightgrey";
-    context.fillRect(this.rect.x, this.rect.y, width, height);
+    //context.fillStyle = "lightgrey";
+    //context.fillRect(this.rect.x, this.rect.y, width, height);
+    context.drawImage(this.images.test, this.rect.x, this.rect.y, width, height)
 
     if (this.selected) {
 

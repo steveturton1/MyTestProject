@@ -69,20 +69,22 @@ function MainController() {
 	function mouseUpOrTouchEnd(location) {
 		if (_this.model._selectedMotif) {
 
-			// TODO - TEST THAT IT HAD A MOUSE DOWN RATHER THAN HOVER - MAYBE
+            // TODO - TEST THAT IT HAD A MOUSE DOWN RATHER THAN HOVER - MAYBE
             if (_this.model._selectedMotif.hitTestDelete(location, _this.view.context) &&
-									_this.model._selectedMotif.deleteButton.mouseHover) {
+                _this.model._selectedMotif.deleteButton.mouseHover) {
 
-				// Clicked the delete button.
-				_this.model.motifDeleteSelected();
-				_this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
-				return;
-			}
-		}
+                // Clicked the delete button.
+                _this.model.motifDeleteSelected();
+                _this.view.canvasRenderAll(_this.model.motifs, _this.model.canvasBackgroundImageData);
+                return;
+            }
 
-        _this.model._selectedMotif.dragging = false;
-		_this.model._selectedMotif.resizing = false;
+
+            _this.model._selectedMotif.dragging = false;
+            _this.model._selectedMotif.resizing = false;
+        }
         _this.view.canvasSetDefaultCursor();
+
 	};
 
 	function mouseMoveOrTouchMove(location) {
@@ -146,9 +148,15 @@ MainController.prototype.drawSVG=function(e) {
     var _this = this;
 
     img.onload = function() {
-        _this.view.context.drawImage(img,190,120, 150, 100);
+        _this.view.context.drawImage(img,190,120);
     }
-	img.src = '/static/images/steve/Parental Advisory 16-3-2014.svg'
+	img.src = '/static/images/steve/rect3011 small.png'
+
+    var img2 = new Image();
+    img2.onload = function() {
+        _this.view.context.drawImage(img2,190,260, 199,137);
+    }
+	img2.src = '/static/images/steve/Parental Advisory 16-3-2014 - TEXT TO PATH.svg'
 }
 
 MainController.prototype.motifTestMouseMove = function(loc, context) {
@@ -355,11 +363,12 @@ MainModel.prototype.AddDummyData = function() {
 	var sources = {
 		delete_on: '/static/images/steve/delete_on.png',
 		delete_off: '/static/images/steve/delete_off.png',
-		blank: '/static/images/steve/blank.png'
+		blank: '/static/images/steve/blank.png',
+        test: '/static/images/steve/Parental Advisory 16-3-2014 - TEXT TO PATH.svg'
 	};
 
 	loadImages(sources, function(images) {
-        var x = new Motif(20, 20, 150, 100, images);
+        var x = new Motif(20, 20, 199, 137, images);
 		x.selected = true;
 		_this.motifs.push(x);
 		_this._selectedMotif = x;
@@ -390,13 +399,14 @@ MainModel.prototype.motifAddDummy = function(parentCallback) {
 	var sources = {
 		delete_on: '/static/images/steve/delete_on.png',
 		delete_off: '/static/images/steve/delete_off.png',
-		blank: '/static/images/steve/blank.png'
+		blank: '/static/images/steve/blank.png',
+        test: '/static/images/steve/Parental Advisory 16-3-2014 - TEXT TO PATH.svg'
 	};
 
 	loadImages(sources, function(images) {
 		_this.motifResetAll();
 
-        var x = new Motif(20, 20, 150, 100, images);
+        var x = new Motif(20, 20, 199, 137, images);
 		x.selected = true;
 		_this.motifs.push(x);
 		_this._selectedMotif = x;
