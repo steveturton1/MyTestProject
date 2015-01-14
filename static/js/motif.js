@@ -27,7 +27,6 @@ function Motif(x, y, width, height, images) {
 
 
     this.dragging = false;      // True if being dragged, otherwise false.
-
     this.resizing = false;      // True if being resized, otherwise false.
     this.selected = false;
     this.dragLoc = {x : 0, y : 0};
@@ -101,7 +100,7 @@ Motif.prototype.draw = function(context) {
     // Draw the image
     //context.fillStyle = "lightgrey";
     //context.fillRect(this.rect.x, this.rect.y, width, height);
-    context.drawImage(this.images.test, this.rect.x, this.rect.y, width, height)
+    context.drawImage(this.images.image, this.rect.x, this.rect.y, width, height)
 
     if (this.selected) {
 

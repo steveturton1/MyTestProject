@@ -365,7 +365,7 @@ MainModel.prototype.AddDummyData = function() {
 		delete_on: '/static/images/steve/delete_on.png',
 		delete_off: '/static/images/steve/delete_off.png',
 		blank: '/static/images/steve/blank.png',
-        test: '/static/images/steve/Parental Advisory 16-3-2014 - TEXT TO PATH.svg'
+        image: '/static/images/steve/Parental Advisory 16-3-2014 - TEXT TO PATH.svg'
 	};
 
 	loadImages(sources, function(images) {
@@ -401,13 +401,16 @@ MainModel.prototype.motifAddDummy = function(parentCallback) {
 		delete_on: '/static/images/steve/delete_on.png',
 		delete_off: '/static/images/steve/delete_off.png',
 		blank: '/static/images/steve/blank.png',
-        test: '/static/images/steve/Parental Advisory 16-3-2014 - TEXT TO PATH.svg'
+        image: '/static/images/steve/Parental Advisory 16-3-2014 - TEXT TO PATH.svg'
 	};
 
 	loadImages(sources, function(images) {
 		_this.motifResetAll();
 
-        var x = new Motif(20, 20, 199, 137, images);
+        // Create the new motif, calculate the width and height it is to be to fit into 200x200 size.
+        var ratio = _this.calculateAspectRatioFit(images.image.width, images.image.height, 200, 200);
+        var x = new Motif(20, 20, Math.floor(ratio.width), Math.floor(ratio.height), images);
+
 		x.selected = true;
 		_this.motifs.push(x);
 		_this._selectedMotif = x;
