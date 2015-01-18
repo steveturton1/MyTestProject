@@ -31,7 +31,6 @@ function Motif(x, y, width, height, images) {
     this.selected = false;
     this.dragLoc = {x : 0, y : 0};
     this.images = images;
-
 }
 
 Motif.prototype.reset = function() {
@@ -100,10 +99,9 @@ Motif.prototype.draw = function(context) {
     // Draw the image
     //context.fillStyle = "lightgrey";
     //context.fillRect(this.rect.x, this.rect.y, width, height);
-    context.drawImage(this.images.image, this.rect.x, this.rect.y, width, height)
+    context.drawImage(this.images.image, this.rect.x, this.rect.y, width, height);
 
     if (this.selected) {
-
 
         context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
         context.strokeStyle = "black";
@@ -120,43 +118,21 @@ Motif.prototype.draw = function(context) {
         context.stroke();
         context.setLineDash([]);    // turn off dashed line
 
-        // Draw Delete button
-        this.deleteButton.rect = {x: this.rect.x + width - 8,
-                                y: this.rect.y - 8,
-                                width: 16, height: 16};
-        //context.beginPath();
-        //context.fillStyle = "white";
-        //context.fillRect(this.deleteButton.rect.x, this.deleteButton.rect.y, this.deleteButton.rect.width, this.deleteButton.rect.height);
-        //context.rect(this.deleteButton.rect.x, this.deleteButton.rect.y, this.deleteButton.rect.width, this.deleteButton.rect.height);
-        //context.stroke();
-
         // don't draw images with the context.translate(0.5, 0.5) fix as images
         // will be blurred so restore canvas here.
         context.restore();
+
+        // Draw Delete button
+        this.deleteButton.rect = {x: this.rect.x + width - 8, y: this.rect.y - 8, width: 16, height: 16};
         if (this.deleteButton.mouseHover) {
             context.drawImage(this.images.delete_on, this.deleteButton.rect.x, this.deleteButton.rect.y);
         } else {
             context.drawImage(this.images.delete_off, this.deleteButton.rect.x, this.deleteButton.rect.y);
         }
 
-        // draw the resize button.
-        //context.save();
-        //context.translate(0.5, 0.5);	// so all lines straddle the pixels and aren't blurred - http://www.mobtowers.com/html5-canvas-crisp-lines-every-time/
-        //context.strokeStyle = "black";
-        //context.lineWidth = 1;
-        //context.beginPath();
-        //context.fillStyle = "white";
-        this.resizeButton.rect = {x: this.rect.x + width - 8,
-                                y: this.rect.y + height - 8,
-                                width: 16, height: 16};
-        //context.fillRect(this.resizeButton.rect.x, this.resizeButton.rect.y, this.resizeButton.rect.width, this.resizeButton.rect.height);
-        //context.rect(this.resizeButton.rect.x, this.resizeButton.rect.y, this.resizeButton.rect.width, this.resizeButton.rect.height);
-        //context.stroke();
-        //if (this.resizeButton.mouseHover) {
-            context.drawImage(this.images.blank, this.resizeButton.rect.x, this.resizeButton.rect.y);
-        //} else {
-        //    context.drawImage(this.images.delete_off, this.resizeButton.rect.x, this.resizeButton.rect.y);
-        //}
+        // Draw the resize button
+        this.resizeButton.rect = {x: this.rect.x + width - 6, y: this.rect.y + height - 6, width: 16, height: 16};
+        context.drawImage(this.images.resize, this.resizeButton.rect.x, this.resizeButton.rect.y);
 
     }
     context.restore();

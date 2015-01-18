@@ -24,166 +24,114 @@ def get_user():
 
 
 def get_toolbar():
-    toolbar = {}
+    # shirt = {}
+    # shirt['id'] = 'caribbean-blue'
+    # shirt['display_name'] = 'Caribbean Blue'
+    # shirt['img_small'] = url_for('static', filename='images/shirts/anvil-caribbean-blue-small.jpg')
+    # shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-caribbean-blue-medium.png')
+    # shirts.append(shirt)
 
     # TODO pull this from the database
-    shirts = []
+    shirts = [
+        {'id': 'white', 'display_name': 'White',
+         'img_small': url_for('static', filename='images/shirts/anvil-white-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-white-medium.png')},
 
-    shirt = {'id': 'white',
-             'display_name': 'White',
-             'img_small': url_for('static', filename='images/shirts/anvil-white-small.jpg'),
-             'img_medium': url_for('static', filename='images/shirts/anvil-white-medium.png')}
-    shirts.append(shirt)
+        {'id': 'black', 'display_name': 'Black',
+         'img_small': url_for('static', filename='images/shirts/anvil-black-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-black-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'black'
-    shirt['display_name'] = 'Black'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-black-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-black-medium.png')
-    shirts.append(shirt)
+        {'id': 'apple', 'display_name': 'Apple',
+         'img_small': url_for('static', filename='images/shirts/anvil-apple-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-apple-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'apple'
-    shirt['display_name'] = 'Apple'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-apple-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-apple-medium.png')
-    shirts.append(shirt)
+        {'id': 'caribbean-blue', 'display_name': 'Caribbean Blue',
+         'img_small': url_for('static', filename='images/shirts/anvil-caribbean-blue-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-caribbean-blue-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'caribbean-blue'
-    shirt['display_name'] = 'Caribbean Blue'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-caribbean-blue-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-caribbean-blue-medium.png')
-    shirts.append(shirt)
+        {'id': 'charcoal', 'display_name': 'Charcoal',
+         'img_small': url_for('static', filename='images/shirts/anvil-charcoal-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-charcoal-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'charcoal'
-    shirt['display_name'] = 'Charcoal'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-charcoal-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-charcoal-medium.png')
-    shirts.append(shirt)
+        {'id': 'chocolate', 'display_name': 'Chocolate',
+         'img_small': url_for('static', filename='images/shirts/anvil-chocolate-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-chocolate-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'chocolate'
-    shirt['display_name'] = 'Chocolate'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-chocolate-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-chocolate-medium.png')
-    shirts.append(shirt)
+        {'id': 'city-green', 'display_name': 'City Green',
+         'img_small': url_for('static', filename='images/shirts/anvil-city-green-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-city-green-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'city-green'
-    shirt['display_name'] = 'City Green'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-city-green-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-city-green-medium.png')
-    shirts.append(shirt)
+        {'id': 'heather-blue', 'display_name': 'Heather Blue',
+         'img_small': url_for('static', filename='images/shirts/anvil-heather-blue-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-heather-blue-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'heather-blue'
-    shirt['display_name'] = 'Heather Blue'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-heather-blue-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-heather-blue-medium.png')
-    shirts.append(shirt)
+        {'id': 'heather-dark-grey', 'display_name': 'Heather Dark Grey',
+         'img_small': url_for('static', filename='images/shirts/anvil-heather-dark-grey-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-heather-dark-grey-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'heather-dark-grey'
-    shirt['display_name'] = 'Heather Dark Grey'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-heather-dark-grey-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-heather-dark-grey-medium.png')
-    shirts.append(shirt)
+        {'id': 'heather-green', 'display_name': 'Heather Green',
+         'img_small': url_for('static', filename='images/shirts/anvil-heather-green-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-heather-green-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'heather-green'
-    shirt['display_name'] = 'Heather Green'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-heather-green-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-heather-green-medium.png')
-    shirts.append(shirt)
+        {'id': 'heather-grey', 'display_name': 'Heather Grey',
+         'img_small': url_for('static', filename='images/shirts/anvil-heather-grey-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-heather-grey-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'heather-grey'
-    shirt['display_name'] = 'Heather Grey'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-heather-grey-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-heather-grey-medium.png')
-    shirts.append(shirt)
+        {'id': 'heather-purple', 'display_name': 'Heather Purple',
+         'img_small': url_for('static', filename='images/shirts/anvil-heather-purple-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-heather-purple-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'heather-purple'
-    shirt['display_name'] = 'Heather Purple'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-heather-purple-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-heather-purple-medium.png')
-    shirts.append(shirt)
+        {'id': 'independence-red', 'display_name': 'Independence Red',
+         'img_small': url_for('static', filename='images/shirts/anvil-independence-red-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-independence-red-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'independence-red'
-    shirt['display_name'] = 'Independence Red'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-independence-red-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-independence-red-medium.png')
-    shirts.append(shirt)
+        {'id': 'kelly-green', 'display_name': 'Kelly Green',
+         'img_small': url_for('static', filename='images/shirts/anvil-kelly-green-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-kelly-green-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'kelly-green'
-    shirt['display_name'] = 'Kelly Green'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-kelly-green-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-kelly-green-medium.png')
-    shirts.append(shirt)
+        {'id': 'light-blue', 'display_name': 'Light Blue',
+         'img_small': url_for('static', filename='images/shirts/anvil-light-blue-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-light-blue-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'light-blue'
-    shirt['display_name'] = 'Light Blue'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-light-blue-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-light-blue-medium.png')
-    shirts.append(shirt)
+        {'id': 'navy', 'display_name': 'Navy',
+         'img_small': url_for('static', filename='images/shirts/anvil-navy-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-navy-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'navy'
-    shirt['display_name'] = 'Navy'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-navy-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-navy-medium.png')
-    shirts.append(shirt)
+        {'id': 'orange', 'display_name': 'Orange',
+         'img_small': url_for('static', filename='images/shirts/anvil-orange-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-orange-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'orange'
-    shirt['display_name'] = 'Orange'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-orange-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-orange-medium.png')
-    shirts.append(shirt)
+        {'id': 'purple', 'display_name': 'Purple',
+         'img_small': url_for('static', filename='images/shirts/anvil-purple-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-purple-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'purple'
-    shirt['display_name'] = 'Purple'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-purple-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-purple-medium.png')
-    shirts.append(shirt)
+        {'id': 'red', 'display_name': 'Red',
+         'img_small': url_for('static', filename='images/shirts/anvil-red-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-red-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'red'
-    shirt['display_name'] = 'Red'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-red-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-red-medium.png')
-    shirts.append(shirt)
+        {'id': 'royal-blue', 'display_name': 'Royal Blue',
+         'img_small': url_for('static', filename='images/shirts/anvil-royal-blue-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-royal-blue-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'royal-blue'
-    shirt['display_name'] = 'Royal Blue'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-royal-blue-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-royal-blue-medium.png')
-    shirts.append(shirt)
+        {'id': 'smoke', 'display_name': 'Smoke',
+         'img_small': url_for('static', filename='images/shirts/anvil-smoke-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-smoke-medium.png')},
 
-    shirt = {}
-    shirt['id'] = 'smoke'
-    shirt['display_name'] = 'Smoke'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-smoke-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-smoke-medium.png')
-    shirts.append(shirt)
+        {'id': 'spring-yellow', 'display_name': 'Spring Yellow',
+         'img_small': url_for('static', filename='images/shirts/anvil-spring-yellow-small.jpg'),
+         'img_medium': url_for('static', filename='images/shirts/anvil-spring-yellow-medium.png')}
+    ]
 
-    shirt = {}
-    shirt['id'] = 'spring-yellow'
-    shirt['display_name'] = 'Spring Yellow'
-    shirt['img_small'] = url_for('static', filename='images/shirts/anvil-spring-yellow-small.jpg')
-    shirt['img_medium'] = url_for('static', filename='images/shirts/anvil-spring-yellow-medium.png')
-    shirts.append(shirt)
+    motifs = [
+        {'id': 1, 'display_name': 'Bruce Lee',
+         'img': url_for('static', filename='images/motifs/Bruce-lee-Hd-Wallpapers_3 - 2014-12-02.png')},
 
-    toolbar['shirts'] = {}
-    toolbar['shirts']['selected'] = "apple"  # default to the white one being selected.
-    toolbar['shirts']['list'] = shirts
+        {'id': 2, 'display_name': 'Parental Advisory',
+         'img': url_for('static', filename='images/motifs/Parental Advisory 16-3-2014 - TEXT TO PATH.svg')}
+    ]
 
+    toolbar = {
+        'shirts': {'selected': 'heather-green', 'list': shirts},
+        'motifs': {'list': motifs}
+    }
     return toolbar

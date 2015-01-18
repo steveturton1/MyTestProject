@@ -7,6 +7,10 @@
 #mct-shirts li img {border: 1px solid #e0e0e0;}
 #mct-shirts .selected-img {border: 1px solid red;}
 
+#mct-motifs {margin: 4px;}
+#mct-motifs li {display: inline;}
+#mct-motifs li img {border: 1px solid #e0e0e0;height: 75px;}
+
 #mc-canvas {
     width:auto;
     margin: 0;border: solid lightgrey 1px;background-color: white;}
