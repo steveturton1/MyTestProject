@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, jsonify, redirect, u
 from flask.ext.babel import Babel, refresh, gettext
 import settings
 import services.MyData
+import services.common
 
 app = Flask(__name__)
 app.debug = True
@@ -10,6 +11,16 @@ app.debug = True
 app.secret_key = '\xc1\x85\xb8\xb2\x9f-1\xd61rGtB\x7f\xaa\xfb\xa1\xacT|I\xd9\xd2"'
 
 babel = Babel(app)
+
+
+@app.before_request
+def before_request():
+    services.common.session_set()
+
+
+@app.teardown_request
+def teardown_request(exception):
+    services.common.session_close(exception)
 
 
 @app.before_request
@@ -28,6 +39,8 @@ def app_initialise():
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
+
+
     if request.method == 'POST':
         if request.form['email'] != 'steve.turton@cumptons.co.uk':
             session.pop('logged_in', None)

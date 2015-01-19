@@ -19,22 +19,22 @@
                     <span id="mcts-colour-title"><strong>{{_('Colour: ')}}</strong></span>
                     {% for shirt in tools.shirts.list %}
                         {% if shirt.id == tools.shirts.selected %}
-                            <span id="mcts-colour">{{ shirt.display_name }}</span>
+                            <span id="mcts-colour">{{ shirt.name }}</span>
                         {% endif %}
                     {% endfor %}
                 </div>
                 <ul id="mcts-list">
                     {% for shirt in tools.shirts.list %}
-                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.display_name }}" onclick="controller.garmentThumbnailClick(this);">
+                        <li id="id_{{ shirt.id }}" title="{{_('Click to select ')}}{{ shirt.name }}" onclick="controller.garmentThumbnailClick(this);">
                             {% if shirt.id == tools.shirts.selected %}
-                                <img src="{{ shirt.img_small }}"
-                                     data-img-medium="{{ shirt.img_medium }}"
-                                     data-displayname="{{ shirt.display_name }}"
+                                <img src="{{ shirt.url_small }}"
+                                     data-img-medium="{{ shirt.url_medium }}"
+                                     data-displayname="{{ shirt.name }}"
                                      class="selected-img">
                             {% else %}
-                                <img src="{{ shirt.img_small }}"
-                                     data-displayname="{{ shirt.display_name }}"
-                                     data-img-medium="{{ shirt.img_medium }}">
+                                <img src="{{ shirt.url_small }}"
+                                     data-displayname="{{ shirt.name }}"
+                                     data-img-medium="{{ shirt.url_medium }}">
                             {% endif %}
                         </li>
                     {% endfor %}
@@ -44,8 +44,8 @@
             <div id="mct-motifs">
                 <ul id="mctm-list">
                     {% for motif in tools.motifs.list %}
-                        <li id="id_{{ motif.id }}" title="{{_('Click to select ')}}{{ motif.display_name }}" onclick="controller.motifThumbnailClick(this);">
-                            <img src="{{ motif.img }}" data-displayname="{{ motif.display_name }}">
+                        <li id="id_{{ motif.id }}" title="{{_('Click to select ')}}{{ motif.name }}" onclick="controller.motifThumbnailClick(this);">
+                            <img src="{{ motif.url }}" data-displayname="{{ motif.name }}">
                         </li>
                     {% endfor %}
                 </ul>
@@ -69,7 +69,7 @@
         var selected;
         {% for shirt in tools.shirts.list %}
             {% if shirt.id == tools.shirts.selected %}
-                selected = "{{ shirt.img_medium }}";
+                selected = "{{ shirt.url_medium }}";
             {% endif %}
         {% endfor %}
 
