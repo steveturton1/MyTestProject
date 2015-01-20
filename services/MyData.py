@@ -1,10 +1,11 @@
 __author__ = 'Steve'
-from flask import session, url_for
+from flask import session, url_for, jsonify
 from flask.ext.babel import gettext
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, ForeignKey, Integer, String
 import settings
 from common import *
+from transformers import *
 
 Base = declarative_base()
 
@@ -31,8 +32,12 @@ def get_garments():
         garment_list.append(dict(id=garment.id, name=garment.name, url_small=garment.url_small,
                                  url_medium=garment.url_medium))
 
-    # is this best if list is empty???????????????????????????????????????????
     return garment_list
+
+     #is this best if list is empty???????????????????????????????????????????
+
+    #result = GarmentTransformer().to_json(garments)
+    #return jsonify(data=result)
 
 
 def get_motifs():
