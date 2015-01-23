@@ -17,11 +17,17 @@ class Garments(Base):
     url_small = Column(String(255))
     url_medium = Column(String(255))
 
+
 class Motifs(Base):
     __tablename__ = 'motifs'
     id = Column(Integer, primary_key=True)
     name = Column(String(100))
     url = Column(String(255))
+
+
+class Users(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
 
 
 def get_garments():

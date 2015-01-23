@@ -57,7 +57,30 @@ def login():
 
 @app.route('/admin')
 def admin():
-    return render_template("admin.html")
+    app_settings = services.MyData.get_settings()
+    user = services.MyData.get_user()
+    return render_template("admin.html", settings=app_settings, user=user)
+
+
+@app.route('/admin/users')
+def admin_users():
+    app_settings = services.MyData.get_settings()
+    user = services.MyData.get_user()
+    return render_template("users.html", settings=app_settings, user=user)
+
+
+@app.route('/admin/garments')
+def admin_garments():
+    app_settings = services.MyData.get_settings()
+    user = services.MyData.get_user()
+    return render_template("garments.html", settings=app_settings, user=user)
+
+
+@app.route('/admin/motifs')
+def admin_motifs():
+    app_settings = services.MyData.get_settings()
+    user = services.MyData.get_user()
+    return render_template("motifs.html", settings=app_settings, user=user)
 
 
 @app.route('/logout')

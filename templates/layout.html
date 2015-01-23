@@ -34,7 +34,7 @@
 
     {% if user %}
         <div id="lt-admin">
-            <a href="{{ url_for('admin') }}">{{_('Admin')}}</a>
+            <a href="{{ url_for('admin_users') }}">{{_('Admin')}}</a>
         </div>
 
         <div id="lt-user" onclick="layout_controller.popupUserRender(this, event)">
