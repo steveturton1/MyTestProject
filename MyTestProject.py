@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, jsonify, redirect, url_for, flash
+from flask import Flask, render_template, request, session, jsonify, redirect, url_for, flash, abort
 from flask.ext.babel import Babel, refresh, gettext
 import settings
 import services.MyData
@@ -124,6 +124,16 @@ def service_set_language(lang_id):
     session["language"] = lang_id
     return jsonify(data=lang_id)
 
+@app.route('/service/users', methods=['GET'])
+def get_users():
+    #data = services.MyData.get_settings()
+    data = {'id': '1', 'name': 'Steve'}, {'id': '2', 'name': 'Turton'}
+
+    if data is None:
+        abort(404)
+    else:
+        return jsonify(data=data)
+
 
 @babel.localeselector
 def get_locale():
@@ -142,5 +152,5 @@ def get_locale():
     return lang
 
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0')
-    app.run()
+    app.run(host='0.0.0.0')
+    #app.run()

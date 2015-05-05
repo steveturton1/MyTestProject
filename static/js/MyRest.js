@@ -211,6 +211,10 @@ MyRest.sendString	=	function(_url, _string, _method) {
 };
 
 
+MyRest.getUsers = function(successCallback, errorCallback) {
+    return this.getJSON('/service/users', successCallback, errorCallback);
+}
+
 /*
 MyRest.getUsers = function() {
 	return this.getJSON('/users/');
