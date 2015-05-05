@@ -36,14 +36,9 @@ UsersView.prototype.constructor = UsersView;
 function UsersView() {}
 
 UsersView.prototype.renderUsersList=function(model) {
-    //jQuery("#usersList").html("");
+    jQuery("#usersList").html("");
     //jQuery("#list").show();
     //jQuery("#form").hide();
 
-    //jQuery(jQuery('#templateUserItems').render({users:model.users})).appendTo('#usersList');
-    var addBit = jQuery(jQuery('#templateUserItems').render({ users: model.users}));
-    addBit.appendTo("#usersList");
-
-    jQuery("<span>hello</span>").appendTo("#usersList");
-
+    jQuery(jQuery('#templateUserItems').render({users:model.users})).appendTo('#usersList');
 };
