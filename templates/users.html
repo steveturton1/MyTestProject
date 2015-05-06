@@ -18,18 +18,28 @@
 
     <section id="users">
         <div id="usersList">
-            blag
         </div>
     </section>
 
 
-
-        <script id="templateUserItems" type="text/x-jsrender">
-            <div>
-                Hello - I am users.
-            </div>
-        </script>
-
+    {% raw %}
+    <script id="templateUserItems" type="text/x-jsrender">
+        <ul id="userItemsMainBit" style="display:block; float:left">
+		{{for users}}
+			<li id="item{{:id}}">
+				<dl style="min-height:35px">
+					<dt style="padding-left:10px;margin-left:0;width:190px;">{{:id}}</dt>
+					<dd style="padding-left:0px;width:200px;">{{:name}}</dd>
+					<dd class="user-actions" style="top:14px;">
+						<span id="edit_{{:id}}" class="user-action-edit" onclick="controller.renderEdit({{:id}})"></span>
+						<span id="delete_{{:id}}" class="user-action-delete" onclick="controller.renderDelete({{:id}})"></span>
+					</dd>
+				</dl>
+			</li>
+		{{/for}}
+	</ul>
+    </script>
+    {% endraw %}
 
 {% endblock %}
 
