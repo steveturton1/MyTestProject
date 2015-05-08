@@ -28,6 +28,19 @@ class Motifs(Base):
 class Users(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
+    email = Column(String(255))
+    name = Column(String(255))
+    password = Column(String(255))
+
+
+def getAllUsers():
+    users = session_get().query(Users).all()
+    return UserTransformer().to_json(users)
+
+
+def load_user_from_db(email, password):
+    user = session_get().query(Users).filter(Users.email == email).filter(Users.password == password).first()
+    return user
 
 
 def get_garments():
@@ -66,14 +79,10 @@ def get_settings():
 
 
 def get_user():
-    user = {}
+    if 'logged_in' in session and session['logged_in'] and 'user' in session:
+        return session['user']
 
-    if 'logged_in' in session and session['logged_in']:
-        user['id'] = 'steve.turton@cumptons.co.uk'
-        user['name'] = 'Steve Turton'
-        return user
-    else:
-        return None
+    return None
 
 
 def get_toolbar():

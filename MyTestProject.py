@@ -3,6 +3,7 @@ from flask.ext.babel import Babel, refresh, gettext
 import settings
 import services.MyData
 import services.common
+import services.transformers
 
 app = Flask(__name__)
 app.debug = True
@@ -39,20 +40,27 @@ def app_initialise():
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-
-
     if request.method == 'POST':
-        if request.form['email'] != 'steve.turton@cumptons.co.uk':
-            session.pop('logged_in', None)
+        if not dologin(request.form['email'], request.form['password']):
             flash('The login information you have entered is not valid.')
         else:
-            session['logged_in'] = True
-            #return redirect(url_for('render_ui', template='main.html'))
             return redirect(url_for('main'))
 
     app_settings = services.MyData.get_settings()
     user = services.MyData.get_user()
     return render_template("login.html", settings=app_settings, user=user)
+
+
+def dologin(email, password):
+    user = services.MyData.load_user_from_db(email, password)
+    if user is None:
+        session.pop('logged_in', None)
+        session.pop('user', None)
+        return False
+
+    session['logged_in'] = True
+    session['user'] = services.transformers.UserTransformer().to_json(user)
+    return True
 
 
 @app.route('/admin')
@@ -126,8 +134,7 @@ def service_set_language(lang_id):
 
 @app.route('/service/users', methods=['GET'])
 def get_users():
-    #data = services.MyData.get_settings()
-    data = {'id': '1', 'name': 'Steve'}, {'id': '2', 'name': 'Turton'}
+    data = services.MyData.getAllUsers()
 
     if data is None:
         abort(404)

@@ -18,5 +18,13 @@ class GarmentTransformer(BaseTransformer):
         if isinstance(garment, list):
             return self.to_json_list(garment)
 
-        return dict(id=garment.id, name=garment.name, url_small=garment.url_small,
+        return dict(id=garment.id, email=garment.name, url_small=garment.url_small,
                     url_medium=garment.url_medium)
+
+
+class UserTransformer(BaseTransformer):
+    def to_json(self, user):
+        if isinstance(user, list):
+            return self.to_json_list(user)
+
+        return dict(id=user.id, email=user.email, name=user.name)
