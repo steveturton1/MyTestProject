@@ -78,13 +78,6 @@ def get_settings():
     return settings.APPLICATION
 
 
-def get_user():
-    if 'logged_in' in session and session['logged_in'] and 'user' in session:
-        return session['user']
-
-    return None
-
-
 def get_toolbar():
 
     # motifs = [

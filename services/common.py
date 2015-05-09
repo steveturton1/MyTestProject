@@ -7,7 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../lib"))
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from flask import request, session
+from flask import request, session, flash
 
 engine = create_engine("mysql+mysqldb://root@localhost/mytestproject?charset=utf8&use_unicode=0", echo=True)
 Session = sessionmaker(bind=engine)
@@ -26,10 +26,7 @@ def session_get():
 
 
 def get_logged_user():
-    try:
-        if session.has_key('loggedUser'):
-            return session['loggedUser']
-        else:
-            return None
-    except:
-        return None
+    if 'logged_in' in session and session['logged_in'] and 'user' in session:
+        return session['user']
+
+    return None

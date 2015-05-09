@@ -47,7 +47,7 @@ def login():
             return redirect(url_for('main'))
 
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
+    user = services.common.get_logged_user()
     return render_template("login.html", settings=app_settings, user=user)
 
 
@@ -66,58 +66,82 @@ def dologin(email, password):
 @app.route('/admin')
 def admin():
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
+    user = services.common.get_logged_user()
+    if not user:
+        flash('You must be logged in to access that page.')
+        return redirect(url_for('login'))
+
     return render_template("admin.html", settings=app_settings, user=user)
+
 
 
 @app.route('/admin/users')
 def admin_users():
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
+    user = services.common.get_logged_user()
+    if not user:
+        flash('You must be logged in to access that page.')
+        return redirect(url_for('login'))
+
     return render_template("users.html", settings=app_settings, user=user)
 
 
 @app.route('/admin/garments')
 def admin_garments():
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
+    user = services.common.get_logged_user()
+    if not user:
+        flash('You must be logged in to access that page.')
+        return redirect(url_for('login'))
+
     return render_template("garments.html", settings=app_settings, user=user)
 
 
 @app.route('/admin/motifs')
 def admin_motifs():
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
+    user = services.common.get_logged_user()
+    if not user:
+        flash('You must be logged in to access that page.')
+        return redirect(url_for('login'))
+
     return render_template("motifs.html", settings=app_settings, user=user)
 
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
+    session.pop('user', None)
     return redirect(url_for('login'))
 
 
 @app.route('/forgotpassword')
 def forgotpassword():
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
+    user = services.common.get_logged_user()
     return render_template("forgotpassword.html", settings=app_settings, user=user)
 
 
 @app.route('/main')
 def main():
-    # STILL TO DO - IF NOT LOGGED ON THEN REDIRECT TO LOGON SCREEN.
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
     tools = services.MyData.get_toolbar()
+    user = services.common.get_logged_user()
+    if not user:
+        flash('You must be logged in to access that page.')
+        return redirect(url_for('login'))
+
     return render_template("main.html", settings=app_settings, user=user, tools=tools)
 
 
 @app.route('/ui/<template>')
 def render_ui(template):
-    # STILL TO DO - IF NOT LOGGED ON THEN REDIRECT TO LOGON SCREEN.
     app_settings = services.MyData.get_settings()
-    user = services.MyData.get_user()
+    user = services.common.get_logged_user()
+    if not user:
+        flash('You must be logged in to access that page.')
+        return redirect(url_for('login'))
+
     return render_template(template, settings=app_settings, user=user)
 
 
