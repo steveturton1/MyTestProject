@@ -7,22 +7,48 @@
 {% block js %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/motif.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jsrender.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/MyRest.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/motifs.js') }}"></script>
 {% endblock %}
 
 {% block content %}
 
     {% include "admin_menu.html" %}
 
-    <div id="main-container">
-        I am motifs
-    </div>
+    <section id="motifs">
+        <div id="motifsList">
+        </div>
+    </section>
+
+
+    {% raw %}
+    <script id="templateMotifItems" type="text/x-jsrender">
+        <ul id="motifItemsMainBit" style="display:block; float:left">
+		{{for motifs}}
+			<li id="item{{:id}}">
+				<dl style="min-height:35px">
+					<dt style="padding-left:10px;margin-left:0;width:190px;">{{:id}}</dt>
+					<dd style="padding-left:0px;width:200px;">{{:name}}</dd>
+					<dd style="padding-left:0px;width:200px;">{{:url}}</dd>
+					<dd class="user-actions" style="top:14px;">
+						<span id="edit_{{:id}}" class="user-action-edit" onclick="controller.renderEdit({{:id}})"></span>
+						<span id="delete_{{:id}}" class="user-action-delete" onclick="controller.renderDelete({{:id}})"></span>
+					</dd>
+				</dl>
+			</li>
+		{{/for}}
+	</ul>
+    </script>
+    {% endraw %}
 
 {% endblock %}
 
 {% block scripts %}
 
     <script type="text/javascript">
-
+        controller = new MotifsController();
+        controller.index();
     </script>
 
 {% endblock %}

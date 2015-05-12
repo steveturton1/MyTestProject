@@ -215,6 +215,14 @@ MyRest.getUsers = function(successCallback, errorCallback) {
     return this.getJSON('/service/users', successCallback, errorCallback);
 }
 
+MyRest.getGarments = function(successCallback, errorCallback) {
+    return this.getJSON('/service/garments', successCallback, errorCallback);
+}
+
+MyRest.getMotifs = function(successCallback, errorCallback) {
+    return this.getJSON('/service/motifs', successCallback, errorCallback);
+}
+
 /*
 MyRest.getUsers = function() {
 	return this.getJSON('/users/');

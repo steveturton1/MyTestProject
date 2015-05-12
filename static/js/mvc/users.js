@@ -37,8 +37,5 @@ function UsersView() {}
 
 UsersView.prototype.renderUsersList=function(model) {
     jQuery("#usersList").html("");
-    //jQuery("#list").show();
-    //jQuery("#form").hide();
-
     jQuery(jQuery('#templateUserItems').render({users:model.users})).appendTo('#usersList');
 };

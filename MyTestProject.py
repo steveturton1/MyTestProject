@@ -166,6 +166,26 @@ def get_users():
         return jsonify(data=data)
 
 
+@app.route('/service/garments', methods=['GET'])
+def get_garments():
+    data = services.MyData.get_garments()
+
+    if data is None:
+        abort(404)
+    else:
+        return jsonify(data=data)
+
+
+@app.route('/service/motifs', methods=['GET'])
+def get_motifs():
+    data = services.MyData.get_motifs()
+
+    if data is None:
+        abort(404)
+    else:
+        return jsonify(data=data)
+
+
 @babel.localeselector
 def get_locale():
     # get this out of a table or even a cookie :)

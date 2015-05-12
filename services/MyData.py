@@ -45,29 +45,12 @@ def load_user_from_db(email, password):
 
 def get_garments():
     garments = session_get().query(Garments).all()
-
-    garment_list = []
-    for garment in garments:
-        garment_list.append(dict(id=garment.id, name=garment.name, url_small=garment.url_small,
-                                 url_medium=garment.url_medium))
-
-    return garment_list
-
-     #is this best if list is empty???????????????????????????????????????????
-
-    #result = GarmentTransformer().to_json(garments)
-    #return jsonify(data=result)
+    return GarmentTransformer().to_json(garments)
 
 
 def get_motifs():
     motifs = session_get().query(Motifs).all()
-
-    motif_list = []
-    for motif in motifs:
-        motif_list.append(dict(id=motif.id, name=motif.name, url=motif.url))
-
-    # is this best if list is empty???????????????????????????????????????????
-    return motif_list
+    return MotifTransformer().to_json(motifs)
 
 
 def get_settings():
@@ -79,15 +62,7 @@ def get_settings():
 
 
 def get_toolbar():
-
-    # motifs = [
-    #    {'id': 1, 'display_name': 'Bruce Lee',
-    #     'img': url_for('static', filename='images/motifs/Bruce-lee-Hd-Wallpapers_3 - 2014-12-02.png')},
-    #
-    #    {'id': 2, 'display_name': 'Parental Advisory',
-    #     'img': url_for('static', filename='images/motifs/Parental Advisory 16-3-2014 - TEXT TO PATH.svg')}
-    # ]
-
+    #pass a list of garments and motifs to be shown in toolbar
     garments = get_garments()
     motifs = get_motifs()
 
