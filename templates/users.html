@@ -2,6 +2,7 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}"/>
 {% endblock %}
 
 {% block js %}
@@ -23,11 +24,11 @@
         <ul id="userItemsMainBit" style="display:block; float:left">
 		{{for users}}
 			<li id="item{{:id}}">
-				<dl style="min-height:35px">
-					<dt style="padding-left:10px;margin-left:0;width:190px;">{{:id}}</dt>
-					<dd style="padding-left:0px;width:200px;">{{:name}}</dd>
-					<dd style="padding-left:0px;width:200px;">{{:email}}</dd>
-					<dd class="user-actions" style="top:14px;">
+				<dl style="min-height:20px">
+					<dt style="padding-left:10px;margin-left:0;width:50px;">{{:id}}</dt>
+					<dd style="padding-left:0px;width:300px;">{{:name}}</dd>
+					<dd style="padding-left:0px;width:300px;">{{:email}}</dd>
+					<dd class="user-actions" style="top:2px;">
 						<span id="edit_{{:id}}" class="user-action-edit" onclick="controller.renderEdit({{:id}})"></span>
 						<span id="delete_{{:id}}" class="user-action-delete" onclick="controller.renderDelete({{:id}})"></span>
 					</dd>

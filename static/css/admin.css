@@ -1,0 +1,71 @@
+#userItemsMainBit {
+    display:block;
+    float:left
+	margin: 0;
+	padding: 0;
+}
+
+#userItemsMainBit li{
+	float: left;
+}
+
+#userItemsMainBit dl{
+    float: left;
+	padding-top: 5px;
+    padding-bottom: 5px;
+	position: relative;
+	background: #fff;
+	width: 938px;
+	border-top: 1px solid #cfcfcf;
+	border-left: 1px solid #cfcfcf;
+	border-right: 1px solid #cfcfcf;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	margin: 0;
+}
+
+#userItemsMainBit dt {
+	float:left;
+	display: block;
+	padding-left: 115px;
+	width: 190px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	margin: 0;
+}
+
+#userItemsMainBit dd {
+	float:left;
+	display: block;
+	margin: 0;
+}
+
+.user-actions {
+position: absolute;
+top: 14px;
+right: 57px;
+width: 80px;
+padding-left: 0;
+}
+
+.user-actions span {
+	float: left;
+	position: relative;
+	left: 70px;
+}
+
+.user-action-edit { background: url('/static/images/vr/icon-aol-edit.png') no-repeat 0 0; }
+.user-action-edit:hover { background: url('/static/images/vr/icon-aol-edit-hover.png') no-repeat 0 0; }
+.user-action-edit.active { background: url('/static/images/vr/icon-aol-edit-active.png') no-repeat 0 0; }
+
+
+.user-action-delete {	background: url('/static/images/vr/icon-aol-delete.png') no-repeat 0 0; }
+.user-action-delete:hover { background: url('/static/images/vr/icon-aol-delete-hover.png') no-repeat 0 0; }
+.user-action-delete.active { background: url('/static/images/vr/icon-aol-delete-active.png') no-repeat 0 0; }
+
+.user-action-edit, .user-action-delete {
+	cursor: pointer;
+	width: 28px;
+	height: 27px;
+	display: block;
+}
