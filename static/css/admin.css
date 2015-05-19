@@ -1,30 +1,32 @@
-#userItemsMainBit {
+.dataList {
     display:block;
     float:left
 	margin: 0;
 	padding: 0;
 }
 
-#userItemsMainBit li{
+.dataList li{
 	float: left;
 }
 
-#userItemsMainBit dl{
+#dataListUsers {width: 938px;}
+#dataListGarments {width: 1300px;}
+#dataListMotifs {width: 1000px;}
+
+.dataList dl{
+    min-height: 19px;
     float: left;
 	padding-top: 5px;
     padding-bottom: 5px;
 	position: relative;
 	background: #fff;
-	width: 938px;
 	border-top: 1px solid #cfcfcf;
 	border-left: 1px solid #cfcfcf;
 	border-right: 1px solid #cfcfcf;
-	text-overflow: ellipsis;
-	overflow: hidden;
 	margin: 0;
 }
 
-#userItemsMainBit dt {
+.dataList dt {
 	float:left;
 	display: block;
 	padding-left: 115px;
@@ -32,17 +34,19 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	margin: 0;
+    font-size: 80%;
 }
 
-#userItemsMainBit dd {
+.dataList dd {
 	float:left;
 	display: block;
 	margin: 0;
+    font-size: 80%;
 }
 
 .user-actions {
 position: absolute;
-top: 14px;
+top: 2px;
 right: 57px;
 width: 80px;
 padding-left: 0;
