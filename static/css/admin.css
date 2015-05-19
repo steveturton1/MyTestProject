@@ -9,12 +9,12 @@
 	float: left;
 }
 
-#dataListUsers {width: 938px;}
-#dataListGarments {width: 1300px;}
+#dataListUsers {width: 500px;}
+#dataListGarments {width: 1000px;}
 #dataListMotifs {width: 1000px;}
 
 .dataList dl{
-    min-height: 19px;
+    height: 18px;
     float: left;
 	padding-top: 5px;
     padding-bottom: 5px;
@@ -31,8 +31,6 @@
 	display: block;
 	padding-left: 115px;
 	width: 190px;
-	text-overflow: ellipsis;
-	overflow: hidden;
 	margin: 0;
     font-size: 80%;
 }
@@ -42,34 +40,29 @@
 	display: block;
 	margin: 0;
     font-size: 80%;
+    text-overflow: ellipsis;
+	overflow: hidden;
+    white-space: nowrap;
 }
 
 .user-actions {
-position: absolute;
-top: 2px;
-right: 57px;
-width: 80px;
-padding-left: 0;
+    position: relative;
+    padding-left: 0;
+    top: -4px;
 }
 
 .user-actions span {
 	float: left;
 	position: relative;
-	left: 70px;
+	left: 0px;
 }
 
 .user-action-edit { background: url('/static/images/vr/icon-aol-edit.png') no-repeat 0 0; }
 .user-action-edit:hover { background: url('/static/images/vr/icon-aol-edit-hover.png') no-repeat 0 0; }
 .user-action-edit.active { background: url('/static/images/vr/icon-aol-edit-active.png') no-repeat 0 0; }
 
-
 .user-action-delete {	background: url('/static/images/vr/icon-aol-delete.png') no-repeat 0 0; }
 .user-action-delete:hover { background: url('/static/images/vr/icon-aol-delete-hover.png') no-repeat 0 0; }
 .user-action-delete.active { background: url('/static/images/vr/icon-aol-delete-active.png') no-repeat 0 0; }
 
-.user-action-edit, .user-action-delete {
-	cursor: pointer;
-	width: 28px;
-	height: 27px;
-	display: block;
-}
+.user-action-edit, .user-action-delete {  cursor: pointer;  width: 28px;  height: 27px;  display: block; }
