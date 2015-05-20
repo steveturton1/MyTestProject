@@ -9,9 +9,9 @@
 	float: left;
 }
 
-#dataListUsers {width: 500px;}
-#dataListGarments {width: 1000px;}
-#dataListMotifs {width: 1000px;}
+#dataListUsers {width: 800px; padding-left: 50px;}
+#dataListGarments {width: 1000px; padding-left: 50px;}
+#dataListMotifs {width: 800px; padding-left: 50px;}
 
 .dataList dl{
     height: 18px;
@@ -45,17 +45,8 @@
     white-space: nowrap;
 }
 
-.user-actions {
-    position: relative;
-    padding-left: 0;
-    top: -4px;
-}
-
-.user-actions span {
-	float: left;
-	position: relative;
-	left: 0px;
-}
+.user-actions { position: relative; padding-left: 10px; top: -4px; width:58px; }
+.user-actions span { float: left;  position: relative;  left: 0px; }
 
 .user-action-edit { background: url('/static/images/vr/icon-aol-edit.png') no-repeat 0 0; }
 .user-action-edit:hover { background: url('/static/images/vr/icon-aol-edit-hover.png') no-repeat 0 0; }

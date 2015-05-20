@@ -25,10 +25,13 @@
 		{{for users}}
 			<li id="item{{:id}}">
 				<dl>
-					<dt style="padding-left:10px;margin-left:0;width:25px;">{{:id}}</dt>
-					<dd style="padding-left:0px;width:100px;">{{:name}}</dd>
-					<dd style="padding-left:0px;width:100px;">{{:email}}</dd>
-					<dd class="user-actions" style="padding-left:0px;width:58px;">
+				    <dd style="padding-left:10px;width:25px;">
+                        <input name="your_name" value="your_value" type="checkbox">
+				    </dd>
+					<dt style="padding-left:0px;margin-left:0;width:25px;">{{:id}}</dt>
+					<dd style="padding-left:10px;width:200px;">{{:name}}</dd>
+					<dd style="padding-left:10px;width:200px;">{{:email}}</dd>
+					<dd class="user-actions">
 						<span id="edit_{{:id}}" class="user-action-edit" onclick="controller.renderEdit({{:id}})"></span>
 						<span id="delete_{{:id}}" class="user-action-delete" onclick="controller.renderDelete({{:id}})"></span>
 					</dd>
