@@ -24,6 +24,21 @@ UsersController.prototype.index=function() {
 
 UsersController.prototype.renderUsersList=function() {
     this.view.renderUsersList(this.model);
+
+    //$('#dataListUsers li').click(function(e) {
+    //    x = $(this).attr("id");
+    //    y = this.id;
+    //
+    //});
+
+    $('#dataListUsers li').hover(
+        function(e) {
+            $(this).find("dl").find("dd").first().css("background-color", "red");
+        },
+        function(e) {
+            $(this).find("dl").find("dd").first().css("background-color", "white");
+        }
+    );
 };
 
 
@@ -40,4 +55,6 @@ function UsersView() {}
 UsersView.prototype.renderUsersList=function(model) {
     jQuery("#usersList").html("");
     jQuery(jQuery('#templateUserItems').render({users:model.users})).appendTo('#usersList');
+
+
 };
