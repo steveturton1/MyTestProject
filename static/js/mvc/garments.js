@@ -22,6 +22,15 @@ GarmentsController.prototype.index=function() {
 
 GarmentsController.prototype.renderGarmentList=function() {
     this.view.renderGarmentList(this.model);
+
+    $('#dataListGarments li').hover(
+        function(e) {
+            $(this).find("dl").find("dd").first().css("background-color", "red");
+        },
+        function(e) {
+            $(this).find("dl").find("dd").first().css("background-color", "white");
+        }
+    );
 };
 
 

@@ -22,6 +22,15 @@ MotifsController.prototype.index=function() {
 
 MotifsController.prototype.renderMotifList=function() {
     this.view.renderMotifList(this.model);
+
+    $('#dataListMotifs li').hover(
+        function(e) {
+            $(this).find("dl").find("dd").first().css("background-color", "red");
+        },
+        function(e) {
+            $(this).find("dl").find("dd").first().css("background-color", "white");
+        }
+    );
 };
 
 
