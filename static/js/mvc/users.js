@@ -31,12 +31,13 @@ UsersController.prototype.renderUsersList=function() {
     //
     //});
 
+    // Register some events
     $('#dataListUsers li').hover(
         function(e) {
-            $(this).find("dl").find("dd").first().css("background-color", "red");
+            controller.view.userHoverOn($(this));
         },
         function(e) {
-            $(this).find("dl").find("dd").first().css("background-color", "white");
+            controller.view.userHoverOff($(this));
         }
     );
 };
@@ -55,6 +56,12 @@ function UsersView() {}
 UsersView.prototype.renderUsersList=function(model) {
     jQuery("#usersList").html("");
     jQuery(jQuery('#templateUserItems').render({users:model.users})).appendTo('#usersList');
-
-
 };
+
+UsersView.prototype.userHoverOn=function(element) {
+    element.find("dl").find("dd").first().css("background-color", "red");
+};
+UsersView.prototype.userHoverOff=function(element) {
+    element.find("dl").find("dd").first().css("background-color", "white");
+};
+

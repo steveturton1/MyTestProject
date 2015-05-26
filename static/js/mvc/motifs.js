@@ -23,12 +23,13 @@ MotifsController.prototype.index=function() {
 MotifsController.prototype.renderMotifList=function() {
     this.view.renderMotifList(this.model);
 
+    // Register some events
     $('#dataListMotifs li').hover(
         function(e) {
-            $(this).find("dl").find("dd").first().css("background-color", "red");
+            controller.view.userHoverOn($(this));
         },
         function(e) {
-            $(this).find("dl").find("dd").first().css("background-color", "white");
+            controller.view.userHoverOff($(this));
         }
     );
 };
@@ -47,4 +48,11 @@ function MotifsView() {}
 MotifsView.prototype.renderMotifList=function(model) {
     jQuery("#motifsList").html("");
     jQuery(jQuery('#templateMotifItems').render({motifs:model.motifs})).appendTo('#motifsList');
+};
+
+MotifsView.prototype.userHoverOn=function(element) {
+    element.find("dl").find("dd").first().css("background-color", "red");
+};
+MotifsView.prototype.userHoverOff=function(element) {
+    element.find("dl").find("dd").first().css("background-color", "white");
 };

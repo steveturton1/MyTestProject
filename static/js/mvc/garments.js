@@ -23,12 +23,13 @@ GarmentsController.prototype.index=function() {
 GarmentsController.prototype.renderGarmentList=function() {
     this.view.renderGarmentList(this.model);
 
+    // Register some events
     $('#dataListGarments li').hover(
         function(e) {
-            $(this).find("dl").find("dd").first().css("background-color", "red");
+            controller.view.userHoverOn($(this));
         },
         function(e) {
-            $(this).find("dl").find("dd").first().css("background-color", "white");
+            controller.view.userHoverOff($(this));
         }
     );
 };
@@ -47,4 +48,11 @@ function GarmentsView() {}
 GarmentsView.prototype.renderGarmentList=function(model) {
     jQuery("#garmentsList").html("");
     jQuery(jQuery('#templateGarmentItems').render({garments:model.garments})).appendTo('#garmentsList');
+};
+
+GarmentsView.prototype.userHoverOn=function(element) {
+    element.find("dl").find("dd").first().css("background-color", "red");
+};
+GarmentsView.prototype.userHoverOff=function(element) {
+    element.find("dl").find("dd").first().css("background-color", "white");
 };
