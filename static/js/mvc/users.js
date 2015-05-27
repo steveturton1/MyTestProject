@@ -4,7 +4,7 @@
 
 
 
-UsersController.prototype = {};
+UsersController.prototype = new Controller;
 UsersController.prototype.constructor = UsersController;
 
 function UsersController() {
@@ -16,8 +16,7 @@ UsersController.prototype.index=function() {
 
     MyRest.getUsers(function(users)
     {
-        // On a callback, we lose reference to 'this' so use 'controller' instead which is defined in the html file.
-        controller.model.users = users;
+        controller.model.items = users;
         controller.renderUsersList();
     });
 };
@@ -25,37 +24,32 @@ UsersController.prototype.index=function() {
 UsersController.prototype.renderUsersList=function() {
     this.view.renderUsersList(this.model);
 
-    //$('#dataListUsers li').click(function(e) {
-    //    x = $(this).attr("id");
-    //    y = this.id;
-    //
-    //});
-
     // Register some events
     $('#dataListUsers li').hover(
-        function(e) {
-            controller.view.userHoverOn($(this));
-        },
-        function(e) {
-            controller.view.userHoverOff($(this));
-        }
+        function() { controller.view.userHoverOn($(this));  },
+        function() { controller.view.userHoverOff($(this)); }
+    );
+
+    $('#dataListUsers li').click(
+        function() { controller.view.renderEdit($(this)); }
     );
 };
 
 
-UsersModel.prototype = {};
+UsersModel.prototype = new Model;
 UsersModel.prototype.constructor = UsersModel;
 function UsersModel() {
-    this.users=[];
+    this.items=[];
+    this.currentUserId = -1;
 }
 
-UsersView.prototype = {};
+UsersView.prototype = new View;
 UsersView.prototype.constructor = UsersView;
 function UsersView() {}
 
 UsersView.prototype.renderUsersList=function(model) {
     jQuery("#usersList").html("");
-    jQuery(jQuery('#templateUserItems').render({users:model.users})).appendTo('#usersList');
+    jQuery(jQuery('#templateUserItems').render({users:model.items})).appendTo('#usersList');
 };
 
 UsersView.prototype.userHoverOn=function(element) {
@@ -65,3 +59,23 @@ UsersView.prototype.userHoverOff=function(element) {
     element.find("dl").find("dd").first().css("background-color", "white");
 };
 
+UsersView.prototype.renderEdit=function(element) {
+
+    var userId = element.attr("id").substr(4);  // Get the user id - without the 'item' bit on the front.
+
+    this.removeAllActiveRows();
+
+    if (controller.model.currentUserId == userId) {
+        // We've just clicked the item being edited so just close it.
+        controller.model.currentUserId = -1;
+    } else {
+        controller.model.currentUserId = userId;
+        var item = controller.model.items.getObjectById(userId);
+
+        var tmpl = $('#templateUserEdit').render({item:item});
+        $(tmpl).hide();
+        $(element).after($(tmpl));
+        $('.aol-edit').slideUp({duration:0}).slideDown();
+    }
+
+};

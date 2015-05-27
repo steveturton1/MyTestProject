@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/administration_mvc.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/users.js') }}"></script>
 {% endblock %}
 
@@ -41,6 +42,21 @@
 		{{/for}}
 	</ul>
     </script>
+
+
+    <script id="templateUserEdit" type="text/x-jsrender">
+        <li rel="{{:item.id}}" class="aol-edit active">
+            <div><label for="name">{% endraw %}{{ _('Name') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Name') }}{% raw %}" id="name" value="{{:item.name}}" maxlength="255"></div>
+            <div><label for="email">{% endraw %}{{ _('Email') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Email') }}{% raw %}" id="email" value="{{:item.email}}" maxlength="255"></div>
+            <section id="aole-edit-actions" class="aole-grid" style="min-height:51px;">
+                <p>
+                    <span class="aea-cancel" style="top:0px;" onclick="controller.removeEditDeleteRows();">{% endraw %}{{ _('Cancel') }}{% raw %}</span>
+                    <a id="save_{{:item.id}}" class="bluebutton aea-save" onclick="controller.save({{:item.id}})">{% endraw %}{{ _('Save') }}{% raw %}</a>
+                </p>
+            </section>
+        </li>
+    </script>
+
     {% endraw %}
 
 {% endblock %}
