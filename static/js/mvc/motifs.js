@@ -52,10 +52,12 @@ MotifsView.prototype.renderMotifList=function(model) {
 };
 
 MotifsView.prototype.motifHoverOn=function(element) {
-    element.find("dl").find("dd").first().css("background-color", "red");
+    //element.find("dl").find("dd").first().css("background-color", "red");
+    element.find("dl").toggleClass("itemHighlighted");
 };
 MotifsView.prototype.motifHoverOff=function(element) {
-    element.find("dl").find("dd").first().css("background-color", "white");
+    //element.find("dl").find("dd").first().css("background-color", "white");
+    element.find("dl").toggleClass("itemHighlighted");
 };
 
 MotifsView.prototype.renderEdit=function(element) {

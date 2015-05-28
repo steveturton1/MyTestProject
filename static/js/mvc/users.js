@@ -53,10 +53,14 @@ UsersView.prototype.renderUsersList=function(model) {
 };
 
 UsersView.prototype.userHoverOn=function(element) {
-    element.find("dl").find("dd").first().css("background-color", "red");
+    //element.find("dl").find("dd").first().css("background-color", "red");
+    //element.find("dl").addClass("itemHighlighted");
+    element.find("dl").toggleClass("itemHighlighted");
 };
 UsersView.prototype.userHoverOff=function(element) {
-    element.find("dl").find("dd").first().css("background-color", "white");
+    //element.find("dl").find("dd").first().css("background-color", "white");
+    //element.find("dl").removeClass("itemHighlighted");
+    element.find("dl").toggleClass("itemHighlighted");
 };
 
 UsersView.prototype.renderEdit=function(element) {

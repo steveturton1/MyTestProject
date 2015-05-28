@@ -52,10 +52,12 @@ GarmentsView.prototype.renderGarmentList=function(model) {
 };
 
 GarmentsView.prototype.garmentHoverOn=function(element) {
-    element.find("dl").find("dd").first().css("background-color", "red");
+    //element.find("dl").find("dd").first().css("background-color", "red");
+    element.find("dl").toggleClass("itemHighlighted");
 };
 GarmentsView.prototype.garmentHoverOff=function(element) {
-    element.find("dl").find("dd").first().css("background-color", "white");
+    //element.find("dl").find("dd").first().css("background-color", "white");
+    element.find("dl").toggleClass("itemHighlighted");
 };
 
 GarmentsView.prototype.renderEdit=function(element) {

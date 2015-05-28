@@ -9,9 +9,9 @@
 	float: left;
 }
 
-#dataListUsers {width: 800px; padding-left: 50px;}
-#dataListGarments {width: 1000px; padding-left: 50px;}
-#dataListMotifs {width: 800px; padding-left: 50px;}
+#dataListUsers    { width: 552px;  margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
+#dataListGarments { width: 1000px; margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
+#dataListMotifs   { width: 800px;  margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
 
 .dataList dl{
     height: 18px;
@@ -19,11 +19,15 @@
 	padding-top: 5px;
     padding-bottom: 5px;
 	position: relative;
-	background: #fff;
+    background: #ffffff;
 	border-top: 1px solid #cfcfcf;
-	border-left: 1px solid #cfcfcf;
-	border-right: 1px solid #cfcfcf;
 	margin: 0;
+}
+.dataList li:last-child dl { border-bottom: 1px solid #cfcfcf; }    /* Give last item a bottom border */
+
+
+.itemHighlighted {
+    background: #eee !important;
 }
 
 .dataList dt {
