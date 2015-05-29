@@ -25,9 +25,9 @@
 }
 .dataList li:last-child dl { border-bottom: 1px solid #cfcfcf; }    /* Give last item a bottom border */
 
-
-.itemHighlighted {
+#dataListUsers li dl:hover, #dataListGarments  li dl:hover, #dataListMotifs li dl:hover{
     background: #eee !important;
+    cursor:pointer;
 }
 
 .dataList dt {

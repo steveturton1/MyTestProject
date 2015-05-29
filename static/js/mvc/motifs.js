@@ -24,11 +24,6 @@ MotifsController.prototype.renderMotifList=function() {
     this.view.renderMotifList(this.model);
 
     // Register some events
-    $('#dataListMotifs li').hover(
-        function() { controller.view.motifHoverOn($(this));  },
-        function() { controller.view.motifHoverOff($(this)); }
-    );
-
     $('#dataListMotifs li').click(
         function() { controller.view.renderEdit($(this)); }
     );
@@ -49,15 +44,6 @@ function MotifsView() {}
 MotifsView.prototype.renderMotifList=function(model) {
     jQuery("#motifsList").html("");
     jQuery(jQuery('#templateMotifItems').render({motifs:model.items})).appendTo('#motifsList');
-};
-
-MotifsView.prototype.motifHoverOn=function(element) {
-    //element.find("dl").find("dd").first().css("background-color", "red");
-    element.find("dl").toggleClass("itemHighlighted");
-};
-MotifsView.prototype.motifHoverOff=function(element) {
-    //element.find("dl").find("dd").first().css("background-color", "white");
-    element.find("dl").toggleClass("itemHighlighted");
 };
 
 MotifsView.prototype.renderEdit=function(element) {

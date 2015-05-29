@@ -24,11 +24,6 @@ GarmentsController.prototype.renderGarmentList=function() {
     this.view.renderGarmentList(this.model);
 
     // Register some events
-    $('#dataListGarments li').hover(
-        function() { controller.view.garmentHoverOn($(this));  },
-        function() { controller.view.garmentHoverOff($(this)); }
-    );
-
     $('#dataListGarments li').click(
         function() { controller.view.renderEdit($(this)); }
     );
@@ -49,15 +44,6 @@ function GarmentsView() {}
 GarmentsView.prototype.renderGarmentList=function(model) {
     jQuery("#garmentsList").html("");
     jQuery(jQuery('#templateGarmentItems').render({garments:model.items})).appendTo('#garmentsList');
-};
-
-GarmentsView.prototype.garmentHoverOn=function(element) {
-    //element.find("dl").find("dd").first().css("background-color", "red");
-    element.find("dl").toggleClass("itemHighlighted");
-};
-GarmentsView.prototype.garmentHoverOff=function(element) {
-    //element.find("dl").find("dd").first().css("background-color", "white");
-    element.find("dl").toggleClass("itemHighlighted");
 };
 
 GarmentsView.prototype.renderEdit=function(element) {

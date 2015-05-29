@@ -25,10 +25,6 @@ UsersController.prototype.renderUsersList=function() {
     this.view.renderUsersList(this.model);
 
     // Register some events
-    $('#dataListUsers li').hover(
-        function() { controller.view.userHoverOn($(this));  },
-        function() { controller.view.userHoverOff($(this)); }
-    );
 
     $('#dataListUsers li').click(
         function() { controller.view.renderEdit($(this)); }
@@ -50,17 +46,6 @@ function UsersView() {}
 UsersView.prototype.renderUsersList=function(model) {
     jQuery("#usersList").html("");
     jQuery(jQuery('#templateUserItems').render({users:model.items})).appendTo('#usersList');
-};
-
-UsersView.prototype.userHoverOn=function(element) {
-    //element.find("dl").find("dd").first().css("background-color", "red");
-    //element.find("dl").addClass("itemHighlighted");
-    element.find("dl").toggleClass("itemHighlighted");
-};
-UsersView.prototype.userHoverOff=function(element) {
-    //element.find("dl").find("dd").first().css("background-color", "white");
-    //element.find("dl").removeClass("itemHighlighted");
-    element.find("dl").toggleClass("itemHighlighted");
 };
 
 UsersView.prototype.renderEdit=function(element) {
