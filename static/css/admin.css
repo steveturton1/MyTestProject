@@ -1,13 +1,6 @@
-.dataList {
-    display:block;
-    float:left
-	margin: 0;
-	padding: 0;
-}
+.dataList { display:block; float:left margin: 0; padding: 0; }
 
-.dataList li{
-	float: left;
-}
+.dataList li{ float: left; }
 
 #dataListUsers    { width: 552px;  margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
 #dataListGarments { width: 1000px; margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
@@ -20,10 +13,13 @@
     padding-bottom: 5px;
 	position: relative;
     background: #ffffff;
-	border-top: 1px solid #cfcfcf;
+	border-top: 1px solid #cfcfcf; border-left: 1px solid transparent; border-right: 1px solid transparent;
 	margin: 0;
 }
 .dataList li:last-child dl { border-bottom: 1px solid #cfcfcf; }    /* Give last item a bottom border */
+.dataList .aole-expanded { border-left: 1px solid #cfcfcf; border-right: 1px solid #cfcfcf; }
+
+#dataListUsers .aol-edit { width: 530px; background: white; }
 
 .dataList li dl:hover {
     background: #eee;
@@ -49,6 +45,8 @@
 	overflow: hidden;
     white-space: nowrap;
 }
+
+.aol-edit { padding: 10px; }
 
 .user-actions { position: relative; padding-left: 10px; top: -4px; width:58px; }
 .user-actions span { float: left;  position: relative;  left: 0px; }

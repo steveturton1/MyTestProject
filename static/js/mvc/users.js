@@ -53,11 +53,14 @@ UsersView.prototype.renderEdit=function(element) {
     var userId = element.attr("id").substr(4);  // Get the user id - without the 'item' bit on the front.
 
     this.removeAllActiveRows();
+    $("#dataListUsers").find("dl").removeClass("aole-expanded");
 
     if (controller.model.currentUserId == userId) {
         // We've just clicked the item being edited so just close it.
         controller.model.currentUserId = -1;
     } else {
+        element.find("dl").addClass("aole-expanded");
+
         controller.model.currentUserId = userId;
         var item = controller.model.items.getObjectById(userId);
 
