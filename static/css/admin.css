@@ -14,10 +14,12 @@
 	position: relative;
     background: #ffffff;
 	border-top: 1px solid #cfcfcf; border-left: 1px solid transparent; border-right: 1px solid transparent;
+    border-style: dotted;
 	margin: 0;
+
 }
-.dataList li:last-child dl { border-bottom: 1px solid #cfcfcf; }    /* Give last item a bottom border */
-.dataList .aole-expanded { border-left: 1px solid #cfcfcf; border-right: 1px solid #cfcfcf; }
+.dataList li:last-child dl { border-bottom: 1px solid #cfcfcf; border-style: dotted;}    /* Give last item a bottom border */
+/*.dataList .aole-expanded { border-left: 1px solid #cfcfcf; border-right: 1px solid #cfcfcf; } */
 
 #dataListUsers .aol-edit { width: 530px; background: white; }
 
@@ -45,8 +47,15 @@
 	overflow: hidden;
     white-space: nowrap;
 }
+.dl-expand {
+    background: url('/static/images/steve/delete_on.png') no-repeat 0 0;
+}
+.dl-contract {
+    background: url('/static/images/steve/delete_off.png') no-repeat 0 0;
+}
 
-.aol-edit { padding: 10px; }
+
+.aol-edit { padding: 10px; border-left: 1px solid transparent; border-right: 1px solid transparent;}
 
 .user-actions { position: relative; padding-left: 10px; top: -4px; width:58px; }
 .user-actions span { float: left;  position: relative;  left: 0px; }

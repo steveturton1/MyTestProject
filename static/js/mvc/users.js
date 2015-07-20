@@ -51,14 +51,20 @@ UsersView.prototype.renderUsersList=function(model) {
 UsersView.prototype.renderEdit=function(element) {
 
     var userId = element.attr("id").substr(4);  // Get the user id - without the 'item' bit on the front.
+    var blag = element.find(".dl-expand");      // Get the element that shows the expand arrow - we will changes this later to contract arrow
 
     this.removeAllActiveRows();
     $("#dataListUsers").find("dl").removeClass("aole-expanded");
+
+    // Replace any contract icons with expand.
+    $("#dataListUsers").find(".dl-contract").removeClass("dl-contract").addClass("dl-expand");
 
     if (controller.model.currentUserId == userId) {
         // We've just clicked the item being edited so just close it.
         controller.model.currentUserId = -1;
     } else {
+        blag.addClass("dl-contract");           // show the contract icon for the expanded item.
+
         element.find("dl").addClass("aole-expanded");
 
         controller.model.currentUserId = userId;
