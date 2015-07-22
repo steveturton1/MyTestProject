@@ -2,7 +2,7 @@
 
 .dataList li{ float: left; }
 
-#dataListUsers    { width: 552px;  margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
+#dataListUsers    { width: 575px;  margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
 #dataListGarments { width: 1000px; margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
 #dataListMotifs   { width: 800px;  margin-left: 50px; background: white; overflow: hidden; padding: 3px; }
 
@@ -48,16 +48,16 @@
     white-space: nowrap;
 }
 .dl-expand {
-    background: url('/static/images/steve/delete_on.png') no-repeat 0 0;
+    background: url('/static/images/vr/arrow_close.png') no-repeat 0 0;
 }
 .dl-contract {
-    background: url('/static/images/steve/delete_off.png') no-repeat 0 0;
+    background: url('/static/images/vr/arrow_open.png') no-repeat 0 0;
 }
 
 
 .aol-edit { padding: 10px; border-left: 1px solid transparent; border-right: 1px solid transparent;}
 
-.user-actions { position: relative; padding-left: 10px; top: -4px; width:58px; }
+.user-actions { position: relative; padding-left: 10px; top: -4px; width:30px; }
 .user-actions span { float: left;  position: relative;  left: 0px; }
 
 .user-action-edit { background: url('/static/images/vr/icon-aol-edit.png') no-repeat 0 0; }

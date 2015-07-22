@@ -26,17 +26,16 @@
 		{{for users}}
 			<li id="item{{:id}}">
 				<dl>
-				    <dd style="padding-left:0px;width:4px;top:-5px;height:28px;position:relative;">&nbsp</dd>
-				    <dd style="padding-left:10px;width:25px;height:25px;" class="dl-expand"></dd>
+
+				    <dd style="padding-left:0px;width:16px;height:16px;" class="dl-expand"></dd>
 				    <dd style="padding-left:10px;width:25px;">
                         <input name="your_name" value="your_value" type="checkbox">
 				    </dd>
 					<dt style="padding-left:0px;margin-left:0;width:25px;">{{:id}}</dt>
-					<dd style="padding-left:10px;width:200px;">{{:name}}</dd>
-					<dd style="padding-left:10px;width:198px;">{{:email}}</dd>
+					<dd style="padding-left:10px;width:218px;">{{:name}}</dd>
+					<dd style="padding-left:10px;width:219px;">{{:email}}</dd>
 					<dd class="user-actions">
-						<span id="edit_{{:id}}" class="user-action-edit" onclick="controller.renderEdit({{:id}})"></span>
-						<span id="delete_{{:id}}" class="user-action-delete" onclick="controller.renderDelete({{:id}})"></span>
+						<span id="delete_{{:id}}" class="user-action-delete" onclick="controller.renderDelete(event, {{:id}})"></span>
 					</dd>
 				</dl>
 			</li>
@@ -58,6 +57,14 @@
         </li>
     </script>
 
+    <script id="adminDelete" type="text/x-jsrender">
+        <li class="aol-edit aactive red">
+            <div class="aole-gutter">
+                <p class="aole-info"><strong>{% endraw %}{{ _('Delete user') }}{% raw %}?</strong></p>
+                <p class="aole-button aole-delete"><span class="aole-cancel" onclick="controller.removeEditDeleteRows();">{% endraw %}{{ _('Cancel') }}{% raw %}</span><a href="#" class="redbutton" onclick="controller.remove({{:itemid}})">{% endraw %}{{ _('Delete') }}{% raw %}</a></p>
+            </div>
+        </li>
+    </script>
     {% endraw %}
 
 {% endblock %}

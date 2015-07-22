@@ -26,7 +26,13 @@ View.prototype.removeAllActiveRows = function() {
     });
 };
 
-
+View.prototype.renderRemove = function(itemid){
+	this.removeAllActiveRows();
+	var tmpl = $($('#adminDelete').render({itemid:itemid}));
+	$(tmpl).hide();
+	$($('li[id=item'+itemid+']')).after($(tmpl));
+	$(tmpl).slideDown();
+};
 
 
 Array.prototype.getObjectById = function (obj) {

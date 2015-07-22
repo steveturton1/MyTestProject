@@ -31,6 +31,12 @@ UsersController.prototype.renderUsersList=function() {
     );
 };
 
+UsersController.prototype.renderDelete=function(event, itemid) {
+    event.stopPropagation();
+    this.view.renderDelete(itemid);
+
+};
+
 
 UsersModel.prototype = new Model;
 UsersModel.prototype.constructor = UsersModel;
@@ -75,5 +81,8 @@ UsersView.prototype.renderEdit=function(element) {
         $(element).after($(tmpl));
         $('.aol-edit').slideUp({duration:0}).slideDown();
     }
+};
 
+UsersView.prototype.renderDelete=function(itemid) {
+    this.renderRemove(itemid);
 };
