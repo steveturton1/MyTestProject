@@ -25,7 +25,6 @@ UsersController.prototype.renderUsersList=function() {
     this.view.renderUsersList(this.model);
 
     // Register some events
-
     $('#dataListUsers li').click(
         function() { controller.view.renderEdit($(this)); }
     );
@@ -60,10 +59,10 @@ UsersView.prototype.renderEdit=function(element) {
     var blag = element.find(".dl-expand");      // Get the element that shows the expand arrow - we will changes this later to contract arrow
 
     this.removeAllActiveRows();
-    $("#dataListUsers").find("dl").removeClass("aole-expanded");
+    $("#dataListUsers dl").removeClass("aole-expanded");
 
     // Replace any contract icons with expand.
-    $("#dataListUsers").find(".dl-contract").removeClass("dl-contract").addClass("dl-expand");
+    $("#dataListUsers .dl-contract").removeClass("dl-contract").addClass("dl-expand");
 
     if (controller.model.currentUserId == userId) {
         // We've just clicked the item being edited so just close it.
