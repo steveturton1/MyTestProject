@@ -55,9 +55,9 @@
 }
 
 
-.aol-edit { padding: 10px; border-left: 1px solid transparent; border-right: 1px solid transparent;}
+.aol-edit { padding: 10px; border-left: 1px solid transparent; border-right: 1px solid transparent;background: white;}
 
-.user-actions { position: relative; padding-left: 10px; top: -4px; width:30px; }
+.user-actions { position: relative; padding-left: 10px; top: -4px; width:58px; }
 .user-actions span { float: left;  position: relative;  left: 0px; }
 
 .user-action-edit { background: url('/static/images/vr/icon-aol-edit.png') no-repeat 0 0; }
@@ -69,3 +69,27 @@
 .user-action-delete.active { background: url('/static/images/vr/icon-aol-delete-active.png') no-repeat 0 0; }
 
 .user-action-edit, .user-action-delete {  cursor: pointer;  width: 28px;  height: 27px;  display: block; }
+
+.modal-dialog {
+    position: absolute;
+    box-shadow: 0 4px 23px 5px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0,0,0,0.15);
+    border-radius: 3px;
+    width: 430px;
+    height: 230px;
+    margin: auto;
+    left:0; right:0;top:0; bottom:0;
+    background: white;
+}
+#edit_user .modal-dialog {
+    width: 430px;
+    height: 230px;
+}
+
+.modal-dialog-close { position: absolute; width: 16px; height: 16px; right: 4px; top: 5px; background: url('/static/images/steve/modal_dialog_close.png') no-repeat; }
+.modal-dialog-close:hover {background: url('/static/images/steve/modal_dialog_close_hover.png') no-repeat;}
+.modal-dialog-title { font-size: 100%;
+    background: #eee;
+    padding: 4px;
+    border-bottom: 1px solid #cfcfcf
+}
+.modal-dialog-content { margin-top: 0; font-size: 80%; padding: 10px;}

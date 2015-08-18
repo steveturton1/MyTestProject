@@ -7,7 +7,7 @@
 
 {% block js %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/administration_mvc.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/users.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mvc/users2.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,6 +20,9 @@
             </div>
         </section>
     </div>
+    <div id="edit_user">
+
+    </div>
 
     {% raw %}
     <script id="templateUserItems" type="text/x-jsrender">
@@ -27,15 +30,14 @@
 		{{for users}}
 			<li id="item{{:id}}">
 				<dl>
-
-				    <dd style="padding-left:0px;width:16px;height:16px;" class="dl-expand"></dd>
-				    <dd style="padding-left:10px;width:25px;">
+				    <dd style="padding-left:5px;width:25px;">
                         <input name="your_name" value="your_value" type="checkbox">
 				    </dd>
 					<dt style="padding-left:0px;margin-left:0;width:25px;">{{:id}}</dt>
 					<dd style="padding-left:10px;width:218px;">{{:name}}</dd>
-					<dd style="padding-left:10px;width:219px;">{{:email}}</dd>
+					<dd style="padding-left:10px;width:212px;">{{:email}}</dd>
 					<dd class="user-actions">
+					    <span id="edit_{{:id}}" class="user-action-edit" onclick="controller.renderEdit(event, {{:id}})"></span>
 						<span id="delete_{{:id}}" class="user-action-delete" onclick="controller.renderDelete(event, {{:id}})"></span>
 					</dd>
 				</dl>
@@ -46,16 +48,29 @@
 
 
     <script id="templateUserEdit" type="text/x-jsrender">
-        <li rel="{{:item.id}}" class="aol-edit active">
-            <div><label for="name">{% endraw %}{{ _('Name') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Name') }}{% raw %}" id="name" value="{{:item.name}}" maxlength="255"></div>
-            <div><label for="email">{% endraw %}{{ _('Email') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Email') }}{% raw %}" id="email" value="{{:item.email}}" maxlength="255"></div>
-            <section id="aole-edit-actions" class="aole-grid" style="min-height:51px;">
-                <p>
-                    <span class="aea-cancel" style="top:0px;" onclick="controller.removeEditDeleteRows();">{% endraw %}{{ _('Cancel') }}{% raw %}</span>
-                    <a id="save_{{:item.id}}" class="bluebutton aea-save" onclick="controller.save({{:item.id}})">{% endraw %}{{ _('Save') }}{% raw %}</a>
-                </p>
-            </section>
-        </li>
+        <div class="modal-overlay">
+            <div class="modal-dialog">
+                <div class="modal-dialog-close" onclick="controller.cancelUserEdit(event)"></div>
+                <div class="modal-dialog-title">{% endraw %}{{ _('Edit User') }}{% raw %}</div>
+                <div class="modal-dialog-content">
+                    <div><label for="name">{% endraw %}{{ _('Name') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Name') }}{% raw %}" id="name" value="{{:item.name}}" maxlength="255"></div>
+                    <div><label for="email">{% endraw %}{{ _('Email') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Email') }}{% raw %}" id="email" value="{{:item.email}}" maxlength="255"></div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="templateUserEditOld" type="text/x-jsrender">
+        <div class="modal-overlay">
+            <li rel="{{:item.id}}" class="aol-edit active">
+                <div class="modal-dialog-close" onclick="controller.cancelUserEdit(event)"></div>
+                <div class="modal-dialog-title">{% endraw %}{{ _('Edit User') }}{% raw %}</div>
+                <div class="modal-dialog-content">
+                    <div><label for="name">{% endraw %}{{ _('Name') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Name') }}{% raw %}" id="name" value="{{:item.name}}" maxlength="255"></div>
+                    <div><label for="email">{% endraw %}{{ _('Email') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Email') }}{% raw %}" id="email" value="{{:item.email}}" maxlength="255"></div>
+                </div>
+            </li>
+        </div>
     </script>
 
     <script id="adminDelete" type="text/x-jsrender">

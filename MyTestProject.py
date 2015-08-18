@@ -74,7 +74,6 @@ def admin():
     return render_template("admin.html", settings=app_settings, user=user)
 
 
-
 @app.route('/admin/users')
 def admin_users():
     app_settings = services.MyData.get_settings()
@@ -84,6 +83,17 @@ def admin_users():
         return redirect(url_for('login'))
 
     return render_template("users.html", settings=app_settings, user=user)
+
+
+@app.route('/admin/users2')
+def admin_users2():
+    app_settings = services.MyData.get_settings()
+    user = services.common.get_logged_user()
+    if not user:
+        flash('You must be logged in to access that page.')
+        return redirect(url_for('login'))
+
+    return render_template("users2.html", settings=app_settings, user=user)
 
 
 @app.route('/admin/garments')
