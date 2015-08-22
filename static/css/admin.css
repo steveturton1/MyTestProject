@@ -1,3 +1,7 @@
+body {
+    height: 100%;   /* Needed for modal-overlay so modal-overlay is 100% even if scrolling down. */
+}
+
 .dataList { display:block; float:left margin: 0; padding: 0; }
 
 .dataList li{ float: left; }
@@ -72,7 +76,7 @@
 
 .modal-overlay {
     z-index: 99999;
-    position: absolute;
+    position: fixed;
     left: 0px; top: 0px;
     width: 100%; height: 100%;
     background: #000000;
