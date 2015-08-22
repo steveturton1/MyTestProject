@@ -70,7 +70,16 @@
 
 .user-action-edit, .user-action-delete {  cursor: pointer;  width: 28px;  height: 27px;  display: block; }
 
+.modal-overlay {
+    z-index: 99999;
+    position: absolute;
+    left: 0px; top: 0px;
+    width: 100%; height: 100%;
+    background: #000000;
+    opacity: .5;
+}
 .modal-dialog {
+    z-index: 999999;
     position: absolute;
     box-shadow: 0 4px 23px 5px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0,0,0,0.15);
     border-radius: 3px;

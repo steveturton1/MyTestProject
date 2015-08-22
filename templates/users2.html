@@ -48,7 +48,7 @@
 
 
     <script id="templateUserEdit" type="text/x-jsrender">
-        <div class="modal-overlay">
+        <div class="modal-overlay"></div>
             <div class="modal-dialog">
                 <div class="modal-dialog-close" onclick="controller.cancelUserEdit(event)"></div>
                 <div class="modal-dialog-title">{% endraw %}{{ _('Edit User') }}{% raw %}</div>
@@ -57,7 +57,7 @@
                     <div><label for="email">{% endraw %}{{ _('Email') }}{% raw %}</label><input type="text" placeholder="{% endraw %}{{ _('Email') }}{% raw %}" id="email" value="{{:item.email}}" maxlength="255"></div>
                 </div>
             </div>
-        </div>
+
     </script>
 
     <script id="templateUserEditOld" type="text/x-jsrender">
