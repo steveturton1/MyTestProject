@@ -1,0 +1,1 @@
+python c:\Source\MyTestProject\MyTestProject.py
